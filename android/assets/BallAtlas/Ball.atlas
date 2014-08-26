@@ -1,0 +1,47 @@
+
+Ball.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ball0
+  rotate: false
+  xy: 2, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+ball1
+  rotate: false
+  xy: 36, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+ball2
+  rotate: false
+  xy: 70, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+ball3
+  rotate: false
+  xy: 104, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+ball4
+  rotate: false
+  xy: 138, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+ball5
+  rotate: false
+  xy: 172, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1

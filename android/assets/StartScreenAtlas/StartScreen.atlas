@@ -1,0 +1,12 @@
+
+StartScreen.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Title
+  rotate: false
+  xy: 1, 1
+  size: 200, 40
+  orig: 200, 40
+  offset: 0, 0
+  index: -1

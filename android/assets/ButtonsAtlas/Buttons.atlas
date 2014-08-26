@@ -1,0 +1,47 @@
+
+Buttons.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+buttonL1
+  rotate: false
+  xy: 1, 1
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+buttonL2
+  rotate: false
+  xy: 103, 1
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+buttonXS1
+  rotate: false
+  xy: 205, 8
+  size: 65, 43
+  orig: 65, 43
+  offset: 0, 0
+  index: -1
+buttonS1
+  rotate: false
+  xy: 272, 19
+  size: 68, 32
+  orig: 68, 32
+  offset: 0, 0
+  index: -1
+buttonS2
+  rotate: false
+  xy: 342, 19
+  size: 68, 32
+  orig: 68, 32
+  offset: 0, 0
+  index: -1
+levelButton
+  rotate: false
+  xy: 412, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1

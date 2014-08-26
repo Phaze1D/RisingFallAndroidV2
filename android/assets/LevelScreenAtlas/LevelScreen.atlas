@@ -1,0 +1,26 @@
+
+LevelScreen.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+lifePanel
+  rotate: false
+  xy: 1, 1
+  size: 128, 101
+  orig: 128, 101
+  offset: 0, 0
+  index: -1
+naviB
+  rotate: false
+  xy: 131, 44
+  size: 50, 58
+  orig: 50, 58
+  offset: 0, 0
+  index: -1
+naviBPressed
+  rotate: false
+  xy: 131, 44
+  size: 50, 58
+  orig: 50, 58
+  offset: 0, 0
+  index: -1

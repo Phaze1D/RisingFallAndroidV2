@@ -1,0 +1,47 @@
+
+BadBallArt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+badBall0
+  rotate: false
+  xy: 1, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+badBall1
+  rotate: false
+  xy: 33, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+badBall2
+  rotate: false
+  xy: 65, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+badBall3
+  rotate: false
+  xy: 97, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+badBall4
+  rotate: false
+  xy: 129, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+badBall5
+  rotate: false
+  xy: 161, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1

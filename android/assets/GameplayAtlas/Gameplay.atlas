@@ -1,0 +1,61 @@
+
+Gameplay.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gameOverArea
+  rotate: false
+  xy: 1, 141
+  size: 203, 238
+  orig: 203, 238
+  offset: 0, 0
+  index: -1
+powerArea
+  rotate: false
+  xy: 206, 77
+  size: 48, 302
+  orig: 48, 302
+  offset: 0, 0
+  index: -1
+LevelIDArea
+  rotate: false
+  xy: 1, 51
+  size: 47, 88
+  orig: 47, 88
+  offset: 0, 0
+  index: -1
+objectiveArea
+  rotate: false
+  xy: 50, 100
+  size: 72, 39
+  orig: 72, 39
+  offset: 0, 0
+  index: -1
+playerTimeArea
+  rotate: false
+  xy: 50, 100
+  size: 72, 39
+  orig: 72, 39
+  offset: 0, 0
+  index: -1
+scoreArea
+  rotate: false
+  xy: 50, 100
+  size: 72, 39
+  orig: 72, 39
+  offset: 0, 0
+  index: -1
+optionArea
+  rotate: false
+  xy: 1, 1
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+notificationCircle
+  rotate: false
+  xy: 124, 120
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
