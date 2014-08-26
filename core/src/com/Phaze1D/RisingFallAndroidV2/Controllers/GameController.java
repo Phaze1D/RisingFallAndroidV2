@@ -1,13 +1,12 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
 
-import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Scenes.StartScene;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
  * Created by davidvillarreal on 8/13/14.
  * Rising Fall Android Version
  */
-public class GameController extends Game{
+public class GameController extends Game implements StartScene.StartScreenDelegate{
 
     private SpriteBatch batch;
 
@@ -25,8 +24,6 @@ public class GameController extends Game{
     private boolean isCreated;
 
     private TextureLoader textureLoader;
-
-    private BitmapFont bitmapFont;
 
     private Player player;
 
@@ -39,7 +36,6 @@ public class GameController extends Game{
     public void create() {
         if (!isCreated) {
             player = Player.shareInstance();
-            bitmapFont = BitmapFontSizer.getFontWithSize(0);
             viewport = new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
             textureLoader = TextureLoader.shareTextureLoader();
             loadStartScreen();
@@ -64,14 +60,22 @@ public class GameController extends Game{
         super.dispose();
         Player.savePlayer();
         player = null;
-        bitmapFont.dispose();
         textureLoader.dispose();
     }
 
     /** Loads the StartScreen data*/
     private void loadStartScreen(){
 
-
+        setScreen(null);
+        textureLoader.dispose();
+        textureLoader.loadStartScreenAtlases();
+        StartScene startScreen = new StartScene (viewport, batch);
+        startScreen.startScreenAtlas =  textureLoader.getStartScreenAtlas();
+        startScreen.buttonAtlas = textureLoader.getButtonAtlas();
+        startScreen.ballsAtlas = textureLoader.getBallsAtlas();
+        startScreen.socialMediaAtlas = textureLoader.getSocialMediaAtlas();
+        startScreen.delegate = this;
+        setScreen(startScreen);
 
     }
 
@@ -86,4 +90,13 @@ public class GameController extends Game{
 
     }
 
+    @Override
+    public void playButtonPressed() {
+
+    }
+
+    @Override
+    public void storeButtonPressed() {
+
+    }
 }

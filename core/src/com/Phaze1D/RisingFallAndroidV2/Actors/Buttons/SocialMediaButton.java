@@ -1,4 +1,4 @@
-package com.Phaze1D.RisingFallAndroidV2.Actors;
+package com.Phaze1D.RisingFallAndroidV2.Actors.Buttons;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
