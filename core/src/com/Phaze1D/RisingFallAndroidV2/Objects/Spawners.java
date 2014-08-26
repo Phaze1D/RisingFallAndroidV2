@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Objects;
 
-import com.Phaze1D.RisingFallAndroid.SpriteNodes.Ball;
+
+import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
