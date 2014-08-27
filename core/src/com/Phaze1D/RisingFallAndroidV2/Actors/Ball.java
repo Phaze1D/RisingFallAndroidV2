@@ -49,6 +49,8 @@ public class Ball extends Image {
 
     public void setPhysicsBody(Body body){
         body.setUserData(this);
+        body.setLinearDamping(0);
+        body.setLinearVelocity(velocity);
         this.body = body;
     }
 
@@ -58,8 +60,6 @@ public class Ball extends Image {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         bodyDef.fixedRotation = true;
-        bodyDef.linearDamping = 0;
-        bodyDef.linearVelocity.set(velocity);
         bodyDef.position.set(new Vector2(getX(), getY()));
 
         return bodyDef;

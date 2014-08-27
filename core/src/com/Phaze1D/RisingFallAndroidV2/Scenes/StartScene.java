@@ -107,7 +107,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         }
 
         moveBalls();
-        doPhysicsStep(delta);
+        physicsWorld.step(1/60f, 6,2);
     }
 
     @Override
@@ -118,6 +118,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     @Override
     public void show() {
         if (!isCreated){
+            System.out.println(getWidth() + "  " + getHeight());
             Gdx.input.setInputProcessor(this);
             createScene();
             isCreated = true;
@@ -156,15 +157,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         }
     }
 
-    private void doPhysicsStep(float deltaTime) {
 
-        float frameTime = Math.min(deltaTime, 0.25f);
-        accumulator += frameTime;
-        while (accumulator >= 1/45f) {
-            physicsWorld.step(1/45f, 6, 2);
-            accumulator -= 1/45f;
-        }
-    }
 
     private void spawnBall(){
 
@@ -215,7 +208,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         physicsWorld = new World(new Vector2(0, 0), true);
         spawnRate = 1/1.0f;
         socialSubAnimationDuration = .3f;
-        velocity = new Vector2(0, -200);
+        velocity = new Vector2(0, -5f);
         ballQuene = new LinkedList<Ball>();
 
 //        _deltaTime = _spawnRate;
