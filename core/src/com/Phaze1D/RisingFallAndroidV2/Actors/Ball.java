@@ -2,6 +2,8 @@ package com.Phaze1D.RisingFallAndroidV2.Actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -23,6 +25,7 @@ public class Ball extends Image {
 
     public Vector2 startPoint;
     public Vector2 endPoint;
+    public Vector2 velocity;
 
     public Sprite doubleSprite;
 
@@ -35,6 +38,8 @@ public class Ball extends Image {
     public boolean didMove;
     public boolean hasBeenChecked;
 
+    public Body body;
+
 
     public Ball(Sprite mainSprite) {
         super(mainSprite);
@@ -42,7 +47,24 @@ public class Ball extends Image {
     }
 
 
+    public void setPhysicsBody(Body body){
+        body.setUserData(this);
+        this.body = body;
+    }
 
+
+    public BodyDef ballDef(){
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.linearDamping = 0;
+        bodyDef.linearVelocity.set(velocity);
+        bodyDef.position.set(new Vector2(getX(), getY()));
+
+        return bodyDef;
+
+    }
 
 
     public interface BallDelegate{

@@ -3,13 +3,25 @@ package com.Phaze1D.RisingFallAndroidV2.Scenes;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
-import com.Phaze1D.RisingFallAndroidV2.Objects.Spawners;
+import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.LinkedList;
@@ -18,7 +30,7 @@ import java.util.LinkedList;
  * Created by davidvillarreal on 8/26/14.
  * Rising Fall Android Version
  */
-public class StartScene extends Stage implements Screen {
+public class StartScene extends Stage implements Screen, SimpleButton.SimpleButtonDelegate, SocialMediaButton.SocialMediaButtonDelegate {
 
     public StartScreenDelegate delegate;
 
@@ -28,9 +40,13 @@ public class StartScene extends Stage implements Screen {
     public TextureAtlas buttonAtlas;
     public TextureAtlas ballsAtlas;
 
+    private Sprite playSprite;
+    private Sprite storeSprite;
+
     private boolean isCreated;
     private boolean isSocialSubCreated;
     private boolean hasFinishCreated;
+    private boolean paused;
 
     private Vector2 titlePosition;
     private Vector2 playButtonPosition;
@@ -39,7 +55,7 @@ public class StartScene extends Stage implements Screen {
 
     private Vector2[] socialSubPositions;
     private SocialMediaButton[] socialSubNodes;
-    private Spawners[] spawners;
+    private Spawner[] spawners;
     private LinkedList<Ball> ballQuene;
 
     private SimpleButton playButton;
@@ -47,13 +63,24 @@ public class StartScene extends Stage implements Screen {
 
     private SocialMediaButton socialParent;
 
+    private Animation socialMediaAnimation;
+
     private float socialSubAnimationDuration;
     private float spawnRate;
+    private float stateTime;
+    private float accumulator = 0;
+    private float nextSpawn;
+
 
     private double deltaTime;
     private double passTime;
 
     private Vector2 velocity;
+
+    private World physicsWorld;
+
+    private Group ballGroup;
+
 
 
     public StartScene(Viewport viewport, Batch batch) {
@@ -63,6 +90,24 @@ public class StartScene extends Stage implements Screen {
     @Override
     public void render(float delta) {
 
+        act();
+        draw();
+
+        if (hasFinishCreated && !paused){
+
+            nextSpawn += delta;
+
+            ((SpriteDrawable)socialParent.getStyle().imageUp).setSprite((Sprite)socialMediaAnimation.getKeyFrame(stateTime, true));
+            stateTime += delta;
+
+            if (nextSpawn >= spawnRate) {
+                nextSpawn = nextSpawn - spawnRate;
+                spawnBall();
+            }
+        }
+
+        moveBalls();
+        doPhysicsStep(delta);
     }
 
     @Override
@@ -72,6 +117,11 @@ public class StartScene extends Stage implements Screen {
 
     @Override
     public void show() {
+        if (!isCreated){
+            Gdx.input.setInputProcessor(this);
+            createScene();
+            isCreated = true;
+        }
 
     }
 
@@ -82,16 +132,307 @@ public class StartScene extends Stage implements Screen {
 
     @Override
     public void pause() {
-
+        paused = true;
     }
 
     @Override
     public void resume() {
-
+        paused = false;
     }
 
 
+    private void moveBalls(){
+        Array<Body> bodies = new Array<Body>();
 
+        physicsWorld.getBodies(bodies);
+
+        for (Body b : bodies) {
+
+            Ball e = (Ball) b.getUserData();
+
+            if (e != null) {
+                e.setPosition(b.getPosition().x, b.getPosition().y);
+            }
+        }
+    }
+
+    private void doPhysicsStep(float deltaTime) {
+
+        float frameTime = Math.min(deltaTime, 0.25f);
+        accumulator += frameTime;
+        while (accumulator >= 1/45f) {
+            physicsWorld.step(1/45f, 6, 2);
+            accumulator -= 1/45f;
+        }
+    }
+
+    private void spawnBall(){
+
+
+        if (spawners != null){
+            RandomXS128 randomGen = new RandomXS128();
+            Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
+            ball.velocity = velocity;
+            ball.setPhysicsBody(physicsWorld.createBody(ball.ballDef()));
+            ballGroup.addActor(ball);
+            ballQuene.addLast(ball);
+        }
+
+        if (ballQuene.size() > 0){
+            Ball ball  = ballQuene.getFirst();
+            if (ball.getY() < 0){
+                ballQuene.removeFirst();
+                ball.remove();
+                physicsWorld.destroyBody(ball.body);
+                ball.body = null;
+                ball.clear();
+                ball.clearActions();
+                ball.clearListeners();
+                ball = null;
+            }
+        }
+    }
+
+    private void createScene(){
+
+        initVariables();
+        stillObjectPositions();
+        createTitle();
+        createPlayButton();
+        createStoreButton();
+        createSocialMediaButton();
+        createBackground();
+
+        hasFinishCreated = true;
+
+    }
+
+    private void initVariables() {
+
+        playSprite = buttonAtlas.createSprite("buttonL1");
+        storeSprite = buttonAtlas.createSprite("buttonL1");
+        ballGroup = new Group();
+        physicsWorld = new World(new Vector2(0, 0), true);
+        spawnRate = 1/1.0f;
+        socialSubAnimationDuration = .3f;
+        velocity = new Vector2(0, -200);
+        ballQuene = new LinkedList<Ball>();
+
+//        _deltaTime = _spawnRate;
+
+    }
+
+    private void stillObjectPositions() {
+
+        Sprite test = new Sprite(socialMediaAtlas.createSprite("facebook"));
+
+        titlePosition = new Vector2(getWidth()/2, getHeight() - getHeight()/5);
+        playButtonPosition = new Vector2(getWidth()/2, getHeight()/2.25f);
+        socialButtonPosition = new Vector2(getWidth()*.9f, getHeight()*.1f);
+        storeButtonPosition = new Vector2(getWidth()/2, playButtonPosition.y - playSprite.getHeight() * 2);
+
+        socialSubPositions = new Vector2[6];
+        float xOffset = test.getWidth() + test.getWidth() * .3f;
+        float yOffset = test.getHeight() + test.getHeight() * .3f;
+
+
+        int count = 0;
+
+        for (int row = -1; row < 2; row++){
+            for (int column = 0; column < 2; column++){
+                Vector2 vector2 = new Vector2(playButtonPosition.x + xOffset*row, playButtonPosition.y + yOffset * column);
+                socialSubPositions[count] = vector2;
+                count++;
+            }
+        }
+    }
+
+    private void createTitle() {
+        addActor(ballGroup);
+        Image title = new Image(startScreenAtlas.createSprite("Title"));
+        title.setCenterPosition(titlePosition.x, titlePosition.y);
+        addActor(title);
+    }
+
+    private void createPlayButton() {
+
+        SpriteDrawable up = new SpriteDrawable(playSprite);
+        SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
+        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down, null,font);
+        style.fontColor = Color.BLACK;
+
+        playButton = new SimpleButton("PlayK", style);
+        playButton.setCenterPosition(playButtonPosition.x, playButtonPosition.y);
+        playButton.delegate = this;
+        playButton.type = SimpleButton.PLAY_BUTTON;
+        addActor(playButton);
+
+    }
+
+    private void createStoreButton() {
+
+        SpriteDrawable up = new SpriteDrawable(storeSprite);
+        SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
+        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down, null,font);
+        style.fontColor = Color.BLACK;
+
+        storeButton = new SimpleButton("StoreK", style);
+        storeButton.setCenterPosition(storeButtonPosition.x, storeButtonPosition.y);
+        storeButton.delegate = this;
+        storeButton.type = SimpleButton.STORE_BUTTON;
+        addActor(storeButton);
+
+    }
+
+    private void createSocialMediaButton() {
+
+        SpriteDrawable up = new SpriteDrawable(socialMediaAtlas.createSprite("facebook"));
+
+        socialParent = new SocialMediaButton(up);
+        socialParent.setCenterPosition(socialButtonPosition.x, socialButtonPosition.y);
+        socialParent.delegate = this;
+        socialParent.type = SocialMediaButton.SOCIAL_BUTTON;
+        addActor(socialParent);
+        socialMediaAnimation = new Animation(2f, socialMediaAtlas.createSprites());
+
+    }
+
+    private void createBackground() {
+        createSpawners();
+    }
+
+    private void createSpawners(){
+        float width = ballsAtlas.createSprite("ball0").getWidth();
+
+        spawners = new Spawner[10];
+        for (int i = 0; i < 10; i++){
+            Spawner spawners1 = new Spawner();
+            float offsetX = (getWidth() - (width * 10) )/11;
+            float x = offsetX + (width + offsetX)*i;
+            spawners1.position = new Vector2(x, getHeight());
+            spawners1.powerUpProb = -1;
+            spawners1.ballAtlas = ballsAtlas;
+            spawners[i] = spawners1;
+
+        }
+    }
+
+
+    private void createSocialChildren(){
+
+        playButton.setVisible(false);
+        storeButton.setVisible(false);
+        socialParent.setTouchable(Touchable.disabled);
+
+        Array<Sprite> sprites = socialMediaAtlas.createSprites();
+        socialSubNodes = new SocialMediaButton[sprites.size];
+
+
+
+        for (int i = 0; i < sprites.size; i++){
+            SpriteDrawable up = new SpriteDrawable(sprites.get(i));
+            final SocialMediaButton child = new SocialMediaButton(up);
+            child.setAlpha(0);
+            child.indexInSubArray = i;
+            child.delegate = this;
+            child.setCenterPosition(socialButtonPosition.x, socialButtonPosition.y);
+            child.setTouchable(Touchable.disabled);
+            socialSubNodes[i] = child;
+            AlphaAction fadeIn = Actions.fadeIn(socialSubAnimationDuration);
+            MoveToAction moveToAction = Actions.moveTo(socialSubPositions[i].x - child.getWidth()/2, socialSubPositions[i].y, socialSubAnimationDuration);
+
+            Action complete = new Action() {
+                @Override
+                public boolean act(float delta) {
+                    child.setTouchable(Touchable.enabled);
+                    socialParent.setTouchable(Touchable.enabled);
+                    return true;
+                }
+            };
+
+            SequenceAction seq = Actions.sequence(Actions.parallel(moveToAction, fadeIn), complete);
+            child.addAction(seq);
+            addActor(child);
+        }
+    }
+
+    private void removeSocialChildren(){
+
+        socialParent.setTouchable(Touchable.disabled);
+
+        int count = 0;
+
+        for (final SocialMediaButton node: socialSubNodes){
+            count++;
+            node.setTouchable(Touchable.disabled);
+            AlphaAction fadeOut = Actions.fadeOut(socialSubAnimationDuration);
+            MoveToAction moveToAction = Actions.moveTo(socialParent.getCenterX(), socialParent.getY(), socialSubAnimationDuration);
+
+
+            if (count == socialSubNodes.length){
+
+                Action complete = new Action() {
+                    @Override
+                    public boolean act(float delta) {
+                        playButton.setVisible(true);
+                        storeButton.setVisible(true);
+                        node.clear();
+                        node.clearActions();
+                        node.remove();
+                        socialSubNodes = null;
+                        socialParent.setTouchable(Touchable.enabled);
+                        return true;
+                    }
+                };
+
+                ParallelAction group = Actions.parallel(fadeOut, moveToAction);
+                node.addAction(Actions.sequence(group, complete));
+            }else{
+                node.addAction(Actions.parallel(fadeOut, moveToAction));
+            }
+        }
+    }
+
+    @Override
+    public void buttonPressed(int type) {
+        if (type == SimpleButton.PLAY_BUTTON){
+            delegate.playButtonPressed();
+        }else if (type == SimpleButton.STORE_BUTTON){
+            delegate.storeButtonPressed();
+        }
+    }
+
+    @Override
+    public void socialButtonPressed() {
+
+        if (isSocialSubCreated) {
+            removeSocialChildren();
+            isSocialSubCreated = false;
+            socialParent.isOpen = false;
+        }else{
+            createSocialChildren();
+            isSocialSubCreated = true;
+            socialParent.isOpen = true;
+        }
+
+    }
+
+    @Override
+    public void subSocialButtonPressed(boolean didShare) {
+
+    }
+
+    @Override
+    public void disableChild() {
+
+    }
+
+    @Override
+    public void enableChild() {
+
+    }
 
     /** Start Screen Delegate*/
     public interface StartScreenDelegate{
