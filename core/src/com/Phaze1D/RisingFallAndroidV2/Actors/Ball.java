@@ -21,11 +21,13 @@ public class Ball extends Image {
     public int ballColor;
 
     public float finalYPosition;
+    public float time;
     public int moveDirection;
 
     public Vector2 startPoint;
     public Vector2 endPoint;
     public Vector2 velocity;
+    public Vector2 initPosition;
 
     public Sprite doubleSprite;
 
@@ -37,6 +39,8 @@ public class Ball extends Image {
     public boolean isUnMovable;
     public boolean didMove;
     public boolean hasBeenChecked;
+    public boolean isPhysicsActive;
+
 
     public Body body;
 
@@ -47,23 +51,14 @@ public class Ball extends Image {
     }
 
 
-    public void setPhysicsBody(Body body){
-        body.setUserData(this);
-        body.setLinearDamping(0);
-        body.setLinearVelocity(velocity);
-        this.body = body;
-    }
-
-
-    public BodyDef ballDef(){
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.fixedRotation = true;
-        bodyDef.position.set(new Vector2(getX(), getY()));
-
-        return bodyDef;
-
+    /** Calculates the next physical position on the screen depending on the current velocity*/
+    public void calculateNextPhysicalPosition(float delta){
+        time += delta;
+        if (isPhysicsActive){
+            float newX = initPosition.x + velocity.x * (time);
+            float newY = initPosition.y+ velocity.y * (time);
+            this.setPosition(newX,newY);
+        }
     }
 
 

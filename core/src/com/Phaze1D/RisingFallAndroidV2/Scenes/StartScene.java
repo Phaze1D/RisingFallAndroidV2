@@ -4,6 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
+import com.Phaze1D.RisingFallAndroidV2.Physics.PhyiscsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,8 +12,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -77,10 +76,9 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     private Vector2 velocity;
 
-    private World physicsWorld;
-
     private Group ballGroup;
 
+    private PhyiscsWorld physicsWorld;
 
 
     public StartScene(Viewport viewport, Batch batch) {
@@ -93,11 +91,11 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         act();
         draw();
 
-        if (hasFinishCreated && !paused){
+        if (hasFinishCreated && !paused) {
 
             nextSpawn += delta;
 
-            ((SpriteDrawable)socialParent.getStyle().imageUp).setSprite((Sprite)socialMediaAnimation.getKeyFrame(stateTime, true));
+            ((SpriteDrawable) socialParent.getStyle().imageUp).setSprite((Sprite) socialMediaAnimation.getKeyFrame(stateTime, true));
             stateTime += delta;
 
             if (nextSpawn >= spawnRate) {
@@ -106,8 +104,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
             }
         }
 
-        moveBalls();
-        physicsWorld.step(1/60f, 6,2);
+        physicsWorld.evaluatePhysics(delta);
     }
 
     @Override
@@ -117,8 +114,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     @Override
     public void show() {
-        if (!isCreated){
-            System.out.println(getWidth() + "  " + getHeight());
+        if (!isCreated) {
             Gdx.input.setInputProcessor(this);
             createScene();
             isCreated = true;
@@ -142,41 +138,27 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     }
 
 
-    private void moveBalls(){
-        Array<Body> bodies = new Array<Body>();
-
-        physicsWorld.getBodies(bodies);
-
-        for (Body b : bodies) {
-
-            Ball e = (Ball) b.getUserData();
-
-            if (e != null) {
-                e.setPosition(b.getPosition().x, b.getPosition().y);
-            }
-        }
-    }
+    private void spawnBall() {
 
 
-
-    private void spawnBall(){
-
-
-        if (spawners != null){
+        if (spawners != null) {
             RandomXS128 randomGen = new RandomXS128();
             Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
             ball.velocity = velocity;
-            ball.setPhysicsBody(physicsWorld.createBody(ball.ballDef()));
+            ball.initPosition = new Vector2(ball.getX(),ball.getY());
+            ball.isPhysicsActive = true;
+            physicsWorld.addBody(ball);
             ballGroup.addActor(ball);
             ballQuene.addLast(ball);
         }
 
-        if (ballQuene.size() > 0){
-            Ball ball  = ballQuene.getFirst();
-            if (ball.getY() < 0){
+
+        if (ballQuene.size() > 0) {
+            Ball ball = ballQuene.getFirst();
+            if (ball.getY() < 0) {
                 ballQuene.removeFirst();
                 ball.remove();
-                physicsWorld.destroyBody(ball.body);
+                ball.isPhysicsActive = false;
                 ball.body = null;
                 ball.clear();
                 ball.clearActions();
@@ -184,9 +166,11 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
                 ball = null;
             }
         }
+
+
     }
 
-    private void createScene(){
+    private void createScene() {
 
         initVariables();
         stillObjectPositions();
@@ -205,10 +189,11 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         playSprite = buttonAtlas.createSprite("buttonL1");
         storeSprite = buttonAtlas.createSprite("buttonL1");
         ballGroup = new Group();
-        physicsWorld = new World(new Vector2(0, 0), true);
-        spawnRate = 1/1.0f;
+        physicsWorld = new PhyiscsWorld();
+        physicsWorld.constantStep = 60;
+        spawnRate = 1 / 1.0f;
         socialSubAnimationDuration = .3f;
-        velocity = new Vector2(0, -5f);
+        velocity = new Vector2(0, -200f);
         ballQuene = new LinkedList<Ball>();
 
 //        _deltaTime = _spawnRate;
@@ -219,10 +204,10 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         Sprite test = new Sprite(socialMediaAtlas.createSprite("facebook"));
 
-        titlePosition = new Vector2(getWidth()/2, getHeight() - getHeight()/5);
-        playButtonPosition = new Vector2(getWidth()/2, getHeight()/2.25f);
-        socialButtonPosition = new Vector2(getWidth()*.9f, getHeight()*.1f);
-        storeButtonPosition = new Vector2(getWidth()/2, playButtonPosition.y - playSprite.getHeight() * 2);
+        titlePosition = new Vector2(getWidth() / 2, getHeight() - getHeight() / 5);
+        playButtonPosition = new Vector2(getWidth() / 2, getHeight() / 2.25f);
+        socialButtonPosition = new Vector2(getWidth() * .9f, getHeight() * .1f);
+        storeButtonPosition = new Vector2(getWidth() / 2, playButtonPosition.y - playSprite.getHeight() * 2);
 
         socialSubPositions = new Vector2[6];
         float xOffset = test.getWidth() + test.getWidth() * .3f;
@@ -231,9 +216,9 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         int count = 0;
 
-        for (int row = -1; row < 2; row++){
-            for (int column = 0; column < 2; column++){
-                Vector2 vector2 = new Vector2(playButtonPosition.x + xOffset*row, playButtonPosition.y + yOffset * column);
+        for (int row = -1; row < 2; row++) {
+            for (int column = 0; column < 2; column++) {
+                Vector2 vector2 = new Vector2(playButtonPosition.x + xOffset * row, playButtonPosition.y + yOffset * column);
                 socialSubPositions[count] = vector2;
                 count++;
             }
@@ -252,7 +237,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         SpriteDrawable up = new SpriteDrawable(playSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
         BitmapFont font = BitmapFontSizer.getFontWithSize(0);
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down, null,font);
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
         playButton = new SimpleButton("PlayK", style);
@@ -268,7 +253,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         SpriteDrawable up = new SpriteDrawable(storeSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
         BitmapFont font = BitmapFontSizer.getFontWithSize(0);
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down, null,font);
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
         storeButton = new SimpleButton("StoreK", style);
@@ -296,14 +281,14 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         createSpawners();
     }
 
-    private void createSpawners(){
+    private void createSpawners() {
         float width = ballsAtlas.createSprite("ball0").getWidth();
 
         spawners = new Spawner[10];
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             Spawner spawners1 = new Spawner();
-            float offsetX = (getWidth() - (width * 10) )/11;
-            float x = offsetX + (width + offsetX)*i;
+            float offsetX = (getWidth() - (width * 10)) / 11;
+            float x = offsetX + (width + offsetX) * i;
             spawners1.position = new Vector2(x, getHeight());
             spawners1.powerUpProb = -1;
             spawners1.ballAtlas = ballsAtlas;
@@ -313,7 +298,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     }
 
 
-    private void createSocialChildren(){
+    private void createSocialChildren() {
 
         playButton.setVisible(false);
         storeButton.setVisible(false);
@@ -323,8 +308,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         socialSubNodes = new SocialMediaButton[sprites.size];
 
 
-
-        for (int i = 0; i < sprites.size; i++){
+        for (int i = 0; i < sprites.size; i++) {
             SpriteDrawable up = new SpriteDrawable(sprites.get(i));
             final SocialMediaButton child = new SocialMediaButton(up);
             child.setAlpha(0);
@@ -334,7 +318,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
             child.setTouchable(Touchable.disabled);
             socialSubNodes[i] = child;
             AlphaAction fadeIn = Actions.fadeIn(socialSubAnimationDuration);
-            MoveToAction moveToAction = Actions.moveTo(socialSubPositions[i].x - child.getWidth()/2, socialSubPositions[i].y, socialSubAnimationDuration);
+            MoveToAction moveToAction = Actions.moveTo(socialSubPositions[i].x - child.getWidth() / 2, socialSubPositions[i].y, socialSubAnimationDuration);
 
             Action complete = new Action() {
                 @Override
@@ -351,20 +335,20 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         }
     }
 
-    private void removeSocialChildren(){
+    private void removeSocialChildren() {
 
         socialParent.setTouchable(Touchable.disabled);
 
         int count = 0;
 
-        for (final SocialMediaButton node: socialSubNodes){
+        for (final SocialMediaButton node : socialSubNodes) {
             count++;
             node.setTouchable(Touchable.disabled);
             AlphaAction fadeOut = Actions.fadeOut(socialSubAnimationDuration);
             MoveToAction moveToAction = Actions.moveTo(socialParent.getCenterX(), socialParent.getY(), socialSubAnimationDuration);
 
 
-            if (count == socialSubNodes.length){
+            if (count == socialSubNodes.length) {
 
                 Action complete = new Action() {
                     @Override
@@ -382,7 +366,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
                 ParallelAction group = Actions.parallel(fadeOut, moveToAction);
                 node.addAction(Actions.sequence(group, complete));
-            }else{
+            } else {
                 node.addAction(Actions.parallel(fadeOut, moveToAction));
             }
         }
@@ -390,9 +374,9 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     @Override
     public void buttonPressed(int type) {
-        if (type == SimpleButton.PLAY_BUTTON){
+        if (type == SimpleButton.PLAY_BUTTON) {
             delegate.playButtonPressed();
-        }else if (type == SimpleButton.STORE_BUTTON){
+        } else if (type == SimpleButton.STORE_BUTTON) {
             delegate.storeButtonPressed();
         }
     }
@@ -404,7 +388,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
             removeSocialChildren();
             isSocialSubCreated = false;
             socialParent.isOpen = false;
-        }else{
+        } else {
             createSocialChildren();
             isSocialSubCreated = true;
             socialParent.isOpen = true;
@@ -427,9 +411,12 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     }
 
-    /** Start Screen Delegate*/
-    public interface StartScreenDelegate{
+    /**
+     * Start Screen Delegate
+     */
+    public interface StartScreenDelegate {
         public void playButtonPressed();
+
         public void storeButtonPressed();
     }
 }

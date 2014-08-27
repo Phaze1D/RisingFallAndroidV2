@@ -27,6 +27,8 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     private Player player;
 
+    private OrthographicCamera camera;
+
     public GameController(SpriteBatch batch){
         this.batch = batch;
     }
@@ -35,8 +37,9 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     @Override
     public void create() {
         if (!isCreated) {
+
             player = Player.shareInstance();
-            viewport = new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+            viewport = new ScalingViewport(Scaling.fill, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
             textureLoader = TextureLoader.shareTextureLoader();
             loadStartScreen();
             isCreated = true;
