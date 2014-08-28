@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
@@ -61,6 +63,10 @@ public class Ball extends Image {
         }
     }
 
+    public void setAlpha(float alpha){
+        AlphaAction alphaAction = Actions.alpha(alpha);
+        addAction(alphaAction);
+    }
 
     public interface BallDelegate{
         public void ballTaped(Ball ball);

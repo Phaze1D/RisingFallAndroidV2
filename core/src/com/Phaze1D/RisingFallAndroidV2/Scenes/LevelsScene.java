@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Created by davidvillarreal on 8/26/14.
@@ -189,7 +190,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     private void createLifePanel(){
 
         lifePanel = new LifePanel(sceneAtlas.createSprite("lifePanel"));
-        lifePanel.setPosition((int)(getWidth()/2 - lifePanel.getWidth()/2), (int)(getHeight()/2 - lifePanel.getHeight()/2));
+        lifePanel.setPosition((int) (getWidth() / 2 - lifePanel.getWidth() / 2), (int) (getHeight() / 2 - lifePanel.getHeight() / 2));
         if(playerInfo.livesLeft > 0){
             lifePanel.createLifePanel();
         }else{
@@ -197,7 +198,6 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         }
 
         addActor(lifePanel);
-
     }
 
     private void removeChildLevels(final int parentNumber){
