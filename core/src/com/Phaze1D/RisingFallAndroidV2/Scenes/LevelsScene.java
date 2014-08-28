@@ -165,7 +165,8 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             style.font = BitmapFontSizer.getFontWithSize(0);
             style.fontColor = Color.BLACK;
             SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelButton"));
-            style.imageUp = up;
+            style.up = up;
+
 
             LevelButton levelB = new LevelButton("" + i*10, style);
             levelB.setPosition(levelBPositions[i].x, levelBPositions[i].y);
@@ -264,7 +265,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             style.font = BitmapFontSizer.getFontWithSize(0);
             style.fontColor = Color.BLACK;
             SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelButton"));
-            style.imageUp = up;
+            style.up = up;
 
             LevelButton childB = new LevelButton(childNumber + "", style);
             childB.levelNumber = childNumber++;
