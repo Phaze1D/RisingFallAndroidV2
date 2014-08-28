@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
 
+import com.Phaze1D.RisingFallAndroidV2.Scenes.LevelsScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StartScene;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
  * Created by davidvillarreal on 8/13/14.
  * Rising Fall Android Version
  */
-public class GameController extends Game implements StartScene.StartScreenDelegate{
+public class GameController extends Game implements StartScene.StartScreenDelegate, LevelsScene.LevelSceneDelegate{
 
     private SpriteBatch batch;
 
@@ -84,6 +85,14 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     /** Loads the LevelScreen*/
     private void loadLevelScreen(){
+        setScreen(null);
+        textureLoader.dispose();
+        textureLoader.loadLevelsScreenAtlases();
+        LevelsScene levelsScene = new LevelsScene();
+        levelsScene.buttonAtlas = textureLoader.getButtonAtlas();
+        levelsScene.sceneAtlas = textureLoader.getLevelsScreenAtlas();
+        levelsScene.delegate = this;
+        setScreen(levelsScene);
 
 
     }
@@ -95,11 +104,21 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     @Override
     public void playButtonPressed() {
-
+        loadLevelScreen();
     }
 
     @Override
     public void storeButtonPressed() {
+
+    }
+
+    @Override
+    public void navigationPressed() {
+
+    }
+
+    @Override
+    public void beginGamePlay(int levelID) {
 
     }
 }

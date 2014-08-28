@@ -71,5 +71,6 @@ public class SimpleButton extends ImageTextButton {
 
     public static final int PLAY_BUTTON = 0;
     public static final int STORE_BUTTON = 1;
+    public static final int LEVEL_BACK_BUTTON = 2;
 
 }

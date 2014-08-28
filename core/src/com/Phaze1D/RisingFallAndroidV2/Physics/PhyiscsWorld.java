@@ -12,7 +12,7 @@ import java.util.LinkedList;
  */
 public class PhyiscsWorld {
 
-    private LinkedList<Ball> bodies = new LinkedList<Ball>();
+    public LinkedList<Ball> bodies = new LinkedList<Ball>();
 
     public int constantStep;
 
@@ -34,20 +34,38 @@ public class PhyiscsWorld {
     /** Evaluates the physics of the world
      * @param deltaT is the time since last render
      * */
-    public void evaluatePhysics(float deltaT){
+
+    float t = 0;
+    float dt = .001f;
+    double accumulater = 0;
+
+    public void evaluatePhysics(float frameTime){
+        if(frameTime > .25){
+            frameTime = .25f;
+        }
+
+        accumulater += frameTime;
+        while (accumulater >= dt){
+            integrate(t,dt);
+            t+= dt;
+            accumulater -= dt;
+        }
 
 
+    }
+
+    private void integrate(float t, float dt){
         Iterator<Ball> iterator = bodies.iterator();
 
-            while (iterator.hasNext()) {
-                Ball next = iterator.next();
-                if (!next.isPhysicsActive) {
-                    next.remove();
-                    iterator.remove();
-                } else {
-                    next.calculateNextPhysicalPosition(deltaT);
-                }
+        while (iterator.hasNext()) {
+            Ball next = iterator.next();
+            if (!next.isPhysicsActive) {
+                next.remove();
+                iterator.remove();
+            } else {
+                next.calculateNextPhysicalPosition(dt);
             }
+        }
     }
 
     /** Dispose all the resources use by the world*/

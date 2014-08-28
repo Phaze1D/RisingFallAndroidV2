@@ -137,6 +137,15 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         paused = false;
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+       ballQuene.clear();
+        if (socialSubNodes != null){
+            socialSubNodes = null;
+        }
+        physicsWorld.dispose();
+    }
 
     private void spawnBall() {
 
@@ -166,6 +175,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
                 ball = null;
             }
         }
+
 
 
     }

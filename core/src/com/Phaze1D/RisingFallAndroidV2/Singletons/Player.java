@@ -18,8 +18,8 @@ public class Player implements Serializable{
     private int power3;
     private int power4;
     private int power5;
-    private int levelAt;
-    private int livesLeft;
+    public int levelAt;
+    public int livesLeft;
     private int[] scores;
 
     private double timeLeftOnLifes;
@@ -32,7 +32,7 @@ public class Player implements Serializable{
     public synchronized static Player shareInstance() {
 
         if (ourInstance == null){
-           if (Gdx.files.local("player.dat").exists()){
+           if (Gdx.files.local("player1.dat").exists()){
                ourInstance = readPlayer();
            }else {
                ourInstance = new Player();
@@ -140,24 +140,12 @@ public class Player implements Serializable{
     /** Calculates the next time for 5 new lives */
     public void calculateNextLifeTime(){
 
-        timeLeftOnLifes = System.currentTimeMillis() + 300000;
-    }
 
-    public int getLevelAt() {
-        return levelAt;
     }
 
    public void increaseLevelAt(){
        levelAt++;
    }
-
-    public int getLivesLeft() {
-        return livesLeft;
-    }
-
-    public void setLivesLeft(int livesLeft) {
-        this.livesLeft = livesLeft;
-    }
 
     public void decreaseLivesLeft(){
         if(livesLeft > 0){
