@@ -49,7 +49,7 @@ public class Player implements Serializable{
         power4 = 5;
         power5 = 5;
         levelAt = 0;
-        livesLeft = 5;
+        livesLeft = 0;
         scores = new int[100];
     }
 
@@ -140,6 +140,7 @@ public class Player implements Serializable{
     /** Calculates the next time for 5 new lives */
     public void calculateNextLifeTime(){
 
+        timeLeftOnLifes = System.currentTimeMillis()/1000 + 300;
 
     }
 

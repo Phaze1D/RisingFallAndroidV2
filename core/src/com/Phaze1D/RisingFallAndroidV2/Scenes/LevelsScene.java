@@ -56,6 +56,9 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     public void render(float delta) {
         act();
         draw();
+        if (hasCreatedScene && playerInfo.livesLeft == 0){
+            lifePanel.updateTime();
+        }
 
     }
 
@@ -95,6 +98,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         createNavigationButton();
         createLevelButton();
         createLifePanel();
+        hasCreatedScene = true;
 
     }
 
@@ -171,8 +175,6 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             LevelButton levelB = new LevelButton("" + i*10, style);
             levelB.setPosition(levelBPositions[i].x, levelBPositions[i].y);
             levelB.parentNumber = i;
-
-            System.out.println(playerInfo);
             if (levelB.parentNumber * 10 > playerInfo.levelAt) {
                 levelB.setTouchable(Touchable.disabled);
                 levelB.setAlpha(.4f);
@@ -189,6 +191,26 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
 
     private void createLifePanel(){
+
+        lifePanel = new LifePanel(sceneAtlas.createSprite("lifePanel"));
+        lifePanel.setCenterPosition(getWidth()/2, getHeight()/2);
+        if(playerInfo.livesLeft > 0){
+            lifePanel.createLifePanel();
+        }else{
+            lifePanel.createTimePanel(buttonAtlas.createSprite("buttonXS1"));
+        }
+
+        addActor(lifePanel);
+
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
+        style.font = BitmapFontSizer.getFontWithSize(0);
+        style.fontColor = Color.BLACK;
+        SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("buttonXS1"));
+        style.up = up;
+
+
+//        LevelButton levelB = new LevelButton("" + i*10, style);
+//        levelB.setPosition(levelBPositions[i].x, levelBPositions[i].y);
 
     }
 
@@ -226,7 +248,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
                         }
 
                         navigationB.setVisible(true);
-                        //lifePanel.setVisible(true);
+                        lifePanel.setVisible(true);
                         childLevelButtons = null;
 
                         return true;
@@ -269,7 +291,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
             LevelButton childB = new LevelButton(childNumber + "", style);
             childB.levelNumber = childNumber++;
-            childB.setPosition(levelBPositions[parentNumber].x, levelBPositions[parentNumber].y );
+            childB.setPosition(levelBPositions[parentNumber].x, levelBPositions[parentNumber].y);
             childB.setAlpha(0);
             childB.delegate = this;
             childB.parentNumber = parentNumber*-1;
@@ -333,11 +355,11 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             isSubCreated = false;
         }else{
             if (playerInfo.livesLeft > 0){
-                //lifePanel.setVisible(false);
+                lifePanel.setVisible(false);
                 createChildLevels(parentNumber);
                 isSubCreated = true;
             }else {
-                //lifePanel.runActionWarning();
+                lifePanel.runActionWarning();
             }
         }
     }

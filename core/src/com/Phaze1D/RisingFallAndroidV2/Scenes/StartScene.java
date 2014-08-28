@@ -238,7 +238,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     private void createTitle() {
         addActor(ballGroup);
         Image title = new Image(startScreenAtlas.createSprite("Title"));
-        title.setCenterPosition(titlePosition.x, titlePosition.y);
+        title.setPosition(titlePosition.x - title.getWidth()/2, titlePosition.y - title.getHeight()/2);
         addActor(title);
     }
 
@@ -251,7 +251,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         style.fontColor = Color.BLACK;
 
         playButton = new SimpleButton("PlayK", style);
-        playButton.setCenterPosition(playButtonPosition.x, playButtonPosition.y);
+        playButton.setPosition(playButtonPosition.x - playButton.getWidth()/2, playButtonPosition.y - playButton.getHeight()/2);
         playButton.delegate = this;
         playButton.type = SimpleButton.PLAY_BUTTON;
         addActor(playButton);
@@ -267,7 +267,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         style.fontColor = Color.BLACK;
 
         storeButton = new SimpleButton("StoreK", style);
-        storeButton.setCenterPosition(storeButtonPosition.x, storeButtonPosition.y);
+        storeButton.setPosition(storeButtonPosition.x - storeButton.getWidth()/2, storeButtonPosition.y - storeButton.getHeight()/2);
         storeButton.delegate = this;
         storeButton.type = SimpleButton.STORE_BUTTON;
         addActor(storeButton);
@@ -279,7 +279,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         SpriteDrawable up = new SpriteDrawable(socialMediaAtlas.createSprite("facebook"));
 
         socialParent = new SocialMediaButton(up);
-        socialParent.setCenterPosition(socialButtonPosition.x, socialButtonPosition.y);
+        socialParent.setPosition(socialButtonPosition.x - socialParent.getWidth()/2, socialButtonPosition.y - socialParent.getHeight()/2);
         socialParent.delegate = this;
         socialParent.type = SocialMediaButton.SOCIAL_BUTTON;
         addActor(socialParent);
@@ -324,7 +324,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
             child.setAlpha(0);
             child.indexInSubArray = i;
             child.delegate = this;
-            child.setCenterPosition(socialButtonPosition.x, socialButtonPosition.y);
+            child.setPosition(socialButtonPosition.x - child.getWidth()/2, socialButtonPosition.y - child.getHeight()/2);
             child.setTouchable(Touchable.disabled);
             socialSubNodes[i] = child;
             AlphaAction fadeIn = Actions.fadeIn(socialSubAnimationDuration);

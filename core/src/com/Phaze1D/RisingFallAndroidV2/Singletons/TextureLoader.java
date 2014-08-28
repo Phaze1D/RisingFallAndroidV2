@@ -67,7 +67,10 @@ public class TextureLoader implements Disposable {
     public void loadLevelsScreenAtlases(){
         assetManager.load("LevelScreenAtlas/LevelScreen.atlas", TextureAtlas.class);
         assetManager.load("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
+
+        while (!assetManager.update()){
+
+        }
 
         buttonAtlas = assetManager.get("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
         levelsScreenAtlas = assetManager.get("LevelScreenAtlas/LevelScreen.atlas", TextureAtlas.class);
