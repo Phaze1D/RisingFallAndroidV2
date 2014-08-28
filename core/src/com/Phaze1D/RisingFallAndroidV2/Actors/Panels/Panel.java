@@ -18,7 +18,7 @@ public class Panel extends WidgetGroup{
 
         panelActor = new Image(panelSprite);
         setSize(panelActor.getWidth(), panelActor.getHeight());
-        //addActor(panelActor);
+        addActor(panelActor);
     }
 
 

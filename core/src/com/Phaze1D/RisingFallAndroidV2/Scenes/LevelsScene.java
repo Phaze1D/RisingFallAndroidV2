@@ -54,7 +54,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
     @Override
     public void render(float delta) {
-        act();
+        act(delta);
         draw();
         if (hasCreatedScene && playerInfo.livesLeft == 0){
             lifePanel.updateTime();
@@ -111,8 +111,8 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
         float height = buttonAtlas.createSprite("levelButton").getHeight();
         float width = buttonAtlas.createSprite("levelButton").getWidth();
-        float yOffset = (getHeight() - height * 5)/6f;
-        float xOffset = (getWidth() - 4*width)/5f;
+        float yOffset = (getHeight() - height * 5)/6;
+        float xOffset = (getWidth() - 4*width)/5;
 
 
         int count = 0;
@@ -142,8 +142,6 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
                 count++;
             }
         }
-
-
     }
 
     private void createNavigationButton() {
@@ -162,8 +160,6 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     private void createLevelButton() {
 
         parentLevelButtons = new LevelButton[10];
-
-
         for (int i = 0; i < 10; i++){
             ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
             style.font = BitmapFontSizer.getFontWithSize(0);
@@ -193,7 +189,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     private void createLifePanel(){
 
         lifePanel = new LifePanel(sceneAtlas.createSprite("lifePanel"));
-        lifePanel.setCenterPosition(getWidth()/2, getHeight()/2);
+        lifePanel.setPosition((int)(getWidth()/2 - lifePanel.getWidth()/2), (int)(getHeight()/2 - lifePanel.getHeight()/2));
         if(playerInfo.livesLeft > 0){
             lifePanel.createLifePanel();
         }else{
@@ -201,16 +197,6 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         }
 
         addActor(lifePanel);
-
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-        style.font = BitmapFontSizer.getFontWithSize(0);
-        style.fontColor = Color.BLACK;
-        SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("buttonXS1"));
-        style.up = up;
-
-
-//        LevelButton levelB = new LevelButton("" + i*10, style);
-//        levelB.setPosition(levelBPositions[i].x, levelBPositions[i].y);
 
     }
 
@@ -224,7 +210,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         for (LevelButton childB: childLevelButtons){
 
             MoveToAction moveToAction = Actions.moveTo(levelBPositions[parentNumber].x, levelBPositions[parentNumber].y , duration);
-            AlphaAction alphaAction = Actions.alpha(0f, duration);
+            AlphaAction alphaAction = Actions.alpha(0, duration);
             ParallelAction parallelAction = Actions.parallel(moveToAction, alphaAction);
 
             if (count == 9){

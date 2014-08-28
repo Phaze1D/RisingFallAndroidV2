@@ -55,8 +55,8 @@ public class Ball extends Image {
     public void calculateNextPhysicalPosition(float delta){
         time += delta;
         if (isPhysicsActive){
-            float newX = initPosition.x + velocity.x * (time);
-            float newY = initPosition.y+ velocity.y * (time);
+            int newX = (int)(initPosition.x + velocity.x * (time));
+            int newY = (int)(initPosition.y+ velocity.y * (time));
             this.setPosition(newX,newY);
         }
     }

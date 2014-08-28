@@ -88,7 +88,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     @Override
     public void render(float delta) {
 
-        act();
+        act(delta);
         draw();
 
         if (hasFinishCreated && !paused) {

@@ -114,7 +114,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     @Override
     public void navigationPressed() {
-
+        loadStartScreen();
     }
 
     @Override

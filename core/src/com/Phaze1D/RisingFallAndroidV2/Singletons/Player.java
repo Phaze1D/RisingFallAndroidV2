@@ -32,8 +32,11 @@ public class Player implements Serializable{
     public synchronized static Player shareInstance() {
 
         if (ourInstance == null){
-           if (Gdx.files.local("player1.dat").exists()){
+           if (Gdx.files.local("assets/SupportFiles/player.dat").exists()){
                ourInstance = readPlayer();
+               if (ourInstance == null){
+                   ourInstance = new Player();
+               }
            }else {
                ourInstance = new Player();
            }
@@ -49,7 +52,7 @@ public class Player implements Serializable{
         power4 = 5;
         power5 = 5;
         levelAt = 0;
-        livesLeft = 0;
+        livesLeft = 5;
         scores = new int[100];
     }
 
@@ -168,7 +171,7 @@ public class Player implements Serializable{
 
     /** Saves the player information into a file*/
     public static void savePlayer(){
-        FileHandle file = Gdx.files.local("player.dat");
+        FileHandle file = Gdx.files.local("assets/SupportFiles/player.dat");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = null;
 
@@ -194,7 +197,7 @@ public class Player implements Serializable{
     /** Reads and creates a new instances of Player*/
     public static Player readPlayer(){
         Player player = null;
-        FileHandle file = Gdx.files.local("player.dat");
+        FileHandle file = Gdx.files.local("assets/SupportFiles/player.dat");
         ByteArrayInputStream byteArrayInputStream  = null;
         ObjectInputStream objectInputStream = null;
 

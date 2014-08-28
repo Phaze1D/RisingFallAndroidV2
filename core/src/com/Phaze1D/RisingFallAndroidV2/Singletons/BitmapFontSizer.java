@@ -33,6 +33,7 @@ public class BitmapFontSizer {
             ourInstance = new BitmapFontSizer();
         }
 
+        shareBitmapFont.setScale(1f);
 
         return shareBitmapFont;
     }
