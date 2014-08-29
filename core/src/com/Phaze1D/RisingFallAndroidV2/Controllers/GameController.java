@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
 
+import com.Phaze1D.RisingFallAndroidV2.Scenes.GameplayScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.LevelsScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StartScene;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
  * Created by davidvillarreal on 8/13/14.
  * Rising Fall Android Version
  */
-public class GameController extends Game implements StartScene.StartScreenDelegate, LevelsScene.LevelSceneDelegate{
+public class GameController extends Game implements StartScene.StartScreenDelegate, LevelsScene.LevelSceneDelegate, GameplayScene.GameSceneDelegate{
 
     private SpriteBatch batch;
 
@@ -99,6 +100,20 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     private void loadGameplayScreen(int levelID){
 
+        setScreen(null);
+        textureLoader.dispose();
+        textureLoader.loadGamePlayScreenAtlases();
+        GameplayScene gameplayScreen = new GameplayScene(levelID);
+        gameplayScreen.badBallAtlas = textureLoader.getBadBallAtlas();
+        gameplayScreen.ballAtlas = textureLoader.getBallsAtlas();
+        gameplayScreen.gameSceneAtlas = textureLoader.getGameplayAtlas();
+        gameplayScreen.buttonAtlas = textureLoader.getButtonAtlas();
+        gameplayScreen.unMovableAtlas = textureLoader.getUnmovableBallAtlas();
+        gameplayScreen.powerBallAtlas = textureLoader.getPowerBallAtlas();
+        gameplayScreen.socialMediaAtlas = textureLoader.getSocialMediaAtlas();
+        gameplayScreen.delegate = this;
+        setScreen(gameplayScreen);
+
 
     }
 
@@ -120,5 +135,15 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     @Override
     public void beginGamePlay(int levelID) {
         loadGameplayScreen(levelID);
+    }
+
+    @Override
+    public void quitGamePlay() {
+
+    }
+
+    @Override
+    public void beginNextLevel(int level) {
+
     }
 }

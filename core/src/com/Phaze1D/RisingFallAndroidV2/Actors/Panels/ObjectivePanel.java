@@ -40,7 +40,7 @@ public class ObjectivePanel extends Panel {
 
         font = BitmapFontSizer.getFontWithSize(0);
         titleNode = new Label(titleString, new Label.LabelStyle(font, Color.BLACK));
-        titleNode.setPosition((int)(getWidth() /2 - titleNode.getWidth()/2),(int)(getHeight() * 4/7 - titleNode.getHeight()/2));
+        titleNode.setPosition((int)(getWidth() /2 - titleNode.getWidth()/2),(int)(getHeight() * 4/7 - titleNode.getHeight()/4));
         addActor(titleNode);
 
         String objectString;
@@ -55,7 +55,7 @@ public class ObjectivePanel extends Panel {
         }
 
         objectiveNode = new Label(objectString, new Label.LabelStyle(font, Color.BLACK));
-        objectiveNode.setPosition((int)(getWidth()/2 - objectiveNode.getWidth()/2), (int)(getHeight()/7f + objectiveNode.getHeight()/4 - objectiveNode.getHeight()/2));
+        objectiveNode.setPosition((int)(getWidth()/2 - objectiveNode.getWidth()/2), (int)(getHeight()/7f + objectiveNode.getHeight()/4 - objectiveNode.getHeight()/4));
         addActor(objectiveNode);
 
     }

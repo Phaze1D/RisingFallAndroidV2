@@ -33,11 +33,11 @@ public class ScorePanel extends Panel {
         this.targetScore = targetScore;
 
         titleLabel = new CustomLabel("scorek", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
-        titleLabel.setPosition((int)(getWidth()/2 - titleLabel.getWidth()/2), (int)(getHeight()*4/7 - titleLabel.getHeight()/2));
+        titleLabel.setPosition((int)(getWidth()/2 - titleLabel.getWidth()/2), (int)(getHeight()*4/7) );
         addActor(titleLabel);
 
         scoreLabel = new CustomLabel(currentScore + "/" + targetScore, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
-        scoreLabel.setPosition((int)(getWidth()/2 - scoreLabel.getWidth()/2),(int)(getHeight()/7 - scoreLabel.getHeight()/2));
+        scoreLabel.setPosition((int)(getWidth()/2 - scoreLabel.getWidth()/2),(int)(getHeight()/7));
         scoreLabel.setAlignment(Align.center);
         addActor(scoreLabel);
 

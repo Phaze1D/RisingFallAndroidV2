@@ -41,6 +41,7 @@ public class PowerSidePanel extends Panel {
         Player player = Player.shareInstance();
 
         Array<Sprite> powerSprites = powerBallAtlas.createSprites();
+        powerBalls = new Ball[powerSprites.size];
 
         float yOffset = (getHeight() - powerSprites.get(0).getHeight()*5)/6f;
         float xOffset = getWidth()*.3f;

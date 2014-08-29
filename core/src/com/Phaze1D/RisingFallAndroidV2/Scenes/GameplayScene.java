@@ -14,10 +14,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -26,7 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
  * Created by davidvillarreal on 8/26/14.
  * Rising Fall Android Version
  */
-public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, SimpleButton.SimpleButtonDelegate {
+public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, SimpleButton.SimpleButtonDelegate, SettingPanel.SettingPanelDelegate {
 
     public GameSceneDelegate delegate;
 
@@ -75,6 +78,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public TextureAtlas powerBallAtlas;
     public TextureAtlas unMovableAtlas;
     public TextureAtlas badBallAtlas;
+    public TextureAtlas infoAtlas;
 
     public Sprite playAreaSprite;
     public Sprite ceilingAreaSprite;
@@ -106,9 +110,17 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     private Group ballGroup;
     public PhyiscsWorld world;
 
+    public GameplayScene(int levelID){
+        this.levelID = levelID;
+        levelFactory = new LevelFactory(levelID);
+    }
 
     @Override
     public void render(float delta) {
+        act(delta);
+        draw();
+
+
 
     }
 
@@ -120,6 +132,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
     public void show() {
         if (!isCreated){
+            Gdx.input.setInputProcessor(this);
             createScene();
         }
 
@@ -159,7 +172,6 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         powerTypeAt = -1;
         powerMaxAmount = 0;
         playerInfo = Player.shareInstance();
-        levelFactory = new LevelFactory(levelID);
         stageAt = 1;
         ceilingAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayAreaCeilingArea/ceiling" + levelFactory.ceilingHeight + ".png")));
         playAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayAreaCeilingArea/playArea" + levelFactory.ceilingHeight + ".png")));
@@ -201,7 +213,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         playAreaPosition = new Vector2(xOffset1, yOffset1);
         ceilingPosition = new Vector2(xOffset1, yOffset1 + playAreaSprite.getHeight() - 2);
-        powerAreaPosition = new Vector2(xOffset1 * 2 + playAreaWidth, yOffset2 + powerAreaTest.getHeight());
+        powerAreaPosition = new Vector2(xOffset1 * 2 + playAreaWidth, yOffset2  + yOffset1 + optionTest.getHeight());
+
         optionAreaPosition = new Vector2(xOffset1*2 + playAreaWidth, yOffset1);
 
         float xOffset2 = (playAreaWidth - scoreTest.getWidth()*3)/2f;
@@ -301,7 +314,32 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     }
 
     private void createInitialFill() {
+        int maxRow = numRows -2;
+        RandomXS128 randGen = new RandomXS128();
 
+        for (int i = 0; i < levelFactory.initFill * numRows * levelFactory.numOfColumns;){
+            int randC = randGen.nextInt(levelFactory.numOfColumns);
+
+            if (ballsArray[ ( randC + (maxRow -1)*levelFactory.numOfColumns)] == null){
+                int row = 0;
+                while (ballsArray[randC] != null){
+                    randC = randC + levelFactory.numOfColumns;
+                    row++;
+                }
+
+                int randIndex = randGen.nextInt(6);
+                Ball ball = new Ball(ballAtlas.createSprite("ball" + randIndex));
+                ball.column = randC % levelFactory.numOfColumns;
+                ball.ballColor = randIndex;
+                ball.row = row;
+                ball.setTouchable(Touchable.enabled);
+                ball.delegate = this;
+                ball.setPosition(firstX + (xOffsetPA + ball.getWidth())*ball.column, firstY + (yOffsetPA + ball.getHeight())* ball.row);
+                ballsArray[randC] = ball;
+                i++;
+
+            }
+        }
     }
 
     private void pauseGame() {
@@ -315,6 +353,97 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     }
 
     private void creatingSettingPanel(){
+
+        AlphaAction alphaAction = Actions.alpha(.3f);
+        playArea.addAction(alphaAction);
+        AlphaAction alph = Actions.alpha(.3f);
+        ceiling.addAction(alph);
+
+        if ( !isSettingCreated){
+
+            for (Ball ball: powerSidePanel.powerBalls){
+                ball.setTouchable(Touchable.disabled);
+            }
+
+            settingPanel = new SettingPanel(gameSceneAtlas.createSprite("gameOverArea"));
+            settingPanel.socialMediaAtlas = socialMediaAtlas;
+            settingPanel.buttonAtlas = buttonAtlas;
+            settingPanel.infoAtlas = infoAtlas;
+            settingPanel.setPosition(settingPosition.x, settingPosition.y);
+            settingPanel.gameType = levelFactory.gameType;
+
+
+            if (levelFactory.gameType == 1) {
+                settingPanel.objectiveLeft = (int)levelFactory.gameTime;
+            }else{
+                settingPanel.objectiveLeft = levelFactory.numberOfBalls;
+            }
+//
+            settingPanel.targetScore = levelFactory.targetScore;
+            settingPanel.delegate = this;
+
+            if (stageAt == 1){
+
+                addActor(settingPanel);
+            }else if (stageAt == 2){
+
+                settingPanel.createPausePanel();
+                addActor(settingPanel);
+
+            }else if(stageAt == 3){
+
+                if (ceilingHit){
+
+//                    SKAction * fadeIn = [SKAction fadeAlphaTo:.5 duration:.8];
+//                    SKAction * fadeOut = [SKAction fadeAlphaTo:1 duration:.8];
+//                    SKAction * seq = [SKAction sequence:@[fadeOut, fadeIn]];
+//                    SKAction * repeat = [SKAction repeatAction:seq count:3];
+//
+//                    int hitIndex = _hitBall.column - _levelFactory.numOfColumns + (_levelFactory.numOfColumns * _hitBall.row);
+//
+//                    for (int i = hitIndex; i >= 0 ; i = i - _levelFactory.numOfColumns) {
+//                        Ball * ball = (Ball *)[_ballsArray objectAtIndex:i];
+//                        [ball runAction:repeat];
+//                    }
+//
+//                    [_hitBall runAction:repeat completion:^{
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//
+//                        if (!_didReachScore) {
+//                            //Create score not reached animation
+//                            [_scorePanel didNotReachAnimation];
+//                            _didWin = NO;
+//                        }
+//
+//                        if (_objectiveReached && _didReachScore) {
+//                            _didWin = YES;
+//                        }
+//
+//                        [_sPanel createGameOverPanel:_didWin];
+//
+//                        [self addChild:_sPanel];
+//                        });
+//
+//                    }];
+
+                }else{
+
+                    if (!didReachScore){
+                        scorePanel.didNotReachAnimation();
+                        didWin = false;
+                    }
+
+                    if (objectiveReached && didReachScore){
+                        didWin = true;
+                    }
+
+                    settingPanel.createGameOverPanel(didWin);
+                    addActor(settingPanel);
+                }
+            }
+            isSettingCreated = true;
+        }
 
     }
 
@@ -364,6 +493,31 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     @Override
     public void buttonPressed(int type) {
+
+    }
+
+    @Override
+    public void quitButtonPressed() {
+
+    }
+
+    @Override
+    public void resumeButtonPressed() {
+
+    }
+
+    @Override
+    public void startNextLevel() {
+
+    }
+
+    @Override
+    public void restartButtonPressed() {
+
+    }
+
+    @Override
+    public void continuePlaying() {
 
     }
 
