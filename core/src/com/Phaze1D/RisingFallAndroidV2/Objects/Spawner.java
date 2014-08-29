@@ -78,4 +78,13 @@ public class Spawner {
             return ball;
         }
     }
+
+    /** Spawns a specific ball color used in power 2*/
+    public Ball spawnSpecificBall(int balltype){
+        Ball ball = new Ball(ballAtlas.createSprite("ball"+balltype));
+        ball.setPosition(position.x,position.y);
+        ball.column = column;
+        ball.ballColor = balltype;
+        return ball;
+    }
 }
