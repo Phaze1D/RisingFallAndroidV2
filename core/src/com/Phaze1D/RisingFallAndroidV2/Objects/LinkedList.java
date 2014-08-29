@@ -44,7 +44,7 @@ public class LinkedList {
 
         count++;
 
-        printList();
+
     }
 
     public synchronized void addToFront(Ball ball){
@@ -66,7 +66,6 @@ public class LinkedList {
 
         count++;
 
-        printList();
     }
 
     public synchronized void checkIfReached(){
@@ -90,7 +89,7 @@ public class LinkedList {
                     current.element.isInMovingList = false;
                     head = current.next;
                     current.next = null;
-                    current.element = null;
+                    //current.element = null;
                     current = null;
                     current = head;
                     count--;
@@ -98,7 +97,7 @@ public class LinkedList {
                     current.element.setTouchable(Touchable.enabled);
                     current.element.isInMovingList = false;
                     previous.next = null;
-                    current.element = null;
+                    //current.element = null;
                     current = null;
                     tail = previous;
                     count--;
@@ -107,7 +106,7 @@ public class LinkedList {
                     current.element.isInMovingList = false;
                     previous.next = current.next;
                     current.next = null;
-                    current.element = null;
+                    //current.element = null;
                     current = null;
                     current = previous.next;
                     count--;

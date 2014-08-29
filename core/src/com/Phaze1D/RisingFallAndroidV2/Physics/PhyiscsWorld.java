@@ -63,7 +63,10 @@ public class PhyiscsWorld {
         while (iterator.hasNext()) {
             Ball next = iterator.next();
             if (!next.isPhysicsActive) {
-                next.remove();
+                //next.remove();
+                if (next.getY() < 0){
+                    next.remove();
+                }
                 iterator.remove();
             } else {
                 next.calculateNextPhysicalPosition(dt);

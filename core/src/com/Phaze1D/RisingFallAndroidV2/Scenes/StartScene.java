@@ -153,7 +153,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         if (spawners != null) {
             RandomXS128 randomGen = new RandomXS128();
             Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
-            ball.velocity = velocity;
+            ball.velocity.set(velocity);
             ball.isPhysicsActive = true;
             physicsWorld.addBody(ball);
             ballGroup.addActor(ball);

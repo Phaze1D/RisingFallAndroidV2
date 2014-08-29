@@ -25,6 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+import java.util.Arrays;
+
 /**
  * Created by davidvillarreal on 8/26/14.
  * Rising Fall Android Version
@@ -315,6 +317,10 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             spawner.powerUpProb = levelFactory.powerBallDrop;
             spawner.doubleBallProb = levelFactory.doubleBallProb;
             spawner.unMovableProb = levelFactory.unMovableProb;
+            spawner.ballAtlas = ballAtlas;
+            spawner.powerAtlas = powerBallAtlas;
+            spawner.badBallAtlas = badBallAtlas;
+            spawner.unBallAtlas = unMovableAtlas;
             spawner.levelAt = levelID;
             spawners[i] = spawner;
         }
@@ -392,6 +398,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
             }
         }
+        System.out.println(Arrays.toString(ballsArray));
     }
 
     private void spawnBall(){
@@ -509,6 +516,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                 addActor(settingPanel);
 
             }else if(stageAt == 3){
+
+                System.out.println(Arrays.toString(ballsArray));
 
                 if (ceilingHit){
 
