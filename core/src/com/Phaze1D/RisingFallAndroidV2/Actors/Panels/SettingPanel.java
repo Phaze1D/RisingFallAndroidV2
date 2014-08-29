@@ -79,7 +79,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
     }
 
-    public void createInfoTexture(int levelAt){
+    private void createInfoTexture(int levelAt){
 
 
 //        if (levelAt <= 2 || levelAt == 18 || levelAt == 28 || levelAt == 50 || levelAt == 70) {

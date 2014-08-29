@@ -16,11 +16,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -117,9 +117,60 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     @Override
     public void render(float delta) {
+
+        currentTime = System.currentTimeMillis()/1000;
+
+        if (powerTimePanel != null){
+            powerTimePanel.currentTime = (float)currentTime;
+        }
+
+        movingBallList.checkIfReached();
+        if (ceilingHit && !pausedGame){
+            didReachScore = scorePanel.didReachScore();
+            didWin = false;
+            pauseGame();
+        }
+
+        if (hasFinishCreated && clickedBegin && !pausedGame && !ceilingHit){
+
+            if (currentTime >= nextColorTime){
+                changeRandomBallColor();
+                nextColorTime = currentTime + levelFactory.changeColorTime - delta;
+            }
+
+            if (levelID >= 70 && levelFactory.gameType == 1 && currentTime >= nextSpeedTime){
+                levelFactory.changeSpeedAndDrop();
+                nextSpeedTime = currentTime + levelFactory.changeSpeedTime - delta;
+            }
+
+            if (currentTime >= nextTime && !objectiveReached){
+                spawnBall();
+
+                if (powerTypeAt == 1){
+                    nextTime = currentTime + 1/.5f - delta;
+                }else{
+                    nextTime = currentTime + 1/levelFactory.dropRate - delta;
+                }
+            }
+
+            if (powerTimePanel != null && powerTimePanel.updatetimer() && powerTypeAt != 2){
+                powerTypeAt = -1;
+                if (powerTimePanel != null){
+                    removePowerTimePanel();
+                }
+            }
+
+            objectiveReached = objectivePanel.updateObjective();
+            if (objectiveReached && movingBallList.count == 0){
+                stageAt = 3;
+                didReachScore = scorePanel.didReachScore();
+                pauseGame();
+            }
+
+        }
         act(delta);
         draw();
-
+        world.evaluatePhysics(delta);
 
 
     }
@@ -133,6 +184,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public void show() {
         if (!isCreated){
             Gdx.input.setInputProcessor(this);
+            addListener(new ScreenListener());
             createScene();
         }
 
@@ -140,12 +192,12 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     @Override
     public void hide() {
-
+        clear();
     }
 
     @Override
     public void pause() {
-
+        pauseGame();
     }
 
     @Override
@@ -180,7 +232,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         float ballWidth = ballAtlas.createSprite("ball0").getWidth();
         xOffsetPA = (playAreaSprite.getWidth() - ballWidth*maxColumns)/(maxColumns + 1);
 
-        float numTest = (playAreaSprite.getWidth() - xOffsetPA)/(xOffsetPA + ballWidth);
+        float numTest = (playAreaSprite.getHeight() - xOffsetPA)/(xOffsetPA + ballWidth);
         numRows =(int) Math.ceil(numTest);
         yOffsetPA = (playAreaSprite.getHeight() - ballWidth * numRows)/(numRows + 1);
 
@@ -271,13 +323,13 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private void createSideView() {
         optionPanel = new SimpleButton("", new ImageTextButton.ImageTextButtonStyle(new SpriteDrawable(gameSceneAtlas.createSprite("optionArea")),null,null, BitmapFontSizer.getFontWithSize(0)));
-        optionPanel.setPosition(optionAreaPosition.x, optionAreaPosition.y);
+        optionPanel.setPosition((int)optionAreaPosition.x, (int)optionAreaPosition.y);
         optionPanel.delegate = this;
         addActor(optionPanel);
 
         powerSidePanel = new PowerSidePanel(gameSceneAtlas.createSprite("powerArea"));
         powerSidePanel.powerBallAtlas = powerBallAtlas;
-        powerSidePanel.setPosition(powerAreaPosition.x,powerAreaPosition.y);
+        powerSidePanel.setPosition((int)powerAreaPosition.x,(int)powerAreaPosition.y);
         powerSidePanel.createPanel(gameSceneAtlas.createSprite("notificationCircle"));
         addActor(powerSidePanel);
         for (Ball pball: powerSidePanel.powerBalls) {
@@ -286,7 +338,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
 
         objectivePanel = new ObjectivePanel(gameSceneAtlas.createSprite("objectiveArea"));
-        objectivePanel.setPosition(objectivePosition.x, objectivePosition.y);
+        objectivePanel.setPosition((int)objectivePosition.x, (int)objectivePosition.y);
         objectivePanel.gameType = levelFactory.gameType;
 
 
@@ -301,7 +353,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         addActor(objectivePanel);
 
         scorePanel = new ScorePanel(gameSceneAtlas.createSprite("scoreArea"));
-        scorePanel.setPosition(scorePosition.x, scorePosition.y);
+        scorePanel.setPosition((int)scorePosition.x, (int)scorePosition.y);
         scorePanel.targetScore = levelFactory.targetScore;
         scorePanel.createScorePanel(levelFactory.targetScore);
         addActor(scorePanel);
@@ -342,6 +394,72 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         }
     }
 
+    private void spawnBall(){
+
+        if (powerMaxAmount >= 2){
+            for (Spawner sp: spawners){
+                sp.stopSpawningPower = true;
+            }
+        }
+
+        RandomXS128 randGen = new RandomXS128();
+
+        int randC = randGen.nextInt(levelFactory.numOfColumns);
+        int row = 0;
+        int index = randC;
+
+        while (ballsArray[index] != null && row < numRows){
+            index = index + levelFactory.numOfColumns;
+            row++;
+            if (row == numRows){
+                row = 0;
+                randC = randGen.nextInt(levelFactory.numOfColumns);
+                index = randC;
+            }
+        }
+
+        Ball ball;
+        if (powerTypeAt == 2){
+            ball = spawners[randC].spawnSpecificBall(power2BallNum);
+            if (powerTimePanel != null && powerTimePanel.updateBallsLeft()){
+                powerTypeAt = -1;
+                if (powerTimePanel != null){
+                    removePowerTimePanel();
+                }
+            }
+        }else {
+            ball = spawners[randC].spawnBall();
+        }
+
+        ball.finalYPosition = firstY + (yOffsetPA + ball.getHeight())*row;
+        ball.row = row;
+        ball.delegate = this;
+        if (powerTypeAt == 1){
+            ball.velocity.set(0, levelFactory.velocity * (-.5f));
+        }else {
+            ball.velocity.set(0, levelFactory.velocity * (-1f));
+        }
+
+        ball.isPhysicsActive = true;
+        world.addBody(ball);
+        ballsArray[index] = ball;
+        movingBallList.addToEnd(ball);
+
+        if (ball.isPowerBall){
+            powerMaxAmount++;
+        }
+
+        ballGroup.addActor(ball);
+
+        if (levelFactory.gameType == 2){
+            objectivePanel.ballsLeft--;
+            if (objectivePanel.ballsLeft == nextBallChange){
+                levelFactory.changeSpeedAndDrop();
+                nextBallChange = objectivePanel.ballsLeft - levelFactory.changeSpeedBNum;
+            }
+        }
+    }
+
     private void pauseGame() {
 
         pausedGame = true;
@@ -369,7 +487,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel.socialMediaAtlas = socialMediaAtlas;
             settingPanel.buttonAtlas = buttonAtlas;
             settingPanel.infoAtlas = infoAtlas;
-            settingPanel.setPosition(settingPosition.x, settingPosition.y);
+            settingPanel.setPosition((int)settingPosition.x, (int)settingPosition.y);
             settingPanel.gameType = levelFactory.gameType;
 
 
@@ -383,7 +501,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel.delegate = this;
 
             if (stageAt == 1){
-
+                //settingPanel.createIntroPanel(levelID);
                 addActor(settingPanel);
             }else if (stageAt == 2){
 
@@ -394,38 +512,43 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
                 if (ceilingHit){
 
-//                    SKAction * fadeIn = [SKAction fadeAlphaTo:.5 duration:.8];
-//                    SKAction * fadeOut = [SKAction fadeAlphaTo:1 duration:.8];
-//                    SKAction * seq = [SKAction sequence:@[fadeOut, fadeIn]];
-//                    SKAction * repeat = [SKAction repeatAction:seq count:3];
-//
-//                    int hitIndex = _hitBall.column - _levelFactory.numOfColumns + (_levelFactory.numOfColumns * _hitBall.row);
-//
-//                    for (int i = hitIndex; i >= 0 ; i = i - _levelFactory.numOfColumns) {
-//                        Ball * ball = (Ball *)[_ballsArray objectAtIndex:i];
-//                        [ball runAction:repeat];
-//                    }
-//
-//                    [_hitBall runAction:repeat completion:^{
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//
-//                        if (!_didReachScore) {
-//                            //Create score not reached animation
-//                            [_scorePanel didNotReachAnimation];
-//                            _didWin = NO;
-//                        }
-//
-//                        if (_objectiveReached && _didReachScore) {
-//                            _didWin = YES;
-//                        }
-//
-//                        [_sPanel createGameOverPanel:_didWin];
-//
-//                        [self addChild:_sPanel];
-//                        });
-//
-//                    }];
+
+
+                    int hitIndex = hitBall.column - levelFactory.numOfColumns + (levelFactory.numOfColumns * hitBall.row);
+
+                    for (int i = hitIndex; i>= 0; i = i -levelFactory.numOfColumns){
+                        AlphaAction in = Actions.alpha(.5f, .8f);
+                        AlphaAction out = Actions.alpha(1f,.8f);
+                        SequenceAction seq = Actions.sequence(in,out);
+                        RepeatAction repeat = Actions.repeat(3,seq);
+                        ballsArray[i].addAction(repeat);
+                    }
+
+                    AlphaAction in = Actions.alpha(.5f, .8f);
+                    AlphaAction out = Actions.alpha(1f,.8f);
+                    SequenceAction seq = Actions.sequence(in,out);
+                    RepeatAction repeat = Actions.repeat(3,seq);
+                    Action complete = new Action() {
+                        @Override
+                        public boolean act(float delta) {
+                            if (!didReachScore){
+                                scorePanel.didNotReachAnimation();
+                                didWin = false;
+                            }
+
+                            if (objectiveReached && didReachScore){
+                                didWin = true;
+                            }
+
+                            settingPanel.createGameOverPanel(didWin);
+                            addActor(settingPanel);
+
+
+                            return true;
+                        }
+                    };
+
+                    hitBall.addAction(Actions.sequence(repeat, complete));
 
                 }else{
 
@@ -468,6 +591,95 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     }
 
     private void resumeGameplay(){
+
+        AlphaAction alphaAction = Actions.alpha(1f);
+        playArea.addAction(alphaAction);
+        AlphaAction alph = Actions.alpha(1f);
+        ceiling.addAction(alph);
+
+        if (levelFactory.gameType == 1){
+            objectivePanel.futureTime = System.currentTimeMillis()/1000 + objectivePanel.time;
+        }
+        pausedGame = false;
+        if (powerTimePanel != null) {
+            powerTimePanel.targetTime = powerTimePanel.currentTime + powerTimePanel.time;
+        }
+
+        for (Ball ball: powerSidePanel.powerBalls){
+            if (ball.notiNode != null){
+                ball.setTouchable(Touchable.enabled);
+            }
+        }
+
+        createAllBallsArray();
+        movingBallList.gameResumed();
+        nextTime = currentTime + deltaTime;
+
+    }
+
+    /** Creates and addes the balls in the ball array*/
+    private void createAllBallsArray(){
+
+        for (Ball aBallsArray : ballsArray) {
+            if (aBallsArray != null) {
+
+                if (!aBallsArray.hasParent()) {
+                    ballGroup.addActor(aBallsArray);
+                }
+
+                aBallsArray.setAlpha(1);
+                aBallsArray.setTouchable(Touchable.enabled);
+            }
+        }
+    }
+
+    /** Updates all the balls*/
+    private void updateBallPosition(){
+
+        for (Ball aBallsArray : ballsArray) {
+            if (aBallsArray != null) {
+                calculateNewPosition(aBallsArray);
+            }
+        }
+    }
+
+    /** Calculates the new ball positions*/
+    private void calculateNewPosition(Ball ball){
+
+        int rowBelow = ball.row - 1;
+        int belowIndex = ball.column + levelFactory.numOfColumns*rowBelow;
+        boolean didGo = false;
+
+        while ( (belowIndex >= 0 && ballsArray[belowIndex] == null)){
+            rowBelow--;
+            belowIndex = ball.column + levelFactory.numOfColumns*rowBelow;
+            didGo = true;
+        }
+
+        if (didGo){
+            rowBelow++;
+            belowIndex = ball.column + levelFactory.numOfColumns*rowBelow;
+            int oldIndex = ball.column + levelFactory.numOfColumns*ball.row;
+            ball.row = rowBelow;
+            //ball.updateName();
+            ball.finalYPosition = firstY + (yOffsetPA + ball.getHeight())*ball.row;
+            ballsArray[oldIndex] = null;
+            ballsArray[belowIndex] = ball;
+
+            if (!ball.isInMovingList){
+                movingBallList.addToFront(ball);
+                ball.velocity.set(0, levelFactory.velocity * -1);
+                ball.isPhysicsActive = true;
+                world.addBody(ball);
+            }
+        }
+    }
+
+    private  void changeRandomBallColor(){
+
+    }
+
+    private void removePowerTimePanel(){
 
     }
 
@@ -519,6 +731,40 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
     public void continuePlaying() {
 
+    }
+
+    private class ScreenListener extends InputListener {
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+            return true;
+        }
+
+        @Override
+        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+            if (!clickedBegin){
+
+                if (levelFactory.gameType == 1){
+                    objectivePanel.futureTime = (float)(System.currentTimeMillis()/1000 + levelFactory.gameTime);
+                }
+
+                clickedBegin = true;
+                stageAt = 2;
+                removeSettingPanel();
+
+                nextTime = currentTime + 1.0/levelFactory.dropRate;
+                nextColorTime = currentTime + levelFactory.changeColorTime;
+                nextSpeedTime = currentTime + levelFactory.changeSpeedTime;
+
+            }
+        }
+
+        @Override
+        public void touchDragged(InputEvent event, float x, float y, int pointer) {
+
+
+        }
     }
 
     public interface GameSceneDelegate{

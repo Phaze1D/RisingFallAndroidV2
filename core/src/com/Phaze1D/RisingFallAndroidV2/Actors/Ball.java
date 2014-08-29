@@ -36,8 +36,8 @@ public class Ball extends Image {
 
     public Vector2 startPoint;
     public Vector2 endPoint;
-    public Vector2 velocity;
-    public Vector2 initPosition;
+    public final Vector2 velocity = new Vector2();
+    public final Vector2 initPosition = new Vector2();
 
     public Sprite doubleSprite;
 

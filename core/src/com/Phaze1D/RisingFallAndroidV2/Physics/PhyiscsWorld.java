@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Physics;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.Iterator;
@@ -19,6 +20,8 @@ public class PhyiscsWorld {
     /** Adds a new body to the physics world*/
     public synchronized boolean addBody(Ball body){
         if (body.isPhysicsActive){
+            body.initPosition.set(body.getX(), body.getY());
+            body.time = 0;
             bodies.add(body);
             return true;
         }else{

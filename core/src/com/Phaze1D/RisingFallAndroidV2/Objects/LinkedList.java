@@ -130,7 +130,6 @@ public class LinkedList {
         while (current != null) {
             current.element.isPhysicsActive = false;
             current.element.time = 0;
-            current.element.initPosition = new Vector2((int)current.element.getX(), (int)current.element.getY());
             current = current.next;
         }
 
