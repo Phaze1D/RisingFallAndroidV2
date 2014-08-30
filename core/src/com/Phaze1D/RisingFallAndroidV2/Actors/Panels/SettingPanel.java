@@ -110,7 +110,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
         float yOffset = (getHeight() - button1.getHeight() - button2.getHeight())/3;
         Vector2 quitPosition = new Vector2(getWidth()/2 - button1.getWidth()/2, yOffset);
-        Vector2 resumePosition = new Vector2(getWidth()/2 - button1.getWidth()/2, yOffset*2 + button1.getHeight()/2);
+        Vector2 resumePosition = new Vector2(getWidth()/2 - button1.getWidth()/2, yOffset*2 + button1.getHeight());
 
         SpriteDrawable up = new SpriteDrawable(button1);
         SpriteDrawable down = new SpriteDrawable(button2);
