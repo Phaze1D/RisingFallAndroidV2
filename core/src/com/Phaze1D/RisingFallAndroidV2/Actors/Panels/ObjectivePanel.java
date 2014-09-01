@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class ObjectivePanel extends Panel {
 
-    public float time;
-    public float futureTime;
+    public double time;
+    public double futureTime;
 
     public int ballsLeft;
     public int gameType;
@@ -50,8 +50,7 @@ public class ObjectivePanel extends Panel {
         }else{
             int minutes = (int)time/(60);
             int seconds =(int) (time - minutes*60);
-            String formatted = String.format("%02d:%02d",minutes, seconds);
-            objectString = formatted;
+            objectString = String.format("%02d:%02d",minutes, seconds);
         }
 
         objectiveNode = new Label(objectString, new Label.LabelStyle(font, Color.BLACK));
@@ -70,19 +69,24 @@ public class ObjectivePanel extends Panel {
             int seconds =(int) (time - minutes*60);
             String formatted = String.format("%02d:%02d",minutes, seconds);
             objectiveNode.setText(formatted);
-            float date = System.currentTimeMillis()/1000;
+            double date = System.currentTimeMillis()/1000;
             time = futureTime - date;
 
+            System.out.println((futureTime) + " ---- " + date);
+
         }
+
+
 
         if (gameType == 2 && ballsLeft <= 0){
             ballsLeft = 0;
             objectiveNode.setText("" + ballsLeft);
             return true;
         }else if (gameType == 1 && time < 0){
-            time = 0;
-            int minutes = (int)time/(60);
-            int seconds =(int) (time - minutes*60);
+            System.out.print("Reached");
+            time = -1;
+            int minutes = 0;
+            int seconds = 0;
             String formatted = String.format("%02d:%02d",minutes, seconds);
             objectiveNode.setText(formatted);
             return true;

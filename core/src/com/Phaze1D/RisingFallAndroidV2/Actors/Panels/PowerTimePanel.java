@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class PowerTimePanel extends Panel {
 
-    public float time;
-    public float currentTime;
-    public float targetTime;
+    public double time;
+    public double currentTime;
+    public double targetTime;
 
     public int constantTime;
     public int ballsLeft;
@@ -85,7 +85,9 @@ public class PowerTimePanel extends Panel {
         if (time <= 0){
             time = 0;
             String timeString = String.format("%02d:%02f",0, time);
-            timeLeftLabel.setText(timeString);
+            if(timeLeftLabel != null) {
+                timeLeftLabel.setText(timeString);
+            }
             return true;
         }else {
             String timeString = String.format("%02d:%02f",0, time);

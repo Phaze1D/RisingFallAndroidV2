@@ -52,6 +52,8 @@ public class ScorePanel extends Panel {
             scoreLabel.setVisible(false);
 
             final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+            reachL.setPosition((int)(getWidth()/2 - reachL.getWidth()/2), (int)(getHeight()/2 - reachL.getHeight()/2) );
+            reachL.setAlignment(Align.center);
             AlphaAction alphaAction = Actions.alpha(0, 1.5f);
             ScaleToAction scaleToAction = Actions.scaleTo(1.5f,1.5f,1.5f);
             ParallelAction group = Actions.parallel(alphaAction, scaleToAction);
@@ -67,6 +69,7 @@ public class ScorePanel extends Panel {
             };
             reachL.addAction(Actions.sequence(group, complete));
             addActor(reachL);
+            reachYet = true;
         }
 
     }

@@ -123,7 +123,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
 
         if (powerTimePanel != null){
-            powerTimePanel.currentTime = (float)currentTime;
+            powerTimePanel.currentTime = currentTime;
         }
 
         movingBallList.checkIfReached();
@@ -163,6 +163,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }
 
             objectiveReached = objectivePanel.updateObjective();
+           // System.out.println(movingBallList.count + " ---- " + world.bodies.size() + " --- " + objectiveReached);
             if (objectiveReached && movingBallList.count == 0){
                 stageAt = 3;
                 didReachScore = scorePanel.didReachScore();
@@ -350,7 +351,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
 
         if (levelFactory.gameType == 1) {
-            objectivePanel.time = (float)levelFactory.gameTime;
+            objectivePanel.time = levelFactory.gameTime;
             objectivePanel.ballsLeft = -1;
         }else{
             objectivePanel.ballsLeft = levelFactory.numberOfBalls;
@@ -503,7 +504,6 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }else{
                 settingPanel.objectiveLeft = levelFactory.numberOfBalls;
             }
-//
             settingPanel.targetScore = levelFactory.targetScore;
             settingPanel.delegate = this;
 
@@ -516,8 +516,6 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                 addActor(settingPanel);
 
             }else if(stageAt == 3){
-
-                System.out.println(Arrays.toString(ballsArray));
 
                 if (ceilingHit){
 
@@ -702,8 +700,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         powerTimePanel = new PowerTimePanel(gameSceneAtlas.createSprite("playerTimeArea"));
         powerTimePanel.setPosition((int)powerTimePosition.x, (int)getHeight());
-        powerTimePanel.currentTime = (float)currentTime;
+        powerTimePanel.currentTime = currentTime;
         powerTimePanel.powerType = powerTypeAt;
+        powerTimePanel.powerBallAtlas = powerBallAtlas;
         MoveToAction move = Actions.moveTo((int)powerTimePosition.x, (int)powerTimePosition.y, .3f);
         addActor(powerTimePanel);
         powerTimePanel.addAction(move);
@@ -713,7 +712,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         }else if (powerTypeAt > 0){
             powerTimePanel.createPanelWithTimer();
         }
-
+        addActor(powerTimePanel);
     }
 
     private void removePowerTimePanel(){
@@ -1148,7 +1147,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             if (!clickedBegin){
 
                 if (levelFactory.gameType == 1){
-                    objectivePanel.futureTime = (float)(System.currentTimeMillis()/1000 + levelFactory.gameTime);
+                    objectivePanel.futureTime = (System.currentTimeMillis()/1000 + levelFactory.gameTime);
                 }
 
                 clickedBegin = true;
