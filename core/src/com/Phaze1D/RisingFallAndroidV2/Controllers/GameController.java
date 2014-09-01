@@ -139,11 +139,11 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     @Override
     public void quitGamePlay() {
-
+        loadStartScreen();
     }
 
     @Override
     public void beginNextLevel(int level) {
-
+        loadGameplayScreen(level);
     }
 }

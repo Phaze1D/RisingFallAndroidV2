@@ -168,7 +168,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         SimpleButton mainB = new SimpleButton("MainMenuK", style);
         mainB.delegate = this;
         mainB.setPosition((int)(getWidth()/2 - button1.getWidth()/2), (int)(yOffset));
-        mainB.type = SimpleButton.MAIN_MENU_BUTTON;
+        mainB.type = SimpleButton.QUIT_BUTTON;
         addActor(mainB);
     }
 

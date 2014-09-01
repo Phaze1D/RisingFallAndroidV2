@@ -118,8 +118,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     @Override
     public void render(float delta) {
-
-        currentTime = System.currentTimeMillis()/1000;
+        act(delta);
+        draw();
+        currentTime += delta;
 
 
         if (powerTimePanel != null){
@@ -149,9 +150,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                 spawnBall();
 
                 if (powerTypeAt == 1){
-                    nextTime = currentTime + 1/.5f - delta;
+                    nextTime = currentTime + 1/.5;
                 }else{
-                    nextTime = currentTime + 1/levelFactory.dropRate - delta;
+                    nextTime = currentTime + 1.0/levelFactory.dropRate;
                 }
             }
 
@@ -162,8 +163,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                 }
             }
 
-            objectiveReached = objectivePanel.updateObjective();
-           // System.out.println(movingBallList.count + " ---- " + world.bodies.size() + " --- " + objectiveReached);
+            objectiveReached = objectivePanel.updateObjective(currentTime);
             if (objectiveReached && movingBallList.count == 0){
                 stageAt = 3;
                 didReachScore = scorePanel.didReachScore();
@@ -171,10 +171,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }
 
         }
-        act(delta);
-        draw();
-        world.evaluatePhysics(delta);
 
+        world.evaluatePhysics(delta);
 
     }
 
@@ -224,6 +222,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     private void initVariables() {
 
         ballGroup = new Group();
+        ballGroup.setSize(getWidth(), getHeight());
         world = new PhyiscsWorld();
         powerTypeAt = -1;
         powerMaxAmount = 0;
@@ -368,7 +367,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         infoPanel = new InfoPanel(gameSceneAtlas.createSprite("LevelIDArea"));
         infoPanel.setPosition(getWidth() - infoPanel.getWidth(), getHeight() - infoPanel.getHeight());
-        infoPanel.createPanel(levelID, playerInfo.getPassedScore(playerInfo.getPassedScore(levelID)));
+        infoPanel.createPanel(levelID, playerInfo.getPassedScore(levelID));
         addActor(infoPanel);
 
     }
@@ -445,11 +444,10 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         if (powerTypeAt == 1){
             ball.velocity.set(0, levelFactory.velocity * (-.5f));
         }else {
-            ball.velocity.set(0, levelFactory.velocity * (-1f));
+            ball.velocity.set(0, -levelFactory.velocity);
         }
 
         ball.isPhysicsActive = true;
-        world.addBody(ball);
         ballsArray[index] = ball;
         movingBallList.addToEnd(ball);
 
@@ -605,7 +603,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         ceiling.addAction(alph);
 
         if (levelFactory.gameType == 1){
-            objectivePanel.futureTime = System.currentTimeMillis()/1000 + objectivePanel.time;
+            objectivePanel.futureTime = currentTime + objectivePanel.time;
         }
         pausedGame = false;
         if (powerTimePanel != null) {
@@ -1147,14 +1145,14 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             if (!clickedBegin){
 
                 if (levelFactory.gameType == 1){
-                    objectivePanel.futureTime = (System.currentTimeMillis()/1000 + levelFactory.gameTime);
+                    objectivePanel.futureTime = (currentTime + levelFactory.gameTime);
                 }
 
                 clickedBegin = true;
                 stageAt = 2;
                 removeSettingPanel();
 
-                nextTime = currentTime + 1.0/levelFactory.dropRate;
+                nextTime = currentTime;
                 nextColorTime = currentTime + levelFactory.changeColorTime;
                 nextSpeedTime = currentTime + levelFactory.changeSpeedTime;
 

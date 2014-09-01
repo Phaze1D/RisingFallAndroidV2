@@ -22,8 +22,8 @@ public class Player implements Serializable{
     public int livesLeft;
     private int[] scores;
 
-    private double timeLeftOnLifes;
-    private double timeLeftOnSocialMedia;
+    public double timeLeftOnLifes;
+    public double timeLeftOnSocialMedia;
 
     private Player() {
         setInitialConditions();
@@ -51,7 +51,7 @@ public class Player implements Serializable{
         power3 = 5;
         power4 = 5;
         power5 = 5;
-        levelAt = 0;
+        levelAt = 99;
         livesLeft = 5;
         scores = new int[100];
     }

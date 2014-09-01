@@ -84,13 +84,13 @@ public class PowerTimePanel extends Panel {
         time = targetTime - currentTime;
         if (time <= 0){
             time = 0;
-            String timeString = String.format("%02d:%02f",0, time);
+            String timeString = String.format("%02d:%02f",0, (float)time);
             if(timeLeftLabel != null) {
                 timeLeftLabel.setText(timeString);
             }
             return true;
         }else {
-            String timeString = String.format("%02d:%02f",0, time);
+            String timeString = String.format("%02d:%02f",0, (float)time);
             timeLeftLabel.setText(timeString);
             return false;
         }

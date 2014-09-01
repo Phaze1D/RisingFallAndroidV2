@@ -36,7 +36,7 @@ public class PowerSidePanel extends Panel {
         super(panelSprite);
     }
 
-    public void createPanel(Sprite notificationSprite){
+    public void createPanel(final Sprite notificationSprite){
 
         Player player = Player.shareInstance();
 
@@ -64,7 +64,9 @@ public class PowerSidePanel extends Panel {
                 final Group notiGroup = new Group();
                 final Image noti = new Image(notificationSprite);
                 noti.setPosition((int)(xOffset2 + notificationSprite.getWidth()/2), (int)(powerBalls[i].getY() + powerBalls[i].getHeight() - noti.getHeight()/2));
+                notiGroup.setSize(noti.getWidth(), noti.getHeight());
                 notiGroup.addActor(noti);
+
 
                 ScaleToAction start = Actions.scaleTo(0,0);
                 notiGroup.addAction(start);
@@ -73,20 +75,17 @@ public class PowerSidePanel extends Panel {
                 Action complete = new Action() {
                     @Override
                     public boolean act(float delta) {
-                        ScaleToAction small = Actions.scaleTo(.6f,.6f, .8f);
-                        ScaleToAction big = Actions.scaleTo(1f,1f,.8f);
-                        SequenceAction seq = Actions.sequence(small,big);
 
                         CustomLabel label = new CustomLabel(amount+"", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
                         label.setAlignment(Align.center);
-                        label.setPosition((int)(noti.getWidth()/2 - label.getWidth()/2), (int)(noti.getHeight()/2 - label.getHeight()/2));
+                        label.setPosition((int)(noti.getX() + notificationSprite.getWidth()/2 - label.getWidth()/2), (int)(noti.getY() + notificationSprite.getHeight()/2 - label.getHeight()/2));
                         notiGroup.addActor(label);
-                        notiGroup.addAction(Actions.forever(seq));
 
                         return true;
                     }
                 };
 
+                notiGroup.addAction(Actions.sequence(up, complete));
                 powerBalls[i].notiNode = notiGroup;
                 addActor(notiGroup);
             }else {

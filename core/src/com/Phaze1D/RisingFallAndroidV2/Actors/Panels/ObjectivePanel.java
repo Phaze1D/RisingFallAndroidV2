@@ -60,7 +60,7 @@ public class ObjectivePanel extends Panel {
     }
 
 
-    public boolean updateObjective(){
+    public boolean updateObjective(double currentTime){
         if (gameType == 2){
             objectiveNode.setText("" + ballsLeft);
         }else{
@@ -69,11 +69,8 @@ public class ObjectivePanel extends Panel {
             int seconds =(int) (time - minutes*60);
             String formatted = String.format("%02d:%02d",minutes, seconds);
             objectiveNode.setText(formatted);
-            double date = System.currentTimeMillis()/1000;
+            double date = currentTime;
             time = futureTime - date;
-
-            System.out.println((futureTime) + " ---- " + date);
-
         }
 
 
@@ -83,7 +80,6 @@ public class ObjectivePanel extends Panel {
             objectiveNode.setText("" + ballsLeft);
             return true;
         }else if (gameType == 1 && time < 0){
-            System.out.print("Reached");
             time = -1;
             int minutes = 0;
             int seconds = 0;

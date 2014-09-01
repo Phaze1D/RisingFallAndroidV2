@@ -67,7 +67,7 @@ public class LevelFactory {
         gameObjective = Integer.valueOf(levelLine[0]);
 
         RandomXS128 randomGen = new RandomXS128();
-        powerBallDrop = randomGen.nextFloat()*100;
+        powerBallDrop = randomGen.nextInt(4);
 
 
         calculateChangeSpeedTime();

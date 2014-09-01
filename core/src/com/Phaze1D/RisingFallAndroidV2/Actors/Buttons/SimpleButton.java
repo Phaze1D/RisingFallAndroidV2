@@ -75,7 +75,6 @@ public class SimpleButton extends ImageTextButton {
     public static final int QUIT_BUTTON = 3;
     public static final int RESUME_BUTTON = 4;
     public static final int NEXT_LEVEL_BUTTON = 5;
-    public static final int MAIN_MENU_BUTTON = 6;
     public static final int PAY_BUTTON = 7;
     public static final int RESTART_BUTTON = 8;
 

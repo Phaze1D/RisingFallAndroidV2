@@ -202,7 +202,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         physicsWorld.constantStep = 60;
         spawnRate = 1 / 1.0f;
         socialSubAnimationDuration = .3f;
-        velocity = new Vector2(0, -200f);
+        velocity = new Vector2(0, -250f);
         ballQuene = new LinkedList<Ball>();
 
 //        _deltaTime = _spawnRate;

@@ -120,5 +120,22 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     @Override
     public void buttonPressed(int type) {
 
+        Player playerInfo = Player.shareInstance();
+        playerInfo.livesLeft = 5;
+        playerInfo.timeLeftOnLifes = 0;
+        clear();
+        createLifePanel();
+
+//        PaymentClass * payment = [[PaymentClass alloc] init];
+//        if ([payment payDollar]) {
+//            GameData * info = [GameData sharedGameData];
+//            info.player.lifesLeft = 5;
+//            info.player.timeLeftOnLifes = 0;
+//
+//            [self clearAll];
+//            [self createLifePanel];
+//
+//        }
+
     }
 }
