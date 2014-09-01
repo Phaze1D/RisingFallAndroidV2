@@ -30,6 +30,8 @@ public class LinkedList {
 
         NodeNew node = new NodeNew(ball);
         node.element.isInMovingList = true;
+        node.element.isPhysicsActive = true;
+        gameScene.world.addBody(node.element);
         node.element.setTouchable(Touchable.disabled);
 
         if (count == 0){
@@ -51,6 +53,8 @@ public class LinkedList {
 
         NodeNew node = new NodeNew(ball);
         node.element.isInMovingList = true;
+        node.element.isPhysicsActive = true;
+        gameScene.world.addBody(node.element);
         node.element.setTouchable(Touchable.disabled);
 
         if (count == 0){
@@ -87,6 +91,7 @@ public class LinkedList {
                 if (current == head) {
                     current.element.setTouchable(Touchable.enabled);
                     current.element.isInMovingList = false;
+                    current.element.isPhysicsActive = false;
                     head = current.next;
                     current.next = null;
                     //current.element = null;
@@ -96,6 +101,7 @@ public class LinkedList {
                 }else if (current == tail){
                     current.element.setTouchable(Touchable.enabled);
                     current.element.isInMovingList = false;
+                    current.element.isPhysicsActive = false;
                     previous.next = null;
                     //current.element = null;
                     current = null;
@@ -104,6 +110,7 @@ public class LinkedList {
                 }else {
                     current.element.setTouchable(Touchable.enabled);
                     current.element.isInMovingList = false;
+                    current.element.isPhysicsActive = false;
                     previous.next = current.next;
                     current.next = null;
                     //current.element = null;
@@ -159,6 +166,7 @@ public class LinkedList {
             if (current == head){
                 current.element.setTouchable(Touchable.enabled);
                 current.element.isInMovingList = false;
+                current.element.isPhysicsActive = false;
                 head = current.next;
                 current.next = null;
                 current.element = null;
@@ -167,6 +175,7 @@ public class LinkedList {
             }else if(current == tail){
                 current.element.setTouchable( Touchable.enabled);
                 current.element.isInMovingList = false;
+                current.element.isPhysicsActive = false;
                 previous.next = null;
                 current.element = null;
                 current = null;
@@ -175,6 +184,7 @@ public class LinkedList {
             }else {
                 current.element.setTouchable(Touchable.enabled);
                 current.element.isInMovingList = false;
+                current.element.isPhysicsActive = false;
                 previous.next = current.next;
                 current.next = null;
                 current.element = null;

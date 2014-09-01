@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by davidvillarreal on 8/26/14.
@@ -677,8 +678,6 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             if (!ball.isInMovingList){
                 movingBallList.addToFront(ball);
                 ball.velocity.set(0, levelFactory.velocity * -1);
-                ball.isPhysicsActive = true;
-                world.addBody(ball);
             }
         }
     }
@@ -735,6 +734,12 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     }
 
     public void disableBalls(){
+
+//        for (int i = 0; i <_ballsArray.count; i++) {
+//            if ([[_ballsArray objectAtIndex:i] isKindOfClass:[Ball class]]) {
+//                ((Ball *)[_ballsArray objectAtIndex:i]).userInteractionEnabled = NO;
+//            }
+//        }
 
     }
 
@@ -830,6 +835,30 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     }
 
+    private void runBallRemoveEffect(int score, Ball ball){
+
+
+
+//        SKLabelNode * scoreLab = [SKLabelNode labelNodeWithFontNamed: @"CooperBlack"];
+//        scoreLab.text = [NSString stringWithFormat: @"%d", score];
+//        scoreLab.fontSize = 15;
+//        scoreLab.fontColor = [UIColor blackColor];
+//        scoreLab.position = CGPointMake(ball.position.x + ball.size.width/2, ball.position.y + ball.size.height/2 );
+//        scoreLab.zPosition = 2;
+//        [scoreLab setScale:0];
+//
+//        SKAction * fadeOut = [SKAction fadeAlphaTo:0.4 duration:.5];
+//        SKAction * scaleUp = [SKAction scaleTo:2 duration:.5];
+//        SKAction * group = [SKAction group:@[fadeOut, scaleUp]];
+//
+//        [self addChild:scoreLab];
+//        [scoreLab runAction:group completion:^{
+//
+//            [scoreLab removeFromParent];
+//
+//        }];
+
+    }
 
     @Override
     public void ballMoved(Ball ball, int direction) {
@@ -875,8 +904,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         ball.clearActions();
 
         Vector2 tempPosition = new Vector2(ball.getX(), ball.getY());
-        ball.addAction(Actions.moveTo(temp.getX(), temp.getY(), .1f));
-        temp.addAction(Actions.moveTo(tempPosition.x, tempPosition.y, .1f));
+        ball.addAction(Actions.moveTo((int)temp.getX(), (int)temp.getY(), .1f));
+        temp.addAction(Actions.moveTo((int)tempPosition.x, (int)tempPosition.y, .1f));
     }
 
 
@@ -914,6 +943,85 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             ball.remove();
             ballsArray[ballIndex] = null;
             updateBallPosition();
+        }
+    }
+
+    private void powerBallType1(){
+
+        powerTypeAt = 1;
+        if (powerTimePanel != null){
+            powerTimePanel.powerType = powerTypeAt;
+            powerTimePanel.resetTimer();
+        }else{
+            createPowerTimePanel();
+        }
+    }
+
+    private void powerBallType2(){
+
+        powerTypeAt = 2;
+        if (powerTimePanel != null){
+            powerTimePanel.powerType = powerTypeAt;
+            powerTimePanel.resetBalls();
+        }else{
+            createPowerTimePanel();
+        }
+
+        RandomXS128 randGen = new RandomXS128();
+        power2BallNum = randGen.nextInt(6);
+
+    }
+
+    private void powerBallType3(){
+
+        int ballFromColor = 0;
+        int ballToColor = 0;
+
+        for (Ball aBallsArray : ballsArray) {
+            if (aBallsArray != null && !aBallsArray.isPowerBall) {
+                ballFromColor = aBallsArray.ballColor;
+                break;
+            }
+        }
+
+        for (Ball aBallsArray : ballsArray) {
+            if (aBallsArray != null && aBallsArray.ballColor != ballFromColor && !aBallsArray.isPowerBall) {
+                ballToColor = aBallsArray.ballColor;
+                break;
+            }
+        }
+
+        for (Ball aBallsArray : ballsArray) {
+            if (aBallsArray != null && !aBallsArray.isDoubleBall && aBallsArray.ballColor == ballFromColor && !aBallsArray.isPowerBall) {
+                aBallsArray.changeColor(ballToColor, ballAtlas);
+            }
+        }
+
+    }
+
+    private void powerBallType4(){
+
+        for (int i = 0; i < levelFactory.numOfColumns*2; i++){
+            if (ballsArray[i] != null && !ballsArray[i].isInMovingList && !ballsArray[i].isPowerBall){
+                Ball cball = ballsArray[i];
+                cball.clear();
+                cball.remove();
+
+                ballsArray[i] = null;
+            }
+        }
+
+        scorePanel.updateScore(levelFactory.numOfColumns *6);
+    }
+
+    private void powerBallType5(){
+
+        powerTypeAt = 5;
+        if (powerTimePanel != null){
+            powerTimePanel.powerType = powerTypeAt;
+            powerTimePanel.resetTimer();
+        }else{
+            createPowerTimePanel();
         }
     }
 
