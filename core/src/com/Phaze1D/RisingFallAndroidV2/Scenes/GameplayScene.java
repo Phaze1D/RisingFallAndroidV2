@@ -17,13 +17,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.Arrays;
 
@@ -368,7 +366,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         infoPanel = new InfoPanel(gameSceneAtlas.createSprite("LevelIDArea"));
         infoPanel.setPosition(getWidth() - infoPanel.getWidth(), getHeight() - infoPanel.getHeight());
-        infoPanel.createPanel(levelID, playerInfo.getPassedScore(levelID));
+        infoPanel.createPanel(levelID, playerInfo.getPassedScore(playerInfo.getPassedScore(levelID)));
         addActor(infoPanel);
 
     }
@@ -687,54 +685,53 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private  void changeRandomBallColor(){
 
-//        int randIndex = arc4random_uniform((unsigned)_ballsArray.count);
-//
-//        for (int i  = 0 ; i < 30; i++) {
-//            if ([_ballsArray objectAtIndex:randIndex] != (id)[NSNull null] && !((Ball *)[_ballsArray objectAtIndex:randIndex]).isInMoveingList
-//                    && !((Ball *)[_ballsArray objectAtIndex:randIndex]).isDoubleBall && !((Ball *)[_ballsArray objectAtIndex:randIndex]).isPowerBall) {
-//
-//                int toColor = arc4random_uniform((unsigned)[_ballAtlas textureNames].count);
-//                [(Ball *)[_ballsArray objectAtIndex:randIndex] changeColor:toColor];
-//                break;
-//
-//            }else{
-//                randIndex = arc4random_uniform((unsigned)_ballsArray.count);
-//            }
-//
-//        }
+        RandomXS128 randGen = new RandomXS128();
+        int randIndex = randGen.nextInt(ballsArray.length);
 
-
+        for (int i = 0; i < 30; i++){
+            if(ballsArray[randIndex] != null && !ballsArray[randIndex].isInMovingList && !ballsArray[randIndex].isDoubleBall && !ballsArray[randIndex].isPowerBall){
+                int toColor = randGen.nextInt(6);
+                ballsArray[randIndex].changeColor(toColor, ballAtlas);
+                break;
+            }else{
+                randIndex = randGen.nextInt(ballsArray.length);
+            }
+        }
     }
 
     private void createPowerTimePanel(){
 
-//        _ptPanel = [PowerTimePanel spriteNodeWithTexture:[_gameSceneAtlas textureNamed:@"playerTimeArea"]];
-//        _ptPanel.position = CGPointMake(_ptPosition.x, self.size.height );
-//        _ptPanel.anchorPoint = CGPointMake(0, 0);
-//        _ptPanel.currentTime = _currentTime;
-//        _ptPanel.powerType = _powerTypeAt;
-//        SKAction * moveTo = [SKAction moveTo:_ptPosition duration:.3];
-//        [self addChild:_ptPanel];
-//        [_ptPanel runAction:moveTo];
-//
-//        if (_powerTypeAt == 2) {
-//            [_ptPanel createPanelWithBalls];
-//        }else if(_powerTypeAt > 0){
-//            [_ptPanel createPanelWithTimer];
-//        }
+        powerTimePanel = new PowerTimePanel(gameSceneAtlas.createSprite("playerTimeArea"));
+        powerTimePanel.setPosition((int)powerTimePosition.x, (int)getHeight());
+        powerTimePanel.currentTime = (float)currentTime;
+        powerTimePanel.powerType = powerTypeAt;
+        MoveToAction move = Actions.moveTo((int)powerTimePosition.x, (int)powerTimePosition.y, .3f);
+        addActor(powerTimePanel);
+        powerTimePanel.addAction(move);
+
+        if (powerTypeAt == 2){
+            powerTimePanel.createPanelWithBalls();
+        }else if (powerTypeAt > 0){
+            powerTimePanel.createPanelWithTimer();
+        }
 
     }
 
     private void removePowerTimePanel(){
 
-//        SKAction * moveTo = [SKAction moveTo:CGPointMake(_ptPosition.x, self.size.height ) duration:.3];
-//        [_ptPanel runAction:moveTo completion:^{
-//
-//            [_ptPanel removeAllChildren];
-//            [_ptPanel removeFromParent];
-//            _ptPanel = nil;
-//
-//        }];
+        MoveToAction move = Actions.moveTo((int)powerTimePosition.x, (int)getHeight(), .3f);
+        Action complete = new Action() {
+            @Override
+            public boolean act(float delta) {
+                powerTimePanel.clear();
+                powerTimePanel.remove();
+                powerTimePanel = null;
+                return true;
+            }
+        };
+
+        powerTimePanel.addAction(Actions.sequence(move, complete));
+
     }
 
     public void disableBalls(){
@@ -745,142 +742,179 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
     public void ballTaped(Ball ball) {
 
-//        if (!_ceilingHit) {
-//
-//
-//            NSMutableArray *  connectedBalls = [[NSMutableArray alloc] init];
-//            [self connectionAlgo:ball Array:connectedBalls];
-//
-//            for (Ball *cball in connectedBalls) {
-//                cball.hasBeenChecked = NO;
-//            }
-//
-//
-//            if (connectedBalls.count >= 3) {
-//                int score = (int)(connectedBalls.count - 2 )*3;
-//
-//                if (_powerTypeAt == 5) {
-//                    score = score * 2;
-//                }
-//
-//                [self runBallRemoveEffect:score :ball];
-//
-//                [_scorePanel updateScore:score];
-//
-//                for (Ball *cball in connectedBalls) {
-//
-//                    if (cball.isDoubleBall) {
-//                        [cball doubleClicked];
-//                    }else{
-//                        [cball removeFromParent];
-//                        int ballIndex = cball.column + _levelFactory.numOfColumns*cball.row;
-//                        [_ballsArray replaceObjectAtIndex:ballIndex withObject:[NSNull null]];
-//                    }
-//                }
-//                [self updateBallPositions];
-//            }
-//
-//            [connectedBalls removeAllObjects];
-//            connectedBalls = nil;
-//        }
+        if (!ceilingHit){
+            Array<Ball> connectedBalls = new Array<Ball>();
+            connectionAlgo(ball, connectedBalls);
 
+            for (Ball ball1: connectedBalls){
+                ball1.hasBeenChecked = false;
+            }
+
+            if (connectedBalls.size >= 3){
+                int score = (connectedBalls.size -2)*3;
+                if (powerTypeAt == 5){
+                    score *= 2;
+                }
+
+                runBallRemoveEffect(score, ball);
+
+                scorePanel.updateScore(score);
+
+                for (Ball cball: connectedBalls){
+                    if (cball.isDoubleBall){
+                        cball.doubleClicked();
+                    }else {
+                        cball.clear();
+                        cball.remove();
+                        int ballIndex = cball.column + levelFactory.numOfColumns*cball.row;
+                        ballsArray[ballIndex] = null;
+                    }
+                }
+                updateBallPosition();
+            }
+            connectedBalls.clear();
+            connectedBalls = null;
+        }
 
     }
+
+    private void connectionAlgo(Ball ball, Array<Ball> connectedBalls){
+
+        ball.hasBeenChecked = true;
+        connectedBalls.add(ball);
+
+        int ballIndex = ball.column + levelFactory.numOfColumns*ball.row;
+        int rightIndex = ballIndex + 1;
+        int leftIndex = ballIndex - 1;
+        int upIndex = ballIndex + levelFactory.numOfColumns;
+        int downIndex = ballIndex - levelFactory.numOfColumns;
+
+        boolean rightBool = rightIndex % levelFactory.numOfColumns != 0 &&
+                ballsArray[rightIndex] != null &&
+                !ballsArray[rightIndex].isInMovingList &&
+                ballsArray[rightIndex].ballColor == ball.ballColor &&
+                !ballsArray[rightIndex].hasBeenChecked;
+
+        if (rightBool){
+            connectionAlgo(ballsArray[rightIndex], connectedBalls);
+        }
+
+        boolean leftBool = ballIndex % levelFactory.numOfColumns != 0 &&
+                ballsArray[leftIndex] != null &&
+                !ballsArray[leftIndex].isInMovingList &&
+                ballsArray[leftIndex].ballColor == ball.ballColor &&
+                !ballsArray[leftIndex].hasBeenChecked;
+
+        if (leftBool){
+            connectionAlgo(ballsArray[leftIndex], connectedBalls);
+        }
+
+        boolean upBool = upIndex < ballsArray.length &&
+                ballsArray[upIndex] != null &&
+                !ballsArray[upIndex].isInMovingList &&
+                !ballsArray[upIndex].hasBeenChecked &&
+                ballsArray[upIndex].ballColor == ball.ballColor;
+
+
+        if (upBool){
+            connectionAlgo(ballsArray[upIndex], connectedBalls);
+        }
+
+        boolean downBool = downIndex >= 0 &&
+                !ballsArray[downIndex].hasBeenChecked &&
+                ballsArray[downIndex].ballColor == ball.ballColor;
+
+        if (downBool){
+            connectionAlgo(ballsArray[downIndex], connectedBalls);
+        }
+
+    }
+
 
     @Override
     public void ballMoved(Ball ball, int direction) {
 
-//        int ballIndex = ball.column + _levelFactory.numOfColumns*ball.row;
-//
-//        if (dirc == 1) {
-//            int upBallIndex = ballIndex + _levelFactory.numOfColumns;
-//            if (upBallIndex < _ballsArray.count &&
-//            [_ballsArray objectAtIndex:upBallIndex] != (id)[NSNull null] &&
-//            !((Ball *)[_ballsArray objectAtIndex:upBallIndex]).isInMoveingList &&
-//                    !((Ball *)[_ballsArray objectAtIndex:upBallIndex]).isUnMoveable) {
-//
-//                [self switchBalls:ball ballIndex:ballIndex tempIndex:upBallIndex];
-//
-//
-//            }
-//
-//        }else if (dirc == -1){
-//            int downIndex = ballIndex - _levelFactory.numOfColumns;
-//            if (downIndex >= 0 && !((Ball *)[_ballsArray objectAtIndex:downIndex]).isUnMoveable) {
-//                [self switchBalls:ball ballIndex:ballIndex tempIndex:downIndex];
-//
-//
-//            }
-//
-//        }else if (dirc == 2){
-//            int rightIndex = ballIndex + 1;
-//            if (rightIndex % _levelFactory.numOfColumns != 0 &&
-//            [_ballsArray objectAtIndex:rightIndex] != (id)[NSNull null] &&
-//            !((Ball *)[_ballsArray objectAtIndex:rightIndex]).isInMoveingList &&
-//                    !((Ball *)[_ballsArray objectAtIndex:rightIndex]).isUnMoveable) {
-//
-//                [self switchBalls:ball ballIndex:ballIndex tempIndex:rightIndex];
-//
-//
-//
-//            }
-//
-//        }else if (dirc == -2){
-//            int leftIndex = ballIndex - 1;
-//            if (ballIndex % _levelFactory.numOfColumns != 0 &&
-//            [_ballsArray objectAtIndex:leftIndex] != (id)[NSNull null] &&
-//            !((Ball *)[_ballsArray objectAtIndex:leftIndex]).isInMoveingList &&
-//                    !((Ball *)[_ballsArray objectAtIndex:leftIndex]).isUnMoveable) {
-//
-//                [self switchBalls:ball ballIndex:ballIndex tempIndex:leftIndex];
-//
-//
-//            }
-//        }
+        int ballIndex = ball.column + levelFactory.numOfColumns*ball.row;
 
+        if (direction == 1){
+            int upBallIndex = ballIndex + levelFactory.numOfColumns;
+            if (upBallIndex < ballsArray.length && ballsArray[upBallIndex] != null && !ballsArray[upBallIndex].isInMovingList && !ballsArray[upBallIndex].isUnMovable){
+                switchBalls(ball, ballIndex, upBallIndex);
+            }
+        }else if (direction == -1){
+            int downIndex = ballIndex - levelFactory.numOfColumns;
+            if (downIndex >= 0 && !ballsArray[downIndex].isUnMovable){
+                switchBalls(ball, ballIndex, downIndex);
+            }
+        }else if (direction == 2){
+            int rightIndex = ballIndex + 1;
+            if (rightIndex % levelFactory.numOfColumns != 0 && ballsArray[rightIndex] != null && !ballsArray[rightIndex].isInMovingList && !ballsArray[rightIndex].isUnMovable){
+                switchBalls(ball,ballIndex,rightIndex);
+            }
+        }else if (direction == -2){
+            int leftIndex = ballIndex - 1;
+            if (ballIndex % levelFactory.numOfColumns != 0 && ballsArray[leftIndex] != null && !ballsArray[leftIndex].isInMovingList && !ballsArray[leftIndex].isUnMovable){
+                switchBalls(ball,ballIndex,leftIndex);
+            }
+        }
     }
+
+    private void switchBalls(Ball ball, int ballIndex, int tempIndex){
+
+        Ball temp = ballsArray[tempIndex];
+        int rowTemp = ball.row;
+        int columnTemp = ball.column;
+        ball.row = temp.row;
+        ball.column = temp.column;
+        temp.row = rowTemp;
+        temp.column = columnTemp;
+        ballsArray[ballIndex] = null;
+        ballsArray[tempIndex] = ball;
+        ballsArray[ballIndex] = temp;
+        temp.clearActions();
+        ball.clearActions();
+
+        Vector2 tempPosition = new Vector2(ball.getX(), ball.getY());
+        ball.addAction(Actions.moveTo(temp.getX(), temp.getY(), .1f));
+        temp.addAction(Actions.moveTo(tempPosition.x, tempPosition.y, .1f));
+    }
+
 
     @Override
     public void powerBallTouch(Ball ball) {
 
-//        int powerBallType = ball.powerBallType;
-//
-//        switch (powerBallType) {
-//            case 1:
-//                [self powerBallType1];
-//                break;
-//            case 2:
-//                [self powerBallType2];
-//                break;
-//
-//            case 3:
-//                [self powerBallType3];
-//                break;
-//
-//            case 4:
-//                [self powerBallType4];
-//
-//                if (ball.parent == _powerPanel) {
-//                    [self updateBallPositions];
-//                }
-//
-//                break;
-//
-//            case 5:
-//                [self powerBallType5];
-//                break;
-//            default:
-//                break;
-//        }
-//
-//        if (ball.parent == self) {
-//            int ballIndex = ball.column + _levelFactory.numOfColumns*ball.row;
-//            [ball removeFromParent];
-//            [_ballsArray replaceObjectAtIndex:ballIndex withObject:[NSNull null]];
-//            [self updateBallPositions];
-//        }
+        int powerBallType = ball.powerType;
 
+        switch (powerBallType){
+            case 1:
+                powerBallType1();
+                break;
+            case 2:
+                powerBallType2();
+                break;
+            case 3:
+                powerBallType3();
+                break;
+            case 4:
+                powerBallType4();
+                if (ball.getParent() == powerSidePanel){
+                    updateBallPosition();
+                }
+                break;
+            case 5:
+                powerBallType5();
+                break;
+            default:
+                break;
+        }
 
+        if (ball.getParent() == ballGroup){
+            int ballIndex = ball.column + levelFactory.numOfColumns* ball.row;
+            ball.clear();
+            ball.remove();
+            ballsArray[ballIndex] = null;
+            updateBallPosition();
+        }
     }
 
     @Override
@@ -891,23 +925,21 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
     public void quitButtonPressed() {
 
-//        if (_didWin) {
-//            if (_player.levelAt < 100 && _player.levelAt == _levelID) {
-//                _player.levelAt = _player.levelAt + 1;
-//            }
-//        }else{
-//            _player.lifesLeft--;
-//            if (_player.lifesLeft == 0) {
-//                [_player calculateNextLifeTime];
-//            }
-//        }
-//
-//        if ( [(NSNumber *)[_player.scores objectAtIndex:_levelID] intValue] < _scorePanel.currentScore) {
-//
-//            [_player.scores replaceObjectAtIndex:_levelID withObject:[NSNumber numberWithInt: _scorePanel.currentScore]];
-//        }
-//
-//        [self.delegate quitGameplay];
+        if (didWin){
+            if (playerInfo.levelAt < 100 && playerInfo.levelAt == levelID){
+                playerInfo.levelAt++;
+            }
+        }else {
+            playerInfo.livesLeft--;
+            if (playerInfo.livesLeft == 0){
+                playerInfo.calculateNextLifeTime();
+            }
+        }
+        if (playerInfo.getPassedScore(levelID) < scorePanel.currentScore){
+            playerInfo.setScore(levelID, scorePanel.currentScore);
+        }
+
+        delegate.quitGamePlay();
 
 
     }
@@ -920,89 +952,79 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
     public void startNextLevel() {
 
-//        if ( [(NSNumber *)[_player.scores objectAtIndex:_levelID] intValue] < _scorePanel.currentScore) {
-//            [_player.scores replaceObjectAtIndex:_levelID withObject:[NSNumber numberWithInt: _scorePanel.currentScore]];
-//        }
-//
-//        if (_player.levelAt < 100 && _player.levelAt == _levelID) {
-//            _player.levelAt = _player.levelAt + 1;
-//        }
-//        if (_levelID < 100) {
-//            [self.delegate beginNextLevel: ++_levelID];
-//        }
+        if (playerInfo.getPassedScore(levelID) < scorePanel.currentScore){
+            playerInfo.setScore(levelID, scorePanel.currentScore);
+        }
 
+        if (playerInfo.levelAt < 100 && playerInfo.levelAt == levelID){
+            playerInfo.levelAt++;
+        }
+
+        if (levelID < 100){
+            delegate.beginNextLevel(++levelID);
+        }
 
     }
 
     @Override
     public void restartButtonPressed() {
 
-//        if ( [(NSNumber *)[_player.scores objectAtIndex:_levelID] intValue] < _scorePanel.currentScore) {
-//            [_player.scores replaceObjectAtIndex:_levelID withObject:[NSNumber numberWithInt: _scorePanel.currentScore]];
-//        }
-//
-//
-//        _player.lifesLeft--;
-//        if (_player.lifesLeft == 0) {
-//            [_player calculateNextLifeTime];
-//            [self.delegate quitGameplay];
-//        }else{
-//            [self.delegate beginNextLevel:_levelID];
-//        }
+        if (playerInfo.getPassedScore(levelID) < scorePanel.currentScore){
+            playerInfo.setScore(levelID, scorePanel.currentScore);
+        }
 
+        playerInfo.livesLeft--;
+        if (playerInfo.livesLeft == 0){
+            playerInfo.calculateNextLifeTime();
+            delegate.quitGamePlay();
+        }else{
+            delegate.beginNextLevel(levelID);
+        }
     }
 
     @Override
     public void continuePlaying() {
 
-//        int midIndex = (int)_ballsArray.count/2;
-//
-//        for (int i = midIndex - 1; i < _ballsArray.count; i++) {
-//            if ([_ballsArray objectAtIndex:i] != [NSNull null] ) {
-//                [_movingBallList findNodeAndRemove:[_ballsArray objectAtIndex:i]];
-//                [[_ballsArray objectAtIndex:i] removeFromParent];
-//                [_ballsArray replaceObjectAtIndex:i withObject:[NSNull null]];
-//            }
-//        }
-//
-//
-//        if (_objectiveReached) {
-//
-//            if (_levelFactory.gameType == 1) {
-//                _objectivePanel.time = 20;
-//            }else{
-//                _objectivePanel.ballsLeft = 20;
-//            }
-//            _objectiveReached = NO;
-//        }
-//
-//
-//
-//
-//        if (_ceilingHit && _scorePanel.currentScore < _scorePanel.targetScore) {
-//            if (_levelFactory.gameType == 1 && _objectivePanel.time <= 10 ) {
-//                _objectivePanel.time = _objectivePanel.time + 10;
-//            }else if (_levelFactory.gameType == 2 && _objectivePanel.ballsLeft <= 10){
-//                _objectivePanel.ballsLeft = _objectivePanel.ballsLeft + 10;
-//            }
-//        }
-//
-//
-//        if (_ceilingHit) {
-//            _ceilingHit = NO;
-//            _hitBall = nil;
-//            [_crackSprite removeFromParent];
-//            _crackSprite = nil;
-//        }
-//
-//
-//        _stageAt = 2;
-//
-//        [_scorePanel.scoreLabel removeAllActions];
-//        [_scorePanel.scoreLabel runAction:[SKAction scaleTo:1 duration:1]];
-//        [self removeSettingPanel];
-//        [self pauseGame];
+        int midIndex = (int)ballsArray.length/2;
 
+        for (int i = midIndex - 1; i < ballsArray.length; i++){
+            if (ballsArray[i] != null){
+                movingBallList.findNodeRemove(ballsArray[i]);
+                ballsArray[i].clear();
+                ballsArray[i].remove();
+                ballsArray[i] = null;
+            }
+        }
+
+        if (objectiveReached){
+            if (levelFactory.gameType == 1){
+                objectivePanel.time = 20;
+            }else {
+                objectivePanel.ballsLeft = 20;
+            }
+            objectiveReached = false;
+        }
+
+        if (ceilingHit && scorePanel.currentScore < scorePanel.targetScore){
+            if (levelFactory.gameType == 1 && objectivePanel.time <= 10){
+                objectivePanel.time = objectivePanel.time + 10;
+            }else if(levelFactory.gameType == 2 && objectivePanel.ballsLeft <= 10){
+                objectivePanel.ballsLeft = objectivePanel.ballsLeft + 10;
+            }
+        }
+
+        if (ceilingHit){
+            ceilingHit = false;
+            hitBall = null;
+
+        }
+
+        stageAt = 2;
+
+        scorePanel.scoreLabel.clearActions();
+        scorePanel.scoreLabel.addAction(Actions.scaleTo(1,1));
+        removeSettingPanel();
+        pauseGame();
     }
 
     private class ScreenListener extends InputListener {

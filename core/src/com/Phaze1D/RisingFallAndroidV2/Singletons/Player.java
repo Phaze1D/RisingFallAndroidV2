@@ -161,6 +161,10 @@ public class Player implements Serializable{
         return scores[levelID];
     }
 
+    public void setScore(int leveID, int score){
+        scores[leveID] = score;
+    }
+
     public double getTimeLeftOnLifes() {
         return timeLeftOnLifes;
     }
