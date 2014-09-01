@@ -2,9 +2,11 @@ package com.Phaze1D.RisingFallAndroidV2.Objects;
 
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 
 /**
@@ -36,9 +38,11 @@ public class Spawner {
 
         int powerTest = randGen.nextInt(100) + 1;
 
+
         if (powerTest <= powerUpProb && !stopSpawningPower){
-            int powerType = randGen.nextInt(5) + 1;
-            Ball ball = new Ball(powerAtlas.createSprite("powerBall"+powerType));
+            Array<Sprite> powerSprites = powerAtlas.createSprites();
+            int powerType = randGen.nextInt(5);
+            Ball ball = new Ball(powerSprites.get(powerType));
             ball.setPosition(position.x,position.y);
             ball.column = column;
             ball.isPowerBall = true;
