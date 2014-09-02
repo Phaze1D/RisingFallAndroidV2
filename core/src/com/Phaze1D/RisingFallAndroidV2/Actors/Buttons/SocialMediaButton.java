@@ -21,17 +21,6 @@ public class SocialMediaButton extends ImageButton {
     public int type;
     public int indexInSubArray;
 
-    public SocialMediaButton(Skin skin) {
-        super(skin);
-    }
-
-    public SocialMediaButton(Skin skin, String styleName) {
-        super(skin, styleName);
-    }
-
-    public SocialMediaButton(ImageButtonStyle style) {
-        super(style);
-    }
 
     public SocialMediaButton(Drawable imageUp) {
         super(imageUp);
@@ -40,11 +29,9 @@ public class SocialMediaButton extends ImageButton {
 
     public SocialMediaButton(Drawable imageUp, Drawable imageDown) {
         super(imageUp, imageDown);
+        addListener(new SocialMediaListener());
     }
 
-    public SocialMediaButton(Drawable imageUp, Drawable imageDown, Drawable imageChecked) {
-        super(imageUp, imageDown, imageChecked);
-    }
 
 
     public void setAlpha(float alpha) {
@@ -86,7 +73,7 @@ public class SocialMediaButton extends ImageButton {
         public void enableChild();
     }
 
-    public static final int SOCIAL_BUTTON = 0;
+    public static final int SOCIAL_BUTTON = 1;
 
 
 

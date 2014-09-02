@@ -34,8 +34,9 @@ public class Ball extends Image {
     public float time;
     public int moveDirection;
 
-    public Vector2 startPoint;
-    public Vector2 endPoint;
+    public Vector2 startPoint = new Vector2();
+    public Vector2 endPoint = new Vector2();
+    public Vector2 midPoint = new Vector2();
     public final Vector2 velocity = new Vector2();
     public final Vector2 initPosition = new Vector2();
 
@@ -160,7 +161,7 @@ public class Ball extends Image {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-            startPoint = new Vector2(x,y);
+            startPoint.set(x, y);
             return true;
         }
 
@@ -205,7 +206,7 @@ public class Ball extends Image {
         public void touchDragged(InputEvent event, float x, float y, int pointer) {
 
             if (!isPowerBall){
-                Vector2 midPoint = new Vector2(x, y);
+                midPoint.set(x, y);
                 float distance = fcalculateDirection(midPoint);
 
                 if (distance > getHeight() && !didMove){

@@ -161,13 +161,14 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     private void createLevelButton() {
 
         parentLevelButtons = new LevelButton[10];
-        for (int i = 0; i < 10; i++){
-            ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-            style.font = BitmapFontSizer.getFontWithSize(0);
-            style.fontColor = Color.BLACK;
-            SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelButton"));
-            style.up = up;
 
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
+        style.font = BitmapFontSizer.getFontWithSize(0);
+        style.fontColor = Color.BLACK;
+        SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelButton"));
+        style.up = up;
+
+        for (int i = 0; i < 10; i++){
 
             LevelButton levelB = new LevelButton("" + i*10, style);
             levelB.setPosition(levelBPositions[i].x, levelBPositions[i].y);

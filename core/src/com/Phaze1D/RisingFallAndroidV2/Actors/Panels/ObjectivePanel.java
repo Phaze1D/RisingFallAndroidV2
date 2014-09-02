@@ -67,10 +67,9 @@ public class ObjectivePanel extends Panel {
 
             int minutes = (int)time/(60);
             int seconds =(int) (time - minutes*60);
-            String formatted = String.format("%02d:%02d",minutes, seconds);
-            objectiveNode.setText(formatted);
-            double date = currentTime;
-            time = futureTime - date;
+            objectiveNode.setText(String.format("%02d:%02d",minutes, seconds));
+            time = futureTime - currentTime;
+
         }
 
 
@@ -83,8 +82,7 @@ public class ObjectivePanel extends Panel {
             time = -1;
             int minutes = 0;
             int seconds = 0;
-            String formatted = String.format("%02d:%02d",minutes, seconds);
-            objectiveNode.setText(formatted);
+            objectiveNode.setText(String.format("%02d:%02d",minutes, seconds));
             return true;
         }
         return false;

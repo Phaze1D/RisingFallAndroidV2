@@ -10,7 +10,7 @@ import com.Phaze1D.RisingFallAndroidV2.Objects.PhysicsList;
  */
 public class PhysicsWorld{
 
-    public PhysicsList bodies = new PhysicsList();
+    private PhysicsList bodies = new PhysicsList();
     public int constantStep;
 
     /** Adds a new body to the physics world*/

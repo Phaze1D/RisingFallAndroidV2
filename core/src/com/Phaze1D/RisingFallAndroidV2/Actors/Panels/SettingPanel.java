@@ -242,7 +242,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
         for (int row = 0; row < 2; row++){
             for (int column = 0; column < 3; column++){
-                Vector2 point = new Vector2(xOffset + (xOffset + childrenSprites.get(0).getWidth())*column, getHeight() - (yOffset  + (yOffset + childrenSprites.get(0).getHeight() ) * row));
+                Vector2 point = new Vector2(xOffset + (xOffset + childrenSprites.get(0).getWidth())*column, getHeight() - (yOffset  + (yOffset + childrenSprites.get(0).getHeight()) * row + childrenSprites.get(0).getHeight()));
 
                 final SocialMediaButton subSocial = new SocialMediaButton(new SpriteDrawable(childrenSprites.get(count)));
                 subSocial.setPosition((int)(getWidth()/2 - subSocial.getWidth()/2),(int)(getHeight()/2 - subSocial.getHeight()/2) );
@@ -291,9 +291,12 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
                 public boolean act(float delta) {
                     button.remove();
                     button.clear();
+
                     return true;
                 }
             };
+
+            button.addAction(Actions.sequence(group, complete));
         }
 
         socialChildren = null;
@@ -336,6 +339,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
         }else{
             clear();
+            addActor(panelActor);
             createSocialChildren();
             socialCreated = true;
             socialB.isOpen = true;

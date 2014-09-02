@@ -31,10 +31,10 @@ public class Spawner {
     public TextureAtlas badBallAtlas;
     public TextureAtlas unBallAtlas;
 
+    public RandomXS128 randGen;
 
     public Ball spawnBall(){
 
-        RandomXS128 randGen = new RandomXS128();
 
         int powerTest = randGen.nextInt(100) + 1;
 

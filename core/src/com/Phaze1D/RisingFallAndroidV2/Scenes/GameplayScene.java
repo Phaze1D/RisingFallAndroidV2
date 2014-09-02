@@ -105,6 +105,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public Vector2 settingPosition;
     public Vector2 ceilingPosition;
 
+    private RandomXS128 randGen = new RandomXS128();
+
     private Group ballGroup;
     public PhysicsWorld world;
 
@@ -319,6 +321,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             spawner.powerAtlas = powerBallAtlas;
             spawner.badBallAtlas = badBallAtlas;
             spawner.unBallAtlas = unMovableAtlas;
+            spawner.randGen = randGen;
             spawner.levelAt = levelID;
             spawners[i] = spawner;
         }
@@ -406,7 +409,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }
         }
 
-        RandomXS128 randGen = new RandomXS128();
+
 
         int randC = randGen.nextInt(levelFactory.numOfColumns);
         int row = 0;

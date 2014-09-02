@@ -302,6 +302,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
             spawners1.position = new Vector2(x, getHeight());
             spawners1.powerUpProb = -1;
             spawners1.ballAtlas = ballsAtlas;
+            spawners1.randGen = randomGen;
             spawners[i] = spawners1;
 
         }
