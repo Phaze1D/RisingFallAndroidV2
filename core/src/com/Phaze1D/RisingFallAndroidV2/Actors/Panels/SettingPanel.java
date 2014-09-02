@@ -67,10 +67,10 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 //        }
 //
 
-        TextField.TextFieldStyle style = new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK,null,null,null);
+        TextField.TextFieldStyle style = new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(15), Color.BLACK,null,null,null);
         textView = new TextArea("INFO this is a test to make sure the the text area works and that it aligns the text properly random random random", style);
         textView.setDisabled(true);
-        textView.setBounds(0,0, getWidth()/2, getHeight()/2 - 5);
+        textView.setBounds(0,0, getWidth(), getHeight()/2 - 5);
         textView.setTouchable(Touchable.disabled);
         textView.setMessageText("INFO");
 
@@ -114,7 +114,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
         SpriteDrawable up = new SpriteDrawable(button1);
         SpriteDrawable down = new SpriteDrawable(button2);
-        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
@@ -148,14 +148,15 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
         float yOffset = (getHeight() - button1.getHeight()*3)/4;
 
-        Label title = new Label("GameWonK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
+        Label title = new Label("GameWonK", new Label.LabelStyle(font, Color.BLACK));
         title.setPosition((int)(getWidth()/2 - title.getWidth()/2), (int)(getHeight() - yOffset - title.getHeight()));
         title.setAlignment(Align.center);
         addActor(title);
 
         SpriteDrawable up = new SpriteDrawable(button1);
         SpriteDrawable down = new SpriteDrawable(button2);
-        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
@@ -174,6 +175,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
     public void createGameLost(){
 
+        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
         Sprite button1 = buttonAtlas.createSprite("buttonS1");
         Sprite button2 = buttonAtlas.createSprite("buttonS2");
 
@@ -186,13 +188,13 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         Vector2 quitPosition = new Vector2(xOffset*2 + button1.getWidth(),getHeight() - yOffset*5 - button1.getHeight()*5 );
 
 
-        Label keepPlayLabel = new Label("KeepPlayingK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+        Label keepPlayLabel = new Label("KeepPlayingK", new Label.LabelStyle(font, Color.BLACK));
         keepPlayLabel.setPosition((int)(getWidth()/2 - keepPlayLabel.getWidth()/2), (int)(getHeight() -  yOffset - button1.getHeight()));
         addActor(keepPlayLabel);
 
         SpriteDrawable up = new SpriteDrawable(button1);
         SpriteDrawable down = new SpriteDrawable(button2);
-        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
@@ -208,7 +210,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         socialB.type = SocialMediaButton.SOCIAL_BUTTON;
         addActor(socialB);
 
-        Label endLabel = new Label("EndK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+        Label endLabel = new Label("EndK", new Label.LabelStyle(font, Color.BLACK));
         endLabel.setPosition((int)(getWidth()/2 - endLabel.getWidth()/2), (int)(getHeight() -  yOffset*4 - button1.getHeight()*4));
         addActor(endLabel);
 
