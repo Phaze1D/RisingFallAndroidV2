@@ -4,6 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
@@ -13,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class PowerTimePanel extends Panel {
 
-    public double time;
-    public double currentTime;
-    public double targetTime;
+    public float time;
+    public float currentTime;
+    public float targetTime;
 
     public int constantTime;
     public int ballsLeft;
@@ -37,16 +38,15 @@ public class PowerTimePanel extends Panel {
         Sprite powerBallSprite = powerBallAtlas.createSprite("powerBall" + powerType);
 
         titlePower = new Image(powerBallSprite);
-        titlePower.setPosition((int)(getWidth()/2 - titlePower.getWidth()/2), (int)(getHeight()/2));
-        titlePower.setScale(titlePower.getWidth()/1.5f, titlePower.getHeight()/1.5f);
+        titlePower.setPosition((int)(getWidth()/2 - titlePower.getWidth()/3), (int)(getHeight()/2));
+        titlePower.addAction(Actions.scaleTo(2/3f,2/3f));
         addActor(titlePower);
 
 
         constantTime = 11;
-        currentTime = System.currentTimeMillis()/1000;
         String timeString = String.format("%02d:%02d",0, constantTime);
         timeLeftLabel = new Label(timeString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
-        timeLeftLabel.setPosition((int)(getWidth()/2 - timeLeftLabel.getWidth()/2), (int)(getHeight()/7 - timeLeftLabel.getHeight()/2));
+        timeLeftLabel.setPosition((int)(getWidth()/2 - timeLeftLabel.getWidth()/2), (int)(getHeight()/7));
         targetTime = constantTime + currentTime;
         addActor(timeLeftLabel);
     }
@@ -55,13 +55,13 @@ public class PowerTimePanel extends Panel {
     public void createPanelWithBalls(){
         Sprite powerBallSprite = powerBallAtlas.createSprite("powerBall" + powerType);
         titlePower = new Image(powerBallSprite);
-        titlePower.setPosition((int)(getWidth()/2 - titlePower.getWidth()/2), (int)(getHeight()/2));
-        titlePower.setScale(titlePower.getWidth()/1.5f, titlePower.getHeight()/1.5f);
+        titlePower.setPosition((int)(getWidth()/2 - titlePower.getWidth()/3), (int)(getHeight()/2));
+        titlePower.addAction(Actions.scaleTo(2 / 3f, 2 / 3f));
         addActor(titlePower);
 
         ballsLeft = 10;
         ballsLeftLabel = new Label(ballsLeft + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
-        ballsLeftLabel.setPosition((int)(getWidth()/2 - ballsLeftLabel.getWidth()/2), (int)(getHeight()/7 - ballsLeftLabel.getHeight()/2));
+        ballsLeftLabel.setPosition((int)(getWidth()/2 - ballsLeftLabel.getWidth()/2), (int)(getHeight()/7));
         addActor(ballsLeftLabel);
 
     }
@@ -84,14 +84,16 @@ public class PowerTimePanel extends Panel {
         time = targetTime - currentTime;
         if (time <= 0){
             time = 0;
-            String timeString = String.format("%02d:%02f",0, (float)time);
+            String timeString = String.format("%02d:%02d",0, (int)time);
             if(timeLeftLabel != null) {
                 timeLeftLabel.setText(timeString);
             }
             return true;
         }else {
-            String timeString = String.format("%02d:%02f",0, (float)time);
-            timeLeftLabel.setText(timeString);
+            String timeString = String.format("%02d:%02d",0, (int)time);
+            if (timeLeftLabel != null) {
+                timeLeftLabel.setText(timeString);
+            }
             return false;
         }
     }
@@ -100,10 +102,12 @@ public class PowerTimePanel extends Panel {
         if (timeLeftLabel != null){
             targetTime = constantTime + currentTime;
             clear();
+            addActor(panelActor);
             createPanelWithTimer();
         }else {
             clear();
             titlePower = null;
+            addActor(panelActor);
             createPanelWithTimer();
         }
         ballsLeftLabel = null;
@@ -113,10 +117,12 @@ public class PowerTimePanel extends Panel {
         if (ballsLeftLabel != null){
             ballsLeft = 11;
             clear();
+            addActor(panelActor);
             createPanelWithBalls();
         }else {
             clear();
             titlePower = null;
+            addActor(panelActor);
             createPanelWithBalls();
         }
 

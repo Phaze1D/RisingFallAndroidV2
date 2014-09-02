@@ -6,7 +6,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.*;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LevelFactory;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LinkedList;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
-import com.Phaze1D.RisingFallAndroidV2.Physics.PhyiscsWorld;
+import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.Gdx;
@@ -22,9 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
-
-import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Created by davidvillarreal on 8/26/14.
@@ -109,7 +106,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public Vector2 ceilingPosition;
 
     private Group ballGroup;
-    public PhyiscsWorld world;
+    public PhysicsWorld world;
 
     public GameplayScene(int levelID){
         this.levelID = levelID;
@@ -124,7 +121,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
 
         if (powerTimePanel != null){
-            powerTimePanel.currentTime = currentTime;
+            powerTimePanel.currentTime = (float)currentTime;
         }
 
         movingBallList.checkIfReached();
@@ -156,7 +153,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                 }
             }
 
-            if (powerTimePanel != null && powerTimePanel.updatetimer() && powerTypeAt != 2){
+            if (powerTimePanel != null && powerTypeAt != 2 && powerTimePanel.updatetimer()){
                 powerTypeAt = -1;
                 if (powerTimePanel != null){
                     removePowerTimePanel();
@@ -169,10 +166,10 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                 didReachScore = scorePanel.didReachScore();
                 pauseGame();
             }
-
+            world.evaluatePhysics(delta);
         }
 
-        world.evaluatePhysics(delta);
+
 
     }
 
@@ -223,7 +220,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         ballGroup = new Group();
         ballGroup.setSize(getWidth(), getHeight());
-        world = new PhyiscsWorld();
+        world = new PhysicsWorld();
         powerTypeAt = -1;
         powerMaxAmount = 0;
         playerInfo = Player.shareInstance();
@@ -524,14 +521,14 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                     for (int i = hitIndex; i>= 0; i = i -levelFactory.numOfColumns){
                         AlphaAction in = Actions.alpha(.5f, .8f);
                         AlphaAction out = Actions.alpha(1f,.8f);
-                        SequenceAction seq = Actions.sequence(in,out);
+                        SequenceAction seq = Actions.sequence(out,in);
                         RepeatAction repeat = Actions.repeat(3,seq);
                         ballsArray[i].addAction(repeat);
                     }
 
                     AlphaAction in = Actions.alpha(.5f, .8f);
                     AlphaAction out = Actions.alpha(1f,.8f);
-                    SequenceAction seq = Actions.sequence(in,out);
+                    SequenceAction seq = Actions.sequence(out,in);
                     RepeatAction repeat = Actions.repeat(3,seq);
                     Action complete = new Action() {
                         @Override
@@ -698,7 +695,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         powerTimePanel = new PowerTimePanel(gameSceneAtlas.createSprite("playerTimeArea"));
         powerTimePanel.setPosition((int)powerTimePosition.x, (int)getHeight());
-        powerTimePanel.currentTime = currentTime;
+        powerTimePanel.currentTime = (float)currentTime;
         powerTimePanel.powerType = powerTypeAt;
         powerTimePanel.powerBallAtlas = powerBallAtlas;
         MoveToAction move = Actions.moveTo((int)powerTimePosition.x, (int)powerTimePosition.y, .3f);

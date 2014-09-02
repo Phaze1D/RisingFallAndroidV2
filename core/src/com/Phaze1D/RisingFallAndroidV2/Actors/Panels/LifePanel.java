@@ -69,7 +69,6 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         buyButton = new SimpleButton(".99k", style);
         buyButton.setPosition((int) (getWidth() / 2 - buyButton.getWidth() / 2), (int) (buttonSprite.getHeight() / 2 - buyButton.getHeight()));
 
-        System.out.println((int)getWidth()/2 + " --- " + (int)buttonSprite.getHeight()/2);
 
         buyButton.delegate = this;
         addActor(buyButton);

@@ -4,7 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
-import com.Phaze1D.RisingFallAndroidV2.Physics.PhyiscsWorld;
+import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -70,6 +70,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     private float accumulator = 0;
     private float nextSpawn;
 
+    private RandomXS128 randomGen = new RandomXS128();
 
     private double deltaTime;
     private double passTime;
@@ -78,7 +79,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     private Group ballGroup;
 
-    private PhyiscsWorld physicsWorld;
+    private PhysicsWorld physicsWorld;
 
 
     public StartScene(Viewport viewport, Batch batch) {
@@ -151,7 +152,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
 
         if (spawners != null) {
-            RandomXS128 randomGen = new RandomXS128();
+
             Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
             ball.velocity.set(velocity);
             ball.isPhysicsActive = true;
@@ -198,7 +199,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         playSprite = buttonAtlas.createSprite("buttonL1");
         storeSprite = buttonAtlas.createSprite("buttonL1");
         ballGroup = new Group();
-        physicsWorld = new PhyiscsWorld();
+        physicsWorld = new PhysicsWorld();
         physicsWorld.constantStep = 60;
         spawnRate = 1 / 1.0f;
         socialSubAnimationDuration = .3f;

@@ -276,7 +276,6 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             style.up = up;
 
             LevelButton childB = new LevelButton(childNumber + "", style);
-            System.out.println(childNumber);
             childB.levelNumber = childNumber++;
             childB.setPosition(levelBPositions[parentNumber].x, levelBPositions[parentNumber].y);
             childB.setAlpha(0);

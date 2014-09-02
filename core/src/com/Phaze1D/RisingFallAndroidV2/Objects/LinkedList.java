@@ -157,7 +157,7 @@ public class LinkedList {
         NodeNew current = head;
         NodeNew previous = null;
 
-        while (current.element != ball && current != null){
+        while (current != null && current.element != ball){
             previous = current;
             current = current.next;
         }
