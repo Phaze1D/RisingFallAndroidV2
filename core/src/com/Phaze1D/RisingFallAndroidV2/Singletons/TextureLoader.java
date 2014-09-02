@@ -78,7 +78,13 @@ public class TextureLoader implements Disposable {
     }
 
     /** Loads the game play screen atlases into memory*/
-    public void loadGamePlayScreenAtlases(int levelID){
+    public void loadGamePlayScreenAtlases(int levelAt){
+
+        if (levelAt <= 2 || levelAt == 18 || levelAt == 28 || levelAt == 50 || levelAt == 70) {
+
+        }else{
+            levelAt = 101;
+        }
 
 
         assetManager.load("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
@@ -88,7 +94,7 @@ public class TextureLoader implements Disposable {
         assetManager.load("BallAtlas/UnmovableBallArt.atlas",TextureAtlas.class);
         assetManager.load("BallAtlas/BadBallArt.atlas", TextureAtlas.class);
         assetManager.load("SocialMediaAtlas/SocialMediaArt.atlas", TextureAtlas.class);
-        assetManager.load("InfoAtlas/Info"+levelID, TextureAtlas.class);
+        assetManager.load("InfoAtlas/Info"+levelAt +".atlas", TextureAtlas.class);
         assetManager.finishLoading();
 
         buttonAtlas = assetManager.get("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
@@ -98,7 +104,7 @@ public class TextureLoader implements Disposable {
         unmovableBallAtlas = assetManager.get("BallAtlas/UnmovableBallArt.atlas",TextureAtlas.class);
         badBallAtlas = assetManager.get("BallAtlas/BadBallArt.atlas", TextureAtlas.class);
         socialMediaAtlas = assetManager.get("SocialMediaAtlas/SocialMediaArt.atlas", TextureAtlas.class);
-        infoAtlas = assetManager.get("InfoAtlas/Info"+levelID, TextureAtlas.class);
+        infoAtlas = assetManager.get("InfoAtlas/Info"+levelAt+".atlas", TextureAtlas.class);
         isGameplayScreenLoaded = true;
 
     }

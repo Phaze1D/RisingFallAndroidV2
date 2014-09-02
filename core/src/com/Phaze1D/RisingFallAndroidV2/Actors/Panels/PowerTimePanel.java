@@ -45,7 +45,7 @@ public class PowerTimePanel extends Panel {
 
         constantTime = 11;
         String timeString = String.format("%02d:%02d",0, constantTime);
-        timeLeftLabel = new Label(timeString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+        timeLeftLabel = new Label(timeString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         timeLeftLabel.setPosition((int)(getWidth()/2 - timeLeftLabel.getWidth()/2), (int)(getHeight()/7));
         targetTime = constantTime + currentTime;
         addActor(timeLeftLabel);
@@ -60,7 +60,7 @@ public class PowerTimePanel extends Panel {
         addActor(titlePower);
 
         ballsLeft = 10;
-        ballsLeftLabel = new Label(ballsLeft + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+        ballsLeftLabel = new Label(ballsLeft + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         ballsLeftLabel.setPosition((int)(getWidth()/2 - ballsLeftLabel.getWidth()/2), (int)(getHeight()/7));
         addActor(ballsLeftLabel);
 

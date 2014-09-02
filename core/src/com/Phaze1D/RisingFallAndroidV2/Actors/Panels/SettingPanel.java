@@ -68,11 +68,12 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 //
 
         TextField.TextFieldStyle style = new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK,null,null,null);
-        textView = new TextArea("INFO", style);
+        textView = new TextArea("INFO this is a test to make sure the the text area works and that it aligns the text properly random random random", style);
         textView.setDisabled(true);
-        textView.setBounds(0,0, getWidth()/2, getHeight()/2);
+        textView.setBounds(0,0, getWidth()/2, getHeight()/2 - 5);
         textView.setTouchable(Touchable.disabled);
         textView.setMessageText("INFO");
+
         addActor(textView);
 
     createInfoTexture(levelAt);
@@ -90,14 +91,13 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
 
         float xOffset = (getWidth() - infoAtlas.createSprite("correct").getWidth()*2)/3;
-        float yOffset = (getHeight()/2 - infoAtlas.createSprite("correct").getHeight())/2;
 
         Image correctI = new Image(infoAtlas.createSprite("correct"));
-        correctI.setPosition((int)(xOffset - correctI.getHeight()/2), (int)(yOffset - correctI.getHeight()/2 ));
+        correctI.setPosition((int)(xOffset), (int)(getHeight() - 5 - correctI.getHeight()));
         addActor(correctI);
 
         Image incorrectI = new Image(infoAtlas.createSprite("incorrect"));
-        incorrectI.setPosition((int)(xOffset*2 + incorrectI.getWidth() - incorrectI.getWidth()/2), (int)(yOffset - incorrectI.getHeight()/2));
+        incorrectI.setPosition((int)(xOffset*2 + incorrectI.getWidth()), (int)(getHeight() - 5 - incorrectI.getHeight()));
         addActor(incorrectI);
 
     }

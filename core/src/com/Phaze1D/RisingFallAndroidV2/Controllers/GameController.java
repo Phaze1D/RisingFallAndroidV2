@@ -4,6 +4,7 @@ package com.Phaze1D.RisingFallAndroidV2.Controllers;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.GameplayScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.LevelsScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StartScene;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
 import com.badlogic.gdx.Game;
@@ -45,6 +46,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
             textureLoader = TextureLoader.shareTextureLoader();
             loadStartScreen();
             isCreated = true;
+            BitmapFontSizer.sharedInstance();
         }
     }
 

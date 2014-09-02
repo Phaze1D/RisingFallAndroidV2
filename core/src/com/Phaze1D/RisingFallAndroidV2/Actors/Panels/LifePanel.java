@@ -33,13 +33,14 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     public LifePanel(Sprite panelSprite){
         super(panelSprite);
-        font = BitmapFontSizer.getFontWithSize(0);
+
 
 
     }
 
     /** Creates the life panel showing how many lives the player has left*/
     public void createLifePanel(){
+        font = BitmapFontSizer.getFontWithSize(19);
         Player playerInfo = Player.shareInstance();
 
         Label titleLabel = new Label("LifesK", new Label.LabelStyle(font, Color.BLACK));
@@ -55,6 +56,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     /** Creates time panel showing how much time the player has for the next 5 lives*/
     public void createTimePanel(Sprite buttonSprite){
+        font = BitmapFontSizer.getFontWithSize(12);
         Player playerInfo = Player.shareInstance();
         timeLeft = playerInfo.getTimeLeftOnLifes() - System.currentTimeMillis()/1000;
 

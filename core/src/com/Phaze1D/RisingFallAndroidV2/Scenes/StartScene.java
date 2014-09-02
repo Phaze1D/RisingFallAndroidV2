@@ -246,7 +246,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         SpriteDrawable up = new SpriteDrawable(playSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
-        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
@@ -262,7 +262,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         SpriteDrawable up = new SpriteDrawable(storeSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
-        BitmapFont font = BitmapFontSizer.getFontWithSize(0);
+        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
