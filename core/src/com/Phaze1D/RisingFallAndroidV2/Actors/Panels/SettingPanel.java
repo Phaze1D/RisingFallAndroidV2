@@ -149,7 +149,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         float yOffset = (getHeight() - button1.getHeight()*3)/4;
 
         BitmapFont font = BitmapFontSizer.getFontWithSize(11);
-        Label title = new Label("GameWonK", new Label.LabelStyle(font, Color.BLACK));
+        Label title = new Label("GameWonK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(20), Color.BLACK));
         title.setPosition((int)(getWidth()/2 - title.getWidth()/2), (int)(getHeight() - yOffset - title.getHeight()));
         title.setAlignment(Align.center);
         addActor(title);
@@ -188,7 +188,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         Vector2 quitPosition = new Vector2(xOffset*2 + button1.getWidth(),getHeight() - yOffset*5 - button1.getHeight()*5 );
 
 
-        Label keepPlayLabel = new Label("KeepPlayingK", new Label.LabelStyle(font, Color.BLACK));
+        Label keepPlayLabel = new Label("KeepPlayingK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(20), Color.BLACK));
         keepPlayLabel.setPosition((int)(getWidth()/2 - keepPlayLabel.getWidth()/2), (int)(getHeight() -  yOffset - button1.getHeight()));
         addActor(keepPlayLabel);
 
@@ -210,7 +210,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         socialB.type = SocialMediaButton.SOCIAL_BUTTON;
         addActor(socialB);
 
-        Label endLabel = new Label("EndK", new Label.LabelStyle(font, Color.BLACK));
+        Label endLabel = new Label("EndK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(20), Color.BLACK));
         endLabel.setPosition((int)(getWidth()/2 - endLabel.getWidth()/2), (int)(getHeight() -  yOffset*4 - button1.getHeight()*4));
         addActor(endLabel);
 
