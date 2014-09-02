@@ -102,7 +102,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
         setScreen(null);
         textureLoader.dispose();
-        textureLoader.loadGamePlayScreenAtlases();
+        textureLoader.loadGamePlayScreenAtlases(levelID);
         GameplayScene gameplayScreen = new GameplayScene(levelID);
         gameplayScreen.badBallAtlas = textureLoader.getBadBallAtlas();
         gameplayScreen.ballAtlas = textureLoader.getBallsAtlas();
@@ -111,6 +111,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         gameplayScreen.unMovableAtlas = textureLoader.getUnmovableBallAtlas();
         gameplayScreen.powerBallAtlas = textureLoader.getPowerBallAtlas();
         gameplayScreen.socialMediaAtlas = textureLoader.getSocialMediaAtlas();
+        gameplayScreen.infoAtlas = textureLoader.getInfoAtlas();
         gameplayScreen.delegate = this;
         setScreen(gameplayScreen);
 

@@ -2,6 +2,7 @@ package com.Phaze1D.RisingFallAndroidV2.Scenes;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
+import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.*;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LevelFactory;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LinkedList;
@@ -11,6 +12,7 @@ import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 
@@ -834,26 +837,22 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private void runBallRemoveEffect(int score, Ball ball){
 
+        final CustomLabel scoreLab = new CustomLabel("" + score, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(0), Color.BLACK));
+        scoreLab.setPosition(ball.getX() + ball.getWidth()/2, ball.getY() + ball.getHeight()/2);
+        scoreLab.setScale(0);
 
-
-//        SKLabelNode * scoreLab = [SKLabelNode labelNodeWithFontNamed: @"CooperBlack"];
-//        scoreLab.text = [NSString stringWithFormat: @"%d", score];
-//        scoreLab.fontSize = 15;
-//        scoreLab.fontColor = [UIColor blackColor];
-//        scoreLab.position = CGPointMake(ball.position.x + ball.size.width/2, ball.position.y + ball.size.height/2 );
-//        scoreLab.zPosition = 2;
-//        [scoreLab setScale:0];
-//
-//        SKAction * fadeOut = [SKAction fadeAlphaTo:0.4 duration:.5];
-//        SKAction * scaleUp = [SKAction scaleTo:2 duration:.5];
-//        SKAction * group = [SKAction group:@[fadeOut, scaleUp]];
-//
-//        [self addChild:scoreLab];
-//        [scoreLab runAction:group completion:^{
-//
-//            [scoreLab removeFromParent];
-//
-//        }];
+        AlphaAction alphaAction = Actions.alpha(.4f, .5f);
+        ScaleToAction scale = Actions.scaleTo(2,2,.5f);
+        Action complete = new Action() {
+            @Override
+            public boolean act(float delta) {
+                scoreLab.remove();
+                return true;
+            }
+        };
+        ParallelAction group = Actions.parallel(alphaAction, scale);
+        scoreLab.addAction(Actions.sequence(group, complete));
+        addActor(scoreLab);
 
     }
 
