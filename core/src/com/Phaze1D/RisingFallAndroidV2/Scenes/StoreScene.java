@@ -175,6 +175,7 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
         buyPanel = new StoreBuyPanel(itemsArea);
         buyPanel.setPosition((int)sidePosition.x, (int)sidePosition.y);
         buyPanel.delegate = this;
+        buyPanel.itemsAtlas = sceneAtlas;
         buyPanel.createPanel();
         addActor(buyPanel);
 
@@ -216,17 +217,19 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
     private void createSellPanel(final int powerType){
         buyPanel.disableButton();
         float xOffset = (getWidth() - buyPanel.getWidth() - sellItemArea.getWidth())/2;
-        initPointSellPanel.set(getWidth()/2, 0);
+        initPointSellPanel.set(getWidth()/2, -sellItemArea.getHeight());
 
         sellItemPanel = new SellItemPanel(sellItemArea);
         sellItemPanel.setPosition((int)initPointSellPanel.x, (int)initPointSellPanel.y);
+        sellItemPanel.buttonAtlas = buttonAtlas;
+        sellItemPanel.storeSceneAtlas = sceneAtlas;
         sellItemPanel.createPanel(powerType, true);
         sellItemPanel.addAction(Actions.alpha(0));
         sellItemPanel.addAction(Actions.scaleTo(0,0));
 
-        MoveToAction moveTo = Actions.moveTo(xOffset + buyPanel.getWidth(), getHeight()/2 - sellItemPanel.getHeight()/2,.25f);
-        ScaleToAction scaleU = Actions.scaleTo(1,1,.25f);
-        AlphaAction alphaAction = Actions.alpha(1, .25f);
+        MoveToAction moveTo = Actions.moveTo((int)(xOffset + buyPanel.getWidth()), (int)(getHeight()/2 - sellItemPanel.getHeight()/2),.3f);
+        ScaleToAction scaleU = Actions.scaleTo(1,1,.3f);
+        AlphaAction alphaAction = Actions.alpha(1, .3f);
         ParallelAction group = Actions.parallel(moveTo,scaleU,alphaAction);
         Action complete = new Action() {
             @Override

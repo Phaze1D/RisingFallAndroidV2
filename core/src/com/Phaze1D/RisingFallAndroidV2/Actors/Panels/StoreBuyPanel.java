@@ -60,7 +60,7 @@ public class StoreBuyPanel extends Panel implements SimpleButton.SimpleButtonDel
     private void createItems(){
 
        for (int i = 0; i < 5; i++){
-           SpriteDrawable spriteDrawable = new SpriteDrawable(itemsAtlas.createSprite("sp" + i));
+           SpriteDrawable spriteDrawable = new SpriteDrawable(itemsAtlas.createSprite("st" + (i + 1)));
            SimpleButton pbutton = new SimpleButton("", new ImageTextButton.ImageTextButtonStyle(spriteDrawable,null,null, BitmapFontSizer.getFontWithSize(11)));
            pbutton.type = i+9;
            pbutton.delegate = this;

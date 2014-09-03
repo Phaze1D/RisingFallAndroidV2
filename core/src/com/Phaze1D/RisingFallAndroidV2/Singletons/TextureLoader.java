@@ -33,6 +33,7 @@ public class TextureLoader implements Disposable {
     private boolean isStartScreenLoaded;
     private boolean isLevelScreenLoaded;
     private boolean isGameplayScreenLoaded;
+    private boolean isStoreScreenLoaded;
 
 
 
@@ -109,6 +110,19 @@ public class TextureLoader implements Disposable {
 
     }
 
+    public void loadStoreScreenAtlases(){
+        assetManager.load("StoreAtlas/StoreScene.atlas", TextureAtlas.class);
+        assetManager.load("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
+        assetManager.load("BallAtlas/Ball.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+
+        storeAtlas = assetManager.get("StoreAtlas/StoreScene.atlas", TextureAtlas.class);
+        buttonAtlas = assetManager.get("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
+        ballsAtlas = assetManager.get("BallAtlas/Ball.atlas", TextureAtlas.class);
+        isStoreScreenLoaded = true;
+
+    }
+
     public TextureAtlas getStartScreenAtlas() {
         return startScreenAtlas;
     }
@@ -165,10 +179,19 @@ public class TextureLoader implements Disposable {
             disposeLevelScreenAssets();
         }else if (isGameplayScreenLoaded){
             disposeGamePlayScreenAssets();
+        }else if(isStoreScreenLoaded){
+            disposeStoreAssets();
         }
 
 
 
+    }
+
+    private void disposeStoreAssets(){
+        storeAtlas.dispose();
+        buttonAtlas.dispose();
+        assetManager.clear();
+        isStoreScreenLoaded = false;
     }
 
     private void disposeStartMenuAssets(){

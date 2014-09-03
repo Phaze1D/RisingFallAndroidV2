@@ -4,6 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -49,7 +50,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
 
         textView = new TextArea("Infomation about the product that will be bought", new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null));
         textView.setSize((int)(getWidth()/1.5f), (int)(getHeight()/2));
-        textView.setPosition(getX() + getWidth()/2 - textView.getWidth()/2, getY()+ getHeight()/2 - textView.getHeight()/2);
+        textView.setPosition( getWidth()/2 - textView.getWidth()/2, getHeight()/2 - textView.getHeight()/2);
         textView.setDisabled(true);
         textView.setTouchable(Touchable.disabled);
         addActor(textView);
@@ -65,11 +66,16 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         float yOffset = (getHeight() - powerItemSp.getHeight() - buyButtonSp.getHeight())/4;
 
         Image titleNode = new Image(new SpriteDrawable(powerItemSp));
-        titleNode.setPosition((int)(getWidth()/2 - titleNode.getWidth()/2), (int)(getHeight() - yOffset - titleNode.getHeight()));
+        titleNode.setPosition((int)(getWidth()/2 - titleNode.getWidth()/2), (int)(getHeight() - yOffset));
         addActor(titleNode);
 
-        SimpleButton buyButton = new SimpleButton(".99K", new ImageTextButton.ImageTextButtonStyle(new SpriteDrawable(buyButtonSp), null,null,BitmapFontSizer.getFontWithSize(11)));
-        buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset));
+        SpriteDrawable up = new SpriteDrawable(buyButtonSp);
+        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, null, null, font);
+        style.fontColor = Color.BLACK;
+
+        SimpleButton buyButton = new SimpleButton(".99K",style );
+        buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()) );
         buyButton.delegate = this;
         addActor(buyButton);
 

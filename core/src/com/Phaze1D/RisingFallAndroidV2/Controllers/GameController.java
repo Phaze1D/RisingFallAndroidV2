@@ -123,6 +123,16 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     }
 
     private void loadStoreScreen(){
+        setScreen(null);
+        textureLoader.dispose();
+        textureLoader.loadStoreScreenAtlases();
+        StoreScene storeScene = new StoreScene();
+        storeScene.sceneAtlas = textureLoader.getStoreAtlas();
+        storeScene.buttonAtlas = textureLoader.getButtonAtlas();
+        storeScene.ballsAtlas = textureLoader.getBallsAtlas();
+        storeScene.delegate = this;
+        setScreen(storeScene);
+
 
     }
 
@@ -158,6 +168,6 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     @Override
     public void storeBackPressed() {
-
+        loadStartScreen();
     }
 }
