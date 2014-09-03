@@ -68,6 +68,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         Player.savePlayer();
         player = null;
         textureLoader.dispose();
+        BitmapFontSizer.clear();
     }
 
     /** Loads the StartScreen data*/
@@ -149,4 +150,6 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     public void beginNextLevel(int level) {
         loadGameplayScreen(level);
     }
+
+
 }

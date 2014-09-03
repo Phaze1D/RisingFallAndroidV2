@@ -47,5 +47,9 @@ public class BitmapFontSizer {
         return fontTable.get(size);
     }
 
+    public static void clear(){
+        fontTable.clear();
+    }
+
 
 }
