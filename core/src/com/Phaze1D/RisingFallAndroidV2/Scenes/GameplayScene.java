@@ -237,8 +237,24 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         float ballWidth = ballAtlas.createSprite("ball0").getWidth();
         xOffsetPA = (playAreaSprite.getWidth() - ballWidth*maxColumns)/(maxColumns + 1);
 
-        float numTest = (playAreaSprite.getHeight() - xOffsetPA)/(xOffsetPA + ballWidth);
-        numRows =(int) Math.ceil(numTest);
+        //float numTest = (playAreaSprite.getHeight() - xOffsetPA)/(xOffsetPA + ballWidth);
+        switch (levelFactory.ceilingHeight){
+            case 1:
+                numRows = 13;
+                break;
+            case 2:
+            case 3:
+                numRows = 12;
+                break;
+            case 4:
+            case 5:
+                numRows = 11;
+                break;
+            case 6:
+                numRows = 10;
+
+        }
+        //numRows =(int) Math.ceil(numTest);
         yOffsetPA = (playAreaSprite.getHeight() - ballWidth * numRows)/(numRows + 1);
 
         ballsArray = new Ball[numRows * levelFactory.numOfColumns];
