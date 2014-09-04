@@ -1,13 +1,24 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Hashtable;
+
 public class ApplicationController extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameController gameController;
+
+    public ApplicationController(){
+
+    }
+
+    public ApplicationController(Hashtable<String, String> localeStrings){
+        LocaleStrings.getInstance(localeStrings);
+    }
 
 
     @Override
