@@ -3,6 +3,7 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -31,11 +32,11 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     private BitmapFont font;
 
+    private LocaleStrings strings;
+
     public LifePanel(Sprite panelSprite){
         super(panelSprite);
-
-
-
+        strings = LocaleStrings.getOurInstance();
     }
 
     /** Creates the life panel showing how many lives the player has left*/
@@ -43,7 +44,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         font = BitmapFontSizer.getFontWithSize(19);
         Player playerInfo = Player.shareInstance();
 
-        Label titleLabel = new Label("LifesK", new Label.LabelStyle(font, Color.BLACK));
+        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.BLACK));
         titleLabel.setPosition((int) (getWidth() / 2 - titleLabel.getWidth() / 2), (int) (getHeight() * 2 / 3 - titleLabel.getHeight() / 2));
         addActor(titleLabel);
 
@@ -60,7 +61,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         Player playerInfo = Player.shareInstance();
         timeLeft = playerInfo.getTimeLeftOnLifes() - System.currentTimeMillis()/1000;
 
-        Label titleLabel = new Label("LifesK", new Label.LabelStyle(font, Color.BLACK));
+        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.BLACK));
         titleLabel.setPosition((int) (getWidth() / 2 - titleLabel.getWidth() / 2), (int) (getHeight() - titleLabel.getHeight()));
         addActor(titleLabel);
 
@@ -68,7 +69,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,font);
         style.fontColor = Color.BLACK;
 
-        buyButton = new SimpleButton(".99k", style);
+        buyButton = new SimpleButton(strings.getValue(".99k"), style);
         buyButton.setPosition((int) (getWidth() / 2 - buyButton.getWidth() / 2), (int) (buttonSprite.getHeight() / 2 - buyButton.getHeight()));
 
 

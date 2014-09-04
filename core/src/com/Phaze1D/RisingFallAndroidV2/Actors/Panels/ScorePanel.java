@@ -2,6 +2,7 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -24,6 +25,7 @@ public class ScorePanel extends Panel {
     public CustomLabel titleLabel;
 
 
+
     public ScorePanel(Sprite panelSprite) {
         super(panelSprite);
     }
@@ -32,7 +34,7 @@ public class ScorePanel extends Panel {
         currentScore = 0;
         this.targetScore = targetScore;
 
-        titleLabel = new CustomLabel("scorek", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
+        titleLabel = new CustomLabel(LocaleStrings.getOurInstance().getValue("scorek"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         titleLabel.setPosition((int)(getWidth()/2 - titleLabel.getWidth()/2), (int)(getHeight()*4/7) );
         addActor(titleLabel);
 

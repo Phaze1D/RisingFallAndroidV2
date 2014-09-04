@@ -2,6 +2,7 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,9 +26,11 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
     public TextureAtlas buttonAtlas;
     public TextureAtlas storeSceneAtlas;
 
+    private LocaleStrings strings;
 
     public SellItemPanel(Sprite panelSprite) {
         super(panelSprite);
+        strings = LocaleStrings.getOurInstance();
     }
 
     public void createPanel(int powerType, boolean isValidProduct){
@@ -48,7 +51,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
 //        NSString * info = NSLocalizedString(key, nil);
 
 
-        textView = new TextArea("Infomation about the product that will be bought", new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null));
+        textView = new TextArea(strings.getValue("Infomation about the product that will be bought"), new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null));
         textView.setSize((int)(getWidth()/1.5f), (int)(getHeight()/2));
         textView.setPosition( getWidth()/2 - textView.getWidth()/2, getHeight()/2 - textView.getHeight()/2);
         textView.setDisabled(true);
@@ -74,7 +77,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, null, null, font);
         style.fontColor = Color.BLACK;
 
-        SimpleButton buyButton = new SimpleButton(".99K",style );
+        SimpleButton buyButton = new SimpleButton(strings.getValue(".99K"),style );
         buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()) );
         buyButton.delegate = this;
         addActor(buyButton);

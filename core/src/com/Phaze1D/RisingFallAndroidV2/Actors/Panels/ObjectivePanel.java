@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,19 +24,21 @@ public class ObjectivePanel extends Panel {
     public Label objectiveNode;
 
     public BitmapFont font;
+    private LocaleStrings strings;
 
 
     public ObjectivePanel(Sprite panelSprite) {
         super(panelSprite);
+        strings = LocaleStrings.getOurInstance();
     }
 
     public void createPanel(){
 
         String titleString;
         if (gameType == 2){
-            titleString = "BallsLeft";
+            titleString = strings.getValue("BallsLeftK");
         }else {
-            titleString = "TimeLeft";
+            titleString = strings.getValue("TimeLeftK");
         }
 
         font = BitmapFontSizer.getFontWithSize(11);

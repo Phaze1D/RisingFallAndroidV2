@@ -6,6 +6,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
 import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -81,9 +82,11 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     private PhysicsWorld physicsWorld;
 
+    private LocaleStrings strings;
 
     public StartScene(Viewport viewport, Batch batch) {
         super(viewport, batch);
+        strings = LocaleStrings.getOurInstance();
     }
 
     @Override
@@ -250,7 +253,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
-        playButton = new SimpleButton("PlayK", style);
+        playButton = new SimpleButton(strings.getValue("PlayK"), style);
         playButton.setPosition(playButtonPosition.x - playButton.getWidth()/2, playButtonPosition.y - playButton.getHeight()/2);
         playButton.delegate = this;
         playButton.type = SimpleButton.PLAY_BUTTON;
@@ -266,7 +269,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLACK;
 
-        storeButton = new SimpleButton("StoreK", style);
+        storeButton = new SimpleButton(strings.getValue("StoreK"), style);
         storeButton.setPosition(storeButtonPosition.x - storeButton.getWidth()/2, storeButtonPosition.y - storeButton.getHeight()/2);
         storeButton.delegate = this;
         storeButton.type = SimpleButton.STORE_BUTTON;

@@ -49,7 +49,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
             loadStartScreen();
             isCreated = true;
             BitmapFontSizer.sharedInstance();
-            System.out.println(LocaleStrings.getOurInstance().getValue("App"));
+
         }
     }
 

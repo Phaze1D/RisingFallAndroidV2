@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,23 +20,25 @@ public class InfoPanel extends Panel {
 
     public void createPanel(int levelID, int passedScore){
 
+        LocaleStrings strings = LocaleStrings.getOurInstance();
+
 
         Label levelLabel = new Label("  " + levelID, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         levelLabel.setPosition((int)(getWidth()/2 - levelLabel.getWidth()/2), (int)(getHeight()*3/4f - levelLabel.getHeight()/2));
         levelLabel.setAlignment(Align.center);
         addActor(levelLabel);
 
-        Label levelTitle = new Label("LabelK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
+        Label levelTitle = new Label(strings.getValue("LabelK"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         levelTitle.setPosition((int)(getWidth()/2 - levelTitle.getWidth()/2), (int)(getHeight()*3f/4f + levelLabel.getHeight()/1.5f - levelTitle.getHeight()/2));
         levelTitle.setAlignment(Align.center);
         addActor(levelTitle);
 
-        Label highTitle = new Label("Highk", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
+        Label highTitle = new Label(strings.getValue("HighK"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         highTitle.setPosition((int)(getWidth()/2 - highTitle.getWidth()/2),(int)( getHeight()/2 - highTitle.getHeight()/2));
         highTitle.setAlignment(Align.center);
         addActor(highTitle);
 
-        Label scoreTitle = new Label("ScoreK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
+        Label scoreTitle = new Label(strings.getValue("ScoreK"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
         scoreTitle.setPosition((int)(getWidth()/2 - scoreTitle.getWidth()/2),(int)( getHeight()/2 - highTitle.getHeight()/1.5f - scoreTitle.getHeight()/2));
         scoreTitle.setAlignment(Align.center);
         addActor(scoreTitle);

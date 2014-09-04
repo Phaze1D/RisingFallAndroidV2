@@ -2,6 +2,7 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -52,8 +53,8 @@ public class StoreBuyPanel extends Panel implements SimpleButton.SimpleButtonDel
 
 
     private void createTitle(){
-
-        title = new Label("ItemsK", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(15), Color.BLACK));
+        LocaleStrings strings = LocaleStrings.getOurInstance();
+        title = new Label(strings.getValue("ItemsK"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(15), Color.BLACK));
         title.setAlignment(Align.center);
     }
 
