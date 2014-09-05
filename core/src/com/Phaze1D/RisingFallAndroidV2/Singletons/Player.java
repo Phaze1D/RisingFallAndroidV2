@@ -137,7 +137,7 @@ public class Player implements Serializable{
 
     /** Calculates the next available time to share in social media*/
     public void calculateNextShareTime(){
-        timeLeftOnLifes = System.currentTimeMillis()/1000 + 172800;
+        timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 172800;
     }
 
     /** Calculates the next time for 5 new lives */

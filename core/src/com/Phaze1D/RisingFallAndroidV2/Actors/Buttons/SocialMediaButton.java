@@ -1,12 +1,18 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Buttons;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 /**
@@ -63,7 +69,9 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
             double playerTime = player.getTimeLeftOnSocialMedia();
             double currentTime = System.currentTimeMillis() / 1000;
 
+            System.out.println((currentTime < playerTime) + "  " + !isOpen + "  " +  (type == SOCIAL_BUTTON));
             if (currentTime < playerTime && !isOpen && type == SOCIAL_BUTTON) {
+
                 socialMediaButton.displayTimeLeft();
             } else {
                 if (type == SOCIAL_BUTTON) {
@@ -88,7 +96,9 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
                         control.vkClicked();
                     }
 
+                    didShare = true;
                     if (didShare){
+
                         player.calculateNextShareTime();
                     }
                 }
@@ -102,6 +112,56 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
     }
 
     public void displayTimeLeft(){
+
+
+        final double time = System.currentTimeMillis()/1000;
+
+        Player player = Player.shareInstance();
+        int timeLeft= (int)(player.getTimeLeftOnSocialMedia() - time);
+        int seconds = timeLeft % 60;
+        int minutes = (timeLeft /60) %60;
+        int hours = timeLeft/3600;
+
+        Label.LabelStyle style = new Label.LabelStyle(BitmapFontSizer.getFontWithSize(13), Color.BLACK);
+
+        final Label title = new Label(LocaleStrings.getOurInstance().getValue("TimeLeftK"), style);
+        title.setPosition((int)(getWidth()/2 - title.getWidth()/2), (int)getHeight() );
+        title.addAction(Actions.alpha(0));
+
+        final Label timeL = new Label(String.format("%02d:%02d:%02d",hours,minutes, seconds), style);
+        timeL.setPosition((int)(getWidth()/2 - timeL.getWidth()/2), (int) -timeL.getHeight());
+        timeL.addAction(Actions.alpha(0));
+
+        AlphaAction fadeIn = Actions.alpha(1, 1);
+        AlphaAction fadeOut = Actions.alpha(0,1);
+        Action complete = new Action() {
+            @Override
+            public boolean act(float delta) {
+                timeL.remove();
+                title.remove();
+
+                return true;
+            }
+        };
+
+        title.addAction(Actions.sequence(fadeIn,fadeOut,complete));
+
+        AlphaAction fadeIn1 = Actions.alpha(1, 1);
+        AlphaAction fadeOut1 = Actions.alpha(0,1);
+        Action complete1 = new Action() {
+            @Override
+            public boolean act(float delta) {
+                timeL.remove();
+                title.remove();
+
+                return true;
+            }
+        };
+
+        timeL.addAction(Actions.sequence(fadeIn1,fadeOut1,complete1));
+
+        addActor(timeL);
+        addActor(title);
 
     }
 
