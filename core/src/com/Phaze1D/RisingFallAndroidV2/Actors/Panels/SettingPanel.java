@@ -243,6 +243,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         float yOffset = (getHeight() - socialMediaAtlas.createSprite("facebook").getHeight() * 2 - button1.getHeight())/4;
 
         Array<Sprite> childrenSprites = socialMediaAtlas.createSprites();
+        Array<TextureAtlas.AtlasRegion> regions = socialMediaAtlas.getRegions();
 
         int count = 0;
 
@@ -254,6 +255,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
                 subSocial.setPosition((int)(getWidth()/2 - subSocial.getWidth()/2),(int)(getHeight()/2 - subSocial.getHeight()/2) );
                 subSocial.setAlpha(0);
                 subSocial.delegate = this;
+                subSocial.subType = regions.get(count).index;
                 subSocial.indexInSubArray = count;
                 subSocial.setTouchable(Touchable.disabled);
                 socialChildren[count] = subSocial;

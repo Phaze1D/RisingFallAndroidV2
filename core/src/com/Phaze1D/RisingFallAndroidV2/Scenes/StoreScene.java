@@ -44,9 +44,8 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
 //    @property NSArray * productIdentifiers;
 //    @property NSArray * products;
 
-    private float deltaTime;
-    private float passTime;
     private float spawnRate;
+    private float nextSpawn;
 
     private Vector2 velocity;
     private Vector2 sidePosition;
@@ -65,6 +64,8 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
     private Sprite backButton;
     private Sprite sellItemArea;
 
+    private RandomXS128 randomGen = new RandomXS128();
+
 //    @property SKProductsRequest * productsRequest;
 
 
@@ -74,7 +75,14 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
         act();
         if (hasFinished){
 
-            physicsWorld.evaluatePhysics(deltaTime);
+            nextSpawn += delta;
+
+            if (nextSpawn >= spawnRate) {
+                nextSpawn = nextSpawn - spawnRate;
+                spawnBall();
+            }
+
+            physicsWorld.evaluatePhysics(delta);
         }
 
 
@@ -107,6 +115,36 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
 
     @Override
     public void resume() {
+
+    }
+
+    private void spawnBall() {
+
+
+        if (spawners != null) {
+
+            Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
+            ball.velocity.set(velocity);
+            ball.isPhysicsActive = true;
+            physicsWorld.addBody(ball);
+            ballGroup.addActor(ball);
+            ballQuene.addLast(ball);
+        }
+
+
+        if (ballQuene.size() > 0) {
+            Ball ball = ballQuene.getFirst();
+            if (ball.getY() < 0) {
+                ballQuene.removeFirst();
+                ball.remove();
+                ball.isPhysicsActive = false;
+                ball.body = null;
+                ball.clear();
+                ball.clearActions();
+                ball.clearListeners();
+                ball = null;
+            }
+        }
 
     }
 
@@ -145,7 +183,7 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
     private void createSpawners(){
 
         float width = ballsAtlas.createSprite("ball0").getWidth();
-        RandomXS128 randomGen = new RandomXS128();
+
         spawners = new Spawner[10];
         for (int i = 0; i < 10; i++) {
             Spawner spawners1 = new Spawner();

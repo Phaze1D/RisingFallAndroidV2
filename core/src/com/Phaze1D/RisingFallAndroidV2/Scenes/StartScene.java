@@ -320,11 +320,13 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         Array<Sprite> sprites = socialMediaAtlas.createSprites();
         socialSubNodes = new SocialMediaButton[sprites.size];
+        Array<TextureAtlas.AtlasRegion> regions = socialMediaAtlas.getRegions();
 
 
         for (int i = 0; i < sprites.size; i++) {
             SpriteDrawable up = new SpriteDrawable(sprites.get(i));
             final SocialMediaButton child = new SocialMediaButton(up);
+            child.subType = regions.get(i).index;
             child.setAlpha(0);
             child.indexInSubArray = i;
             child.delegate = this;
