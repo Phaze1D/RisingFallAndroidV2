@@ -78,7 +78,7 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
                     delegate.socialButtonPressed();
                 } else {
 
-                    SocialMediaControl control = new SocialMediaControl();
+                    SocialMediaControl control = SocialMediaControl.sharedInstance();
                     control.delegate = this.socialMediaButton;
                     didShare = false;
 
