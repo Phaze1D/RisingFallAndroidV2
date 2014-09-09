@@ -11,7 +11,12 @@ import java.io.*;
  */
 
 public class Player implements Serializable{
-    private static Player ourInstance;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8977155991963664225L;
+
+	private static Player ourInstance;
 
     private int power1;
     private int power2;
@@ -137,7 +142,8 @@ public class Player implements Serializable{
 
     /** Calculates the next available time to share in social media*/
     public void calculateNextShareTime(){
-        timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 172800;
+        //timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 172800;
+    	timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 15;
     }
 
     /** Calculates the next time for 5 new lives */

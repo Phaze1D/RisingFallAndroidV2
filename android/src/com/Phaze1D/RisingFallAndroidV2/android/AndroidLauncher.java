@@ -1,14 +1,17 @@
 package com.Phaze1D.RisingFallAndroidV2.android;
 
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.ApplicationController;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-
-import java.lang.reflect.Field;
-import java.util.Hashtable;
+import com.facebook.Session;
 
 public class AndroidLauncher extends AndroidApplication {
 
@@ -19,7 +22,7 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		
 		SocialMediaControl smc = SocialMediaControl.sharedInstance();
-		smc.setAndroidDelegate(new AndroidSocialMediaControl());
+		smc.setAndroidDelegate(new AndroidSocialMediaControl(this));	
 		
         Hashtable<String, String> hashtable = new Hashtable<String, String>();
         Field[] fields = R.string.class.getFields();
@@ -31,6 +34,7 @@ public class AndroidLauncher extends AndroidApplication {
         appControl = new ApplicationController(hashtable);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(appControl, config);
+		
 		
 		
 	}
@@ -52,4 +56,16 @@ public class AndroidLauncher extends AndroidApplication {
         finish();
         super.onDestroy();
     }
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+		Log.d("DAVID VILLARREAL", "ON activity result");
+	}
+    
+   
+    
+    
 }
