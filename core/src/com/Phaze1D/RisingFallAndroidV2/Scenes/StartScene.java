@@ -159,6 +159,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
             Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
             ball.velocity.set(velocity);
             ball.isPhysicsActive = true;
+            ball.setTouchable(Touchable.disabled);
             physicsWorld.addBody(ball);
             ballGroup.addActor(ball);
             ballQuene.addLast(ball);
@@ -414,7 +415,9 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     @Override
     public void subSocialButtonPressed(boolean didShare) {
-
+    	if(didShare){
+    		socialButtonPressed();
+    	}
     }
 
     @Override

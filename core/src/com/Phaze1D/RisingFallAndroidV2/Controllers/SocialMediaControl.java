@@ -32,27 +32,27 @@ public class SocialMediaControl {
 
 
     public void facebookClicked(){
-    	androidDelegate.androidFacebookClicked();
+    	androidDelegate.androidFacebookClicked(this);
     }
 
     public void contactsClicked(){
-    	androidDelegate.androidContactsClicked();
+    	androidDelegate.androidContactsClicked(this);
     }
 
     public void googleClicked(){
-    	androidDelegate.androidGoogleClicked();
+    	androidDelegate.androidGoogleClicked(this);
     }
 
     public void twitterClicked(){	
-    	androidDelegate.androidTwitterClicked();
+    	androidDelegate.androidTwitterClicked(this);
     }
 
     public void vkClicked(){
-    	androidDelegate.androidVKClicked();
+    	androidDelegate.androidVKClicked(this);
     }
 
     public void weiboClicked(){
-    	androidDelegate.androidWeiboClicked();
+    	androidDelegate.androidWeiboClicked(this);
     }
 
     public interface SocialMediaControlDelegate{
@@ -63,11 +63,11 @@ public class SocialMediaControl {
     
     /** Delegate that handles all the social media code from the android package*/
     public interface SocialMediaConnectionDelegate{
-    	public void androidFacebookClicked();
-    	public void androidContactsClicked();
-    	public void androidGoogleClicked();
-    	public void androidTwitterClicked();
-    	public void androidVKClicked();
-    	public void androidWeiboClicked();
+    	public void androidFacebookClicked(final SocialMediaControl smc);
+    	public void androidContactsClicked(final SocialMediaControl smc);
+    	public void androidGoogleClicked(final SocialMediaControl smc);
+    	public void androidTwitterClicked(final SocialMediaControl smc);
+    	public void androidVKClicked(final SocialMediaControl smc);
+    	public void androidWeiboClicked(final SocialMediaControl smc);
     }
 }

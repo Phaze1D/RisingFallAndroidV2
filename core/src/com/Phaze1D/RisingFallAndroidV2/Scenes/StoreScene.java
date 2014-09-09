@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -126,6 +127,7 @@ public class StoreScene extends Stage implements Screen, StoreBuyPanel.StoreBuyP
             Ball ball = spawners[randomGen.nextInt(10)].spawnBall();
             ball.velocity.set(velocity);
             ball.isPhysicsActive = true;
+            ball.setTouchable(Touchable.disabled);
             physicsWorld.addBody(ball);
             ballGroup.addActor(ball);
             ballQuene.addLast(ball);

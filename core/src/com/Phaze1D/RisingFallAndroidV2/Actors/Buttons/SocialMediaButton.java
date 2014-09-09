@@ -96,7 +96,7 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
                         control.vkClicked();
                     }
 
-                    didShare = true;
+                    
                     if (didShare){
 
                         player.calculateNextShareTime();
@@ -168,7 +168,12 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
 
     @Override
     public void sharedCalledBack(boolean didShare) {
-
+    	if(didShare){
+    		Player player = Player.shareInstance();
+    		player.calculateNextShareTime();
+    		delegate.subSocialButtonPressed(didShare);
+    	}
+    	
     }
 
     @Override
