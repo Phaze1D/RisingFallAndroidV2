@@ -3,6 +3,7 @@ package com.Phaze1D.RisingFallAndroidV2.android;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
@@ -22,7 +23,8 @@ import android.widget.Toast;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl.SocialMediaConnectionDelegate;
-import com.Phaze1D.RisingFallAndroidV2.android.SocialWebDialog.SocialCompleteListener;
+import com.Phaze1D.RisingFallAndroidV2.android.SocialShareDialog.OnCompleteSharing;
+import com.Phaze1D.RisingFallAndroidV2.android.SocialWebLoginDialog.SocialCompleteListener;
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
@@ -184,30 +186,33 @@ public class AndroidSocialMediaControl implements SocialMediaConnectionDelegate 
 
 	private void loadTwitterLogin() {
 
-		new RequestURLClass().execute("null");
+		new TwitterRequestURLClass().execute("null");
 	}
 
 	// Post a tweet on twitter
 	private void postToTwitter(final String oauth) {
-		Thread accessThread = new Thread(new Runnable() {
-
+		
+		
+		androidLan.runOnUiThread(new Runnable() {
+			
 			@Override
 			public void run() {
-				try {
-					accessToken = twitter.getOAuthAccessToken(requestToken,
-							oauth);
 
-					// Update status
-					twitter4j.Status response = twitter
-							.updateStatus("Testing my tweet2");
-
-				} catch (TwitterException e) {
-					e.printStackTrace();
-
-				}
+				SocialShareDialog test = new SocialShareDialog(androidLan);
+				test.setOnCompleteSharing(new OnCompleteSharing() {
+					
+					@Override
+					public void complete(int status, String post) {
+						
+						
+						
+					}
+				});
+				
+				test.show();
+				
 			}
 		});
-		accessThread.start();
 
 	}
 
@@ -221,7 +226,7 @@ public class AndroidSocialMediaControl implements SocialMediaConnectionDelegate 
 	}
 
 	// Request URL async task class
-	private class RequestURLClass extends AsyncTask<String, String, String> {
+	private class TwitterRequestURLClass extends AsyncTask<String, String, String> {
 
 		String url;
 		ProgressDialog pDialog;
@@ -276,7 +281,8 @@ public class AndroidSocialMediaControl implements SocialMediaConnectionDelegate 
 
 				@Override
 				public void run() {
-					SocialWebDialog twitterLoginDialog = new SocialWebDialog(
+					pDialog.dismiss();
+					SocialWebLoginDialog twitterLoginDialog = new SocialWebLoginDialog(
 							androidLan, url2);
 					twitterLoginDialog
 							.setSocialComplete(new SocialCompleteListener() {
@@ -285,9 +291,9 @@ public class AndroidSocialMediaControl implements SocialMediaConnectionDelegate 
 								public void loginComplete(int status,
 										String oauth) {
 
-									if (status == SocialWebDialog.VERIFIED) {
+									if (status == SocialWebLoginDialog.VERIFIED) {
 										postToTwitter(oauth);
-									} else if (status == SocialWebDialog.NOT_VERIFIED) {
+									} else if (status == SocialWebLoginDialog.NOT_VERIFIED) {
 										postErrorMessage();
 										androidLan.appControl.resume();
 									}
@@ -295,7 +301,7 @@ public class AndroidSocialMediaControl implements SocialMediaConnectionDelegate 
 
 							});
 					twitterLoginDialog.show();
-					pDialog.dismiss();
+					
 				}
 			});
 
@@ -303,25 +309,6 @@ public class AndroidSocialMediaControl implements SocialMediaConnectionDelegate 
 
 	}
 
-	private class UpdatingTwitter extends AsyncTask<String, String, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			
-			return null;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			
-		}
-
-	}
 
 	@Override
 	public void androidVKClicked(final SocialMediaControl smc) {

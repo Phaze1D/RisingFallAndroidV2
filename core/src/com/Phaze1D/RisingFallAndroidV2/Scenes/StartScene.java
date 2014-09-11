@@ -106,9 +106,10 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
                 nextSpawn = nextSpawn - spawnRate;
                 spawnBall();
             }
+            physicsWorld.evaluatePhysics(delta);
         }
 
-        physicsWorld.evaluatePhysics(delta);
+        
     }
 
     @Override

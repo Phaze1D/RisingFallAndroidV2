@@ -3,7 +3,6 @@ package com.Phaze1D.RisingFallAndroidV2.android;
 
 
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,7 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class SocialWebDialog extends Dialog {
+public class SocialWebLoginDialog extends Dialog {
 
 	public static final int NOT_POSTED = 0;
 	public static final int POSTED = 1;
@@ -65,20 +64,20 @@ public class SocialWebDialog extends Dialog {
 
 	}
 
-	public SocialWebDialog(Context context, boolean cancelable,
+	public SocialWebLoginDialog(Context context, boolean cancelable,
 			OnCancelListener cancelListener, String url) {
 		super(context, cancelable, cancelListener);
 		this.url = url;
 
 	}
 
-	public SocialWebDialog(Context context, int theme, String url) {
+	public SocialWebLoginDialog(Context context, int theme, String url) {
 		super(context, theme);
 		this.url = url;
 
 	}
 
-	public SocialWebDialog(Context context, String url) {
+	public SocialWebLoginDialog(Context context, String url) {
 		super(context,DEFAULT_THEME);
 		this.url = url;
 
@@ -121,8 +120,8 @@ public class SocialWebDialog extends Dialog {
 		setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialogInterface) {
-				SocialWebDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
-				SocialWebDialog.this.dismiss();
+				SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+				SocialWebLoginDialog.this.dismiss();
 			}
 		});
 
@@ -131,8 +130,8 @@ public class SocialWebDialog extends Dialog {
 		spinner.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialogInterface) {
-				SocialWebDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
-				SocialWebDialog.this.dismiss();
+				SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+				SocialWebLoginDialog.this.dismiss();
 			}
 		});
 
@@ -165,8 +164,8 @@ public class SocialWebDialog extends Dialog {
 		crossImageView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SocialWebDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
-				SocialWebDialog.this.dismiss();
+				SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+				SocialWebLoginDialog.this.dismiss();
 			}
 		});
 		Drawable crossDrawable = getContext().getResources().getDrawable(
@@ -243,12 +242,12 @@ public class SocialWebDialog extends Dialog {
 				Uri uri = Uri.parse( url );				
 	            String oauthVerifier = uri.getQueryParameter( "oauth_verifier" );
 	            if(oauthVerifier != null){
-	            	 SocialWebDialog.this.onComplete.loginComplete(VERIFIED, oauthVerifier);
+	            	 SocialWebLoginDialog.this.onComplete.loginComplete(VERIFIED, oauthVerifier);
 	            }else{
-	            	 SocialWebDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+	            	 SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
 	            }
 	            
-	            SocialWebDialog.this.dismiss();
+	            SocialWebLoginDialog.this.dismiss();
 	            return true;
 			}
 			
