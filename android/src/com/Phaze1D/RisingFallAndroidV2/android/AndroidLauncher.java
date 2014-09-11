@@ -15,7 +15,7 @@ import com.facebook.Session;
 
 public class AndroidLauncher extends AndroidApplication {
 
-    private ApplicationController appControl;
+    public ApplicationController appControl;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
