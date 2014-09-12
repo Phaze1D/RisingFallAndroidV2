@@ -3,19 +3,18 @@ package com.Phaze1D.RisingFallAndroidV2.android;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources.Theme;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -137,9 +136,25 @@ public class SocialShareDialog extends Dialog {
 			@Override
 			public void onClick(View v) {
 				
-				onCompleteSharing.complete(SHARED, (String)tweetButton.getText());
+				
+				onCompleteSharing.complete(SHARED, textArea.getText().toString());
+				SocialShareDialog.this.dismiss();
 			} 
 			
+		});
+		tweetButton.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					tweetButton.setAlpha(.5f);
+				}else if(event.getAction() == MotionEvent.ACTION_UP){
+					tweetButton.setAlpha(1f);
+					v.performClick();
+				}
+				
+				return true;
+			}
 		});
 		
 		frameLayout.addView(tweetButton);

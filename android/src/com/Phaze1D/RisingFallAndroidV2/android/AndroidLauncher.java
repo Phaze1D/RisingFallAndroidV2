@@ -12,6 +12,9 @@ import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.facebook.Session;
+import com.vk.sdk.VKUIHelper;
+
+
 
 public class AndroidLauncher extends AndroidApplication {
 
@@ -21,8 +24,10 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
+		
 		SocialMediaControl smc = SocialMediaControl.sharedInstance();
-		smc.setAndroidDelegate(new AndroidSocialMediaControl(this));	
+		smc.setAndroidDelegate(new AndroidSocialMediaControl(this, smc));	
 		
         Hashtable<String, String> hashtable = new Hashtable<String, String>();
         Field[] fields = R.string.class.getFields();
@@ -35,23 +40,26 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(appControl, config);
 		
+		
 	}
 
 
     @Override
     protected void onPause() {
-
         super.onPause();
+        
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        VKUIHelper.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         finish();
+        VKUIHelper.onDestroy(this);
         super.onDestroy();
     }
 
