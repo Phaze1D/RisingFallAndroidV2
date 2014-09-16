@@ -22,6 +22,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
@@ -43,6 +44,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusShare;
+import com.google.android.gms.wearable.internal.m;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
@@ -69,7 +71,7 @@ public class AndroidSocialMediaControl implements
 
 	public GoogleApiClient googleClient;
 	private ConnectionResult mConnectionResult;
-	public boolean mIntentInProgress;
+	public GoogleConnectClass googleConnect;
 
 	public AndroidSocialMediaControl(AndroidLauncher androidLan,
 			SocialMediaControl smc) {
@@ -202,14 +204,14 @@ public class AndroidSocialMediaControl implements
 	public void androidGoogleClicked() {
 		if (isConnectingToInternet()) {
 			smcDisable();
-			if (googleClient == null) {
-				googleClient = new GoogleApiClient.Builder(androidLan)
-						.addConnectionCallbacks(this)
-						.addOnConnectionFailedListener(this).addApi(Plus.API)
-						.addScope(Plus.SCOPE_PLUS_LOGIN).build();
-			}
+			googleClient = new GoogleApiClient.Builder(androidLan)
+					.addConnectionCallbacks(this)
+					.addOnConnectionFailedListener(this).addApi(Plus.API)
+					.addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
-			googleClient.connect();
+			googleConnect = new GoogleConnectClass();
+
+			googleConnect.execute(AndroidLauncher.GOOGLE_RC_SIGN_IN);
 
 		} else {
 			postErrorMessage();
@@ -217,19 +219,7 @@ public class AndroidSocialMediaControl implements
 
 	}
 
-	@Override
-	public void onConnected(Bundle connectionHint) {
-		Log.d("DAVID", "CONNECTentGOODLE");
-		Intent shareIntent = new PlusShare.Builder(androidLan)
-				.setType("text/plain")
-				.setText("Welcome to the Google+ platform.")
-				.setContentUrl(Uri.parse("https://developers.google.com/+/"))
-				.getIntent();
 
-		androidLan
-				.startActivityForResult(shareIntent, AndroidLauncher.RC_SHARE);
-
-	}
 
 	public void googleDidShare() {
 		postSuccessUpdate();
@@ -249,6 +239,27 @@ public class AndroidSocialMediaControl implements
 
 		}
 	}
+	
+	public void newGoogleConnect(){
+		googleConnect = new GoogleConnectClass();
+	}
+	
+	private void googleCreateShare(){
+		Intent shareIntent = new PlusShare.Builder(androidLan)
+        .setType("text/plain")
+        .setText("Welcome to the Google+ platform.")
+        .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+        .getIntent();
+
+		androidLan.startActivityForResult(shareIntent, AndroidLauncher.GOOGLE_RC_SHARE);
+	}
+	
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		Log.d("DAVID", "CONNECTED GOODLE");
+		
+	}
+	
 
 	@Override
 	public void onConnectionSuspended(int cause) {
@@ -258,36 +269,79 @@ public class AndroidSocialMediaControl implements
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
 		Log.d("DAVID", "CONNECTION FALILED GOODLE");
-
-			mConnectionResult = result;
-
-			Log.d("davod", result + " --- " + result.getErrorCode());
-
-			if (!googleClient.isConnecting()
-					&& !googleClient.isConnected()) {
-				resolveSignInError();
-			} else {
-				smcEnable();
-				postErrorMessage();
-			}
-
-
+		mConnectionResult = result;
 	}
 
 	private void resolveSignInError() {
+		Log.d("DAVID", "resolve sign in error");
 		if (mConnectionResult.hasResolution()) {
 			try {
-				mIntentInProgress = true;
+
 				mConnectionResult.startResolutionForResult(androidLan,
-						AndroidLauncher.RC_SIGN_IN);
-				Log.d("DAVID", "TRYINGKADLAKDF");
+						AndroidLauncher.GOOGLE_RC_SIGN_IN);
 			} catch (SendIntentException e) {
-				e.printStackTrace();
-				mIntentInProgress = false;
-				googleClient.connect();
+				googleDidNotShare();
 
 			}
 		}
+	}
+
+	public class GoogleConnectClass extends AsyncTask<Integer, Integer, Integer> {
+
+		ProgressDialog spinner;
+
+		@Override
+		protected void onPreExecute() {
+			androidLan.runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					spinner = new ProgressDialog(androidLan);
+					spinner.setOnCancelListener(new OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							googleDidNotShare();
+						}
+					});
+					spinner.show();
+
+				}
+			});
+
+		}
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+
+			googleClient.connect();
+			
+			while (googleClient.isConnecting()) {
+				
+			}
+			
+			return params[0];
+		}
+
+		@Override
+		protected void onPostExecute(final Integer result) {
+
+			androidLan.runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					spinner.dismiss();
+					spinner = null;
+					if (result == AndroidLauncher.GOOGLE_RC_SIGN_IN) {
+						resolveSignInError();
+					}else if(result == AndroidLauncher.GOOGLE_RC_SHARE){
+						googleCreateShare();
+					}
+				}
+			});
+
+		}
+
 	}
 
 	@Override

@@ -3,12 +3,14 @@ package com.Phaze1D.RisingFallAndroidV2.android;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.ApplicationController;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
+import com.Phaze1D.RisingFallAndroidV2.android.AndroidSocialMediaControl.GoogleConnectClass;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.facebook.Session;
@@ -24,8 +26,8 @@ import com.vk.sdk.VKUIHelper;
 
 public class AndroidLauncher extends AndroidApplication {
 	
-	public static final int RC_SIGN_IN = 28883;
-	public static final int RC_SHARE = 23973;
+	public static final int GOOGLE_RC_SIGN_IN = 28883;
+	public static final int GOOGLE_RC_SHARE = 23973;
 
     public ApplicationController appControl;
     public AndroidSocialMediaControl androidSocialControl; 
@@ -91,7 +93,9 @@ public class AndroidLauncher extends AndroidApplication {
     protected void onDestroy() {
         finish();
         VKUIHelper.onDestroy(this);
-        if (androidSocialControl.googleClient.isConnected()) {
+        if (androidSocialControl.googleClient != null
+        		&& androidSocialControl.googleClient.isConnected()) {
+        	
 	        Plus.AccountApi.clearDefaultAccount(androidSocialControl.googleClient);
 	        androidSocialControl.googleClient.disconnect();
 	        
@@ -112,30 +116,34 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Log.d("DAVID VILLARREAL", "ON activity result");
-
-		if (requestCode == RC_SIGN_IN) {
-			Log.d("DAVID VILLARREAL", "testinga resutl code" + resultCode);
-	        if (resultCode != ConnectionResult.SUCCESS) {
-	           androidSocialControl.smcEnable();
-	           Log.d("DAVID VILLARREAL", "testinga resutl code");
-	        }
-	        
-	        androidSocialControl.googleClient.connect();
-	    }
 		
-		if(requestCode == RC_SHARE){
-			 Log.d("DAVID", resultCode + " ---- ");
-		        if (resultCode == -1) {
-					androidSocialControl.googleDidShare();
-				}else {
-					androidSocialControl.googleDidNotShare();
-				}
+		if(requestCode == GOOGLE_RC_SIGN_IN){
+			if(resultCode == Activity.RESULT_CANCELED){
+				Log.d("DAVID VILLARREAL", "sign in canceled");
+				androidSocialControl.googleDidNotShare();
+			}else if(resultCode == Activity.RESULT_OK){
+				Log.d("DAVID VILLARREAL", "sign in ok");
+				androidSocialControl.newGoogleConnect();
+				androidSocialControl.googleConnect.execute(GOOGLE_RC_SHARE);
+				
+			}
 		}
-	
+		
+		if(requestCode == GOOGLE_RC_SHARE){
+			if(resultCode == Activity.RESULT_CANCELED){
+				Log.d("DAVID VILLARREAL", "shared canceled");
+				androidSocialControl.googleDidNotShare();
+			}else if(resultCode == Activity.RESULT_OK){
+				Log.d("DAVID VILLARREAL", "shared ok");
+				androidSocialControl.googleDidShare();
+			}
+		}
+		
+
 		
 		if (requestCode == VKSdk.VK_SDK_REQUEST_CODE) {
 			VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
-        }else if(requestCode != RC_SIGN_IN && requestCode != RC_SHARE){
+        }else if(requestCode != GOOGLE_RC_SIGN_IN && requestCode != GOOGLE_RC_SHARE){
         	Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
         }
 		
