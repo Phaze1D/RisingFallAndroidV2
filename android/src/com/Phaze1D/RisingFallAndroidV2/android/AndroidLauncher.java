@@ -12,22 +12,31 @@ import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.facebook.Session;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.plus.PlusShare;
+import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKUIHelper;
 
 
 
 public class AndroidLauncher extends AndroidApplication {
+	
+	public static final int RC_SIGN_IN = 28883;
+	public static final int RC_SHARE = 23973;
 
     public ApplicationController appControl;
+    public AndroidSocialMediaControl androidSocialControl; 
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
-		
 		SocialMediaControl smc = SocialMediaControl.sharedInstance();
-		smc.setAndroidDelegate(new AndroidSocialMediaControl(this, smc));	
+		androidSocialControl = new AndroidSocialMediaControl(this, smc);
+		smc.setAndroidDelegate(androidSocialControl);	
 		
         Hashtable<String, String> hashtable = new Hashtable<String, String>();
         Field[] fields = R.string.class.getFields();
@@ -41,10 +50,32 @@ public class AndroidLauncher extends AndroidApplication {
 		initialize(appControl, config);
 		
 		
+		
+		
 	}
+	
+	
 
 
     @Override
+	protected void onStart() {
+		super.onStart();
+		
+	}
+
+
+
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+	
+	}
+
+
+
+
+	@Override
     protected void onPause() {
         super.onPause();
         
@@ -60,6 +91,19 @@ public class AndroidLauncher extends AndroidApplication {
     protected void onDestroy() {
         finish();
         VKUIHelper.onDestroy(this);
+        if (androidSocialControl.googleClient.isConnected()) {
+	        Plus.AccountApi.clearDefaultAccount(androidSocialControl.googleClient);
+	        androidSocialControl.googleClient.disconnect();
+	        
+	    }
+        
+        if(Session.getActiveSession() != null){
+        	Session.getActiveSession().closeAndClearTokenInformation();
+        }
+        if(VKSdk.instance() != null && VKSdk.isLoggedIn()){
+        	VKSdk.logout();
+        }
+        androidSocialControl.logoutTwitter();
         super.onDestroy();
     }
 
@@ -67,8 +111,34 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
 		Log.d("DAVID VILLARREAL", "ON activity result");
+
+		if (requestCode == RC_SIGN_IN) {
+			Log.d("DAVID VILLARREAL", "testinga resutl code" + resultCode);
+	        if (resultCode != ConnectionResult.SUCCESS) {
+	           androidSocialControl.smcEnable();
+	           Log.d("DAVID VILLARREAL", "testinga resutl code");
+	        }
+	        
+	        androidSocialControl.googleClient.connect();
+	    }
+		
+		if(requestCode == RC_SHARE){
+			 Log.d("DAVID", resultCode + " ---- ");
+		        if (resultCode == -1) {
+					androidSocialControl.googleDidShare();
+				}else {
+					androidSocialControl.googleDidNotShare();
+				}
+		}
+	
+		
+		if (requestCode == VKSdk.VK_SDK_REQUEST_CODE) {
+			VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
+        }else if(requestCode != RC_SIGN_IN && requestCode != RC_SHARE){
+        	Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        }
+		
 	}
     
    
