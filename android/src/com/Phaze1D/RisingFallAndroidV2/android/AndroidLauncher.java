@@ -28,6 +28,7 @@ public class AndroidLauncher extends AndroidApplication {
 	
 	public static final int GOOGLE_RC_SIGN_IN = 28883;
 	public static final int GOOGLE_RC_SHARE = 23973;
+	public static final int EMAIL_RC = 231;
 
     public ApplicationController appControl;
     public AndroidSocialMediaControl androidSocialControl; 
@@ -143,7 +144,7 @@ public class AndroidLauncher extends AndroidApplication {
 		
 		if (requestCode == VKSdk.VK_SDK_REQUEST_CODE) {
 			VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
-        }else if(requestCode != GOOGLE_RC_SIGN_IN && requestCode != GOOGLE_RC_SHARE){
+        }else if(requestCode != GOOGLE_RC_SIGN_IN && requestCode != GOOGLE_RC_SHARE && requestCode != EMAIL_RC){
         	Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
         }
 		

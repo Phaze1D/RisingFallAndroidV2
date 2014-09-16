@@ -122,7 +122,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public void render(float delta) {
         act(delta);
         draw();
-        currentTime += delta;
+        
 
 
         if (powerTimePanel != null){
@@ -137,6 +137,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         }
 
         if (hasFinishCreated && clickedBegin && !pausedGame && !ceilingHit){
+        	currentTime += delta;
 
             if (currentTime >= nextColorTime){
                 changeRandomBallColor();

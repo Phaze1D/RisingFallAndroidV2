@@ -1,5 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.android;
 
+import java.net.URLEncoder;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -197,7 +199,17 @@ public class AndroidSocialMediaControl implements
 
 	@Override
 	public void androidContactsClicked() {
-
+		Intent email = new Intent(Intent.ACTION_SEND);
+		email.setData(Uri.parse("mailto:"));
+		//email.putExtra(Intent.EXTRA_EMAIL, new String[]{"", ""});		  
+		email.putExtra(Intent.EXTRA_SUBJECT, "subject");
+		email.putExtra(Intent.EXTRA_TEXT, "message");
+		email.setType("message/rfc822");
+		
+	    
+		androidLan.startActivityForResult(Intent.createChooser(email, "Email"), AndroidLauncher.EMAIL_RC);
+		
+		
 	}
 
 	@Override
