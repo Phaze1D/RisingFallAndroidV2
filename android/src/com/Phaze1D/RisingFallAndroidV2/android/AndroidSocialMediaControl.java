@@ -199,17 +199,20 @@ public class AndroidSocialMediaControl implements
 
 	@Override
 	public void androidContactsClicked() {
-		Intent email = new Intent(Intent.ACTION_SEND);
-		email.setData(Uri.parse("mailto:"));
-		//email.putExtra(Intent.EXTRA_EMAIL, new String[]{"", ""});		  
-		email.putExtra(Intent.EXTRA_SUBJECT, "subject");
-		email.putExtra(Intent.EXTRA_TEXT, "message");
-		email.setType("message/rfc822");
-		
-	    
-		androidLan.startActivityForResult(Intent.createChooser(email, "Email"), AndroidLauncher.EMAIL_RC);
-		
-		
+		if (isConnectingToInternet()) {
+			smcDisable();
+			Intent email = new Intent(Intent.ACTION_SEND);
+			email.setData(Uri.parse("mailto:"));
+			// email.putExtra(Intent.EXTRA_EMAIL, new String[]{"", ""});
+			email.putExtra(Intent.EXTRA_SUBJECT, "subject");
+			email.putExtra(Intent.EXTRA_TEXT, "message");
+			email.setType("message/rfc822");
+
+			androidLan.startActivityForResult(
+					Intent.createChooser(email, "Email"),
+					AndroidLauncher.EMAIL_RC);
+		}
+
 	}
 
 	@Override
@@ -231,8 +234,6 @@ public class AndroidSocialMediaControl implements
 
 	}
 
-
-
 	public void googleDidShare() {
 		postSuccessUpdate();
 		smcEnable();
@@ -251,27 +252,27 @@ public class AndroidSocialMediaControl implements
 
 		}
 	}
-	
-	public void newGoogleConnect(){
+
+	public void newGoogleConnect() {
 		googleConnect = new GoogleConnectClass();
 	}
-	
-	private void googleCreateShare(){
-		Intent shareIntent = new PlusShare.Builder(androidLan)
-        .setType("text/plain")
-        .setText("Welcome to the Google+ platform.")
-        .setContentUrl(Uri.parse("https://developers.google.com/+/"))
-        .getIntent();
 
-		androidLan.startActivityForResult(shareIntent, AndroidLauncher.GOOGLE_RC_SHARE);
+	private void googleCreateShare() {
+		Intent shareIntent = new PlusShare.Builder(androidLan)
+				.setType("text/plain")
+				.setText("Welcome to the Google+ platform.")
+				.setContentUrl(Uri.parse("https://developers.google.com/+/"))
+				.getIntent();
+
+		androidLan.startActivityForResult(shareIntent,
+				AndroidLauncher.GOOGLE_RC_SHARE);
 	}
-	
+
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		Log.d("DAVID", "CONNECTED GOODLE");
-		
+
 	}
-	
 
 	@Override
 	public void onConnectionSuspended(int cause) {
@@ -298,7 +299,8 @@ public class AndroidSocialMediaControl implements
 		}
 	}
 
-	public class GoogleConnectClass extends AsyncTask<Integer, Integer, Integer> {
+	public class GoogleConnectClass extends
+			AsyncTask<Integer, Integer, Integer> {
 
 		ProgressDialog spinner;
 
@@ -327,11 +329,11 @@ public class AndroidSocialMediaControl implements
 		protected Integer doInBackground(Integer... params) {
 
 			googleClient.connect();
-			
+
 			while (googleClient.isConnecting()) {
-				
+
 			}
-			
+
 			return params[0];
 		}
 
@@ -346,7 +348,7 @@ public class AndroidSocialMediaControl implements
 					spinner = null;
 					if (result == AndroidLauncher.GOOGLE_RC_SIGN_IN) {
 						resolveSignInError();
-					}else if(result == AndroidLauncher.GOOGLE_RC_SHARE){
+					} else if (result == AndroidLauncher.GOOGLE_RC_SHARE) {
 						googleCreateShare();
 					}
 				}
@@ -664,11 +666,11 @@ public class AndroidSocialMediaControl implements
 
 	}
 
-	private void postErrorMessage() {
+	public void postErrorMessage() {
 		smc.delegate.sharedCalledBack(false);
 	}
 
-	private void postSuccessUpdate() {
+	public void postSuccessUpdate() {
 		smc.delegate.sharedCalledBack(true);
 	}
 

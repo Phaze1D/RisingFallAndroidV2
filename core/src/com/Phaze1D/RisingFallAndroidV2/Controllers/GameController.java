@@ -28,6 +28,9 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     private boolean isCreated;
 
     private TextureLoader textureLoader;
+    
+    public AdDelegate adDelegate;
+    
 
     public GameController(SpriteBatch batch){
         this.batch = batch;
@@ -70,7 +73,10 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     /** Loads the StartScreen data*/
     private void loadStartScreen(){
-
+    	adDelegate.currentScene(1);
+    	if(isCreated){
+    		adDelegate.showAd();
+    	}
         setScreen(null);
         textureLoader.dispose();
         textureLoader.loadStartScreenAtlases();
@@ -81,11 +87,14 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         startScreen.socialMediaAtlas = textureLoader.getSocialMediaAtlas();
         startScreen.delegate = this;
         setScreen(startScreen);
+        
 
     }
 
     /** Loads the LevelScreen*/
     private void loadLevelScreen(){
+    	 adDelegate.currentScene(2);
+    	adDelegate.showAd();
         setScreen(null);
         textureLoader.dispose();
         textureLoader.loadLevelsScreenAtlases();
@@ -94,12 +103,13 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         levelsScene.sceneAtlas = textureLoader.getLevelsScreenAtlas();
         levelsScene.delegate = this;
         setScreen(levelsScene);
-
+       
 
     }
 
     private void loadGameplayScreen(int levelID){
-
+    	adDelegate.currentScene(3);
+    	adDelegate.hideAd();
         setScreen(null);
         textureLoader.dispose();
         textureLoader.loadGamePlayScreenAtlases(levelID);
@@ -114,11 +124,13 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         gameplayScreen.infoAtlas = textureLoader.getInfoAtlas();
         gameplayScreen.delegate = this;
         setScreen(gameplayScreen);
-
+        
 
     }
 
     private void loadStoreScreen(){
+    	adDelegate.currentScene(4);
+    	adDelegate.hideAd();
         setScreen(null);
         textureLoader.dispose();
         textureLoader.loadStoreScreenAtlases();
@@ -165,5 +177,11 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     @Override
     public void storeBackPressed() {
         loadStartScreen();
+    }
+    
+    public interface AdDelegate{
+    	public void hideAd();
+    	public void showAd();
+    	public void currentScene(int sceneID);
     }
 }
