@@ -89,7 +89,7 @@ public class Ball extends Image {
     }
 
     public void doubleClicked(){
-        isDoubleBall = true;
+        isDoubleBall = false;
         setDrawable(new SpriteDrawable(doubleSprite));
     }
 

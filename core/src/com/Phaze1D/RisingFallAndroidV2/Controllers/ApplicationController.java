@@ -1,5 +1,6 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.GameController.AdDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -18,10 +19,10 @@ public class ApplicationController extends ApplicationAdapter {
 
     }
 
-    public ApplicationController(Hashtable<String, String> localeStrings){
+    public ApplicationController(Hashtable<String, String> localeStrings, CorePaymentDelegate paymentDelegate){
         LocaleStrings.getInstance(localeStrings);
         
-        gameController = new GameController(batch);
+        gameController = new GameController(batch, paymentDelegate);
     }
 
     public void setAdDelegate(AdDelegate adDelegate){

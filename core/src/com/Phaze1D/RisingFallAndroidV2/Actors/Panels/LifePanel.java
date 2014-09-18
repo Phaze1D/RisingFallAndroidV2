@@ -52,7 +52,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         livesLeft.setPosition((int) (getWidth() / 2 - livesLeft.getWidth() / 2), (int) (getHeight() / 3 - livesLeft.getHeight() / 2));
         addActor(livesLeft);
 
-
+        
     }
 
     /** Creates time panel showing how much time the player has for the next 5 lives*/

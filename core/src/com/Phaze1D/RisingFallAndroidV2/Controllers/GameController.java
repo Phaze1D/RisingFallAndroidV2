@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
 
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.GameplayScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.LevelsScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StartScene;
@@ -31,9 +32,16 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     
     public AdDelegate adDelegate;
     
+    private CorePaymentDelegate paymentDelegate;
+    
 
-    public GameController(SpriteBatch batch){
+    public GameController(SpriteBatch batch, CorePaymentDelegate paymentDelegate){
         this.batch = batch;
+        this.paymentDelegate = paymentDelegate;
+    }
+    
+    public CorePaymentDelegate getPaymentDelegate(){
+    	return paymentDelegate;
     }
 
 

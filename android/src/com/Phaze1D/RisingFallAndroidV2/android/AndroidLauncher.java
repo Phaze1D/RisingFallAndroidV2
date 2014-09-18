@@ -39,11 +39,14 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	private AdRequest adRequest;
 	
 	private int currentSceneID = 0;
+	
+	private AndroidPaymentClass payDelegate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		payDelegate = AndroidPaymentClass.shareInstance();
 		RelativeLayout layout = new RelativeLayout(this);
 
         // Do the stuff that initialize() would do for you
@@ -76,7 +79,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 
 		
 		
-		appControl = new ApplicationController(hashtable);
+		appControl = new ApplicationController(hashtable, payDelegate);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		View gameView = initializeForView(appControl, config);
 		appControl.setAdDelegate(this);

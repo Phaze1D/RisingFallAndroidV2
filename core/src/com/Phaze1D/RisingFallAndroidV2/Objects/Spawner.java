@@ -58,7 +58,7 @@ public class Spawner {
 
             if (dp < doubleBallProb && levelAt >= 18){
                 Ball ball = new Ball(badBallAtlas.createSprite("badBall"+randIndex));
-                ball.doubleSprite = badBallAtlas.createSprite("ball"+randIndex);
+                ball.doubleSprite = ballAtlas.createSprite("ball"+randIndex);
                 ball.setPosition(position.x, position.y);
                 ball.column = column;
                 ball.ballColor = randIndex;

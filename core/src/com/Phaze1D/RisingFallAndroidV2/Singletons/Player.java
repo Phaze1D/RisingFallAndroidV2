@@ -17,7 +17,7 @@ public class Player implements Serializable{
 	private static final long serialVersionUID = 8977155991963664225L;
 
 	private static Player ourInstance;
-
+	
     private int power1;
     private int power2;
     private int power3;
@@ -49,6 +49,7 @@ public class Player implements Serializable{
 
         return ourInstance;
     }
+    
 
     private void setInitialConditions(){
         power1 = 5;
@@ -238,5 +239,5 @@ public class Player implements Serializable{
 
         return player;
     }
-
+    
 }
