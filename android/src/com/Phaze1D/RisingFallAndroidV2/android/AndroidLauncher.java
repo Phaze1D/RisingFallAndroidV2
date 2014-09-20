@@ -46,7 +46,10 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		payDelegate = AndroidPaymentClass.shareInstance();
+		
+		payDelegate = AndroidPaymentClass.shareInstance(this);
+		payDelegate.bindPaymentService();
+		
 		RelativeLayout layout = new RelativeLayout(this);
 
         // Do the stuff that initialize() would do for you
@@ -131,6 +134,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 
 	@Override
 	protected void onDestroy() {
+		payDelegate.unBindPaymentService();
 		if (adView != null) {
 			adView.destroy();
 		}
@@ -229,6 +233,10 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	@Override
 	public void currentScene(int sceneID) {
 		currentSceneID = sceneID;
+		
+	}
+	
+	public void displayInAppError(){
 		
 	}
 
