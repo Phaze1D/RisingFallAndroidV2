@@ -1,5 +1,6 @@
 package com.Phaze1D.RisingFallAndroidV2.Singletons;
 
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -163,6 +164,13 @@ public class Player implements Serializable{
             livesLeft--;
         }
     }
+    
+    public void addLives(){
+    	if(livesLeft == 0){
+    		livesLeft = 5;
+    		timeLeftOnLifes = 0;
+    	}
+    }
 
     public int getPassedScore(int levelID){
         return scores[levelID];
@@ -178,6 +186,26 @@ public class Player implements Serializable{
 
     public double getTimeLeftOnSocialMedia() {
         return timeLeftOnSocialMedia;
+    }
+    
+    public void itemBought(String itemID){
+    	if(itemID == CorePaymentDelegate.KEEP_PLAYING_ID){
+    		
+    	}else if(itemID == CorePaymentDelegate.POWER1_ID){
+    		increasePower(1);
+    	}else if(itemID == CorePaymentDelegate.POWER2_ID){
+    		increasePower(2);
+    	}else if(itemID == CorePaymentDelegate.POWER3_ID){
+    		increasePower(3);
+    	}else if(itemID == CorePaymentDelegate.POWER4_ID){
+    		increasePower(4);
+    	}else if(itemID == CorePaymentDelegate.POWER5_ID){
+    		increasePower(5);
+    	}else if(itemID == CorePaymentDelegate.MORE_LIFES_ID){
+    		if(livesLeft == 0){
+    			addLives();
+    		}
+    	}
     }
 
     /** Saves the player information into a file*/

@@ -123,8 +123,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     public void buttonPressed(int type) {
 
         Player playerInfo = Player.shareInstance();
-        playerInfo.livesLeft = 5;
-        playerInfo.timeLeftOnLifes = 0;
+        playerInfo.addLives();
         clear();
         createLifePanel();
 
