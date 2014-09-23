@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
@@ -74,6 +75,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 				@Override
 				public void onServiceConnected(ComponentName name,
 						IBinder service) {
+					Log.d("DAVID VILLARREAL", "service connectedd");
 					mService = IInAppBillingService.Stub.asInterface(service);
 					try {
 						int respone = mService.isBillingSupported(3,
@@ -209,9 +211,13 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 			if(respone == BILLING_OK){
 			     AndroidPaymentClass.this.skuResponeList = skuDetails.getStringArrayList("DETAILS_LIST");
 			     AndroidPaymentClass.this.areItemsCreated = true;
+			     Log.d("DAVID VILLARREAL", "ITEM LIST READY");
+			     Log.d("DAVID VILLARREAL", skuResponeList.toString());
 			}else{
 				AndroidPaymentClass.this.areItemsCreated = false;
+				Log.d("DAVID VILLARREAL", "ITEM LIST NOT READY");
 			}
+			
 			
 			
 		}

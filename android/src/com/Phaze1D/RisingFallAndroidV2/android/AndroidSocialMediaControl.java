@@ -1,6 +1,5 @@
 package com.Phaze1D.RisingFallAndroidV2.android;
 
-import java.net.URLEncoder;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -24,7 +23,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
@@ -46,7 +44,6 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusShare;
-import com.google.android.gms.wearable.internal.m;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
