@@ -2,6 +2,8 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
@@ -21,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
  * Created by davidvillarreal on 8/26/14.
  * Rising Fall Android Version
  */
-public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelegate{
+public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelegate, PaymentFlowCompletionListener{
 
 
     public double timeLeft;
@@ -33,10 +35,13 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     private BitmapFont font;
 
     private LocaleStrings strings;
+    
+    public CorePaymentDelegate corePaymentDelegate;
 
-    public LifePanel(Sprite panelSprite){
+    public LifePanel(Sprite panelSprite, CorePaymentDelegate cpd){
         super(panelSprite);
         strings = LocaleStrings.getOurInstance();
+        corePaymentDelegate = cpd;
     }
 
     /** Creates the life panel showing how many lives the player has left*/
@@ -114,29 +119,30 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     }
 
-    /** Dispose the resources use by the panel*/
-    public void dispose(){
-        clear();
-    }
-
+   
     @Override
+	public void clear() {
+    	corePaymentDelegate = null;
+		super.clear();
+	}
+
+	@Override
     public void buttonPressed(int type) {
-
-        Player playerInfo = Player.shareInstance();
-        playerInfo.addLives();
-        clear();
-        createLifePanel();
-
-//        PaymentClass * payment = [[PaymentClass alloc] init];
-//        if ([payment payDollar]) {
-//            GameData * info = [GameData sharedGameData];
-//            info.player.lifesLeft = 5;
-//            info.player.timeLeftOnLifes = 0;
-//
-//            [self clearAll];
-//            [self createLifePanel];
-//
-//        }
+		corePaymentDelegate.setPaymentFlowCompletionListener(this);
+    	corePaymentDelegate.buyItem(CorePaymentDelegate.MORE_LIFES_ID);
+        
 
     }
+
+	@Override
+	public void paymentComplete(boolean didPay) {
+		if(didPay){
+			clear();
+	        createLifePanel();
+		}
+		
+	}
+    
+    
+    
 }

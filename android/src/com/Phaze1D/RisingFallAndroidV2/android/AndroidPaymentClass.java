@@ -26,6 +26,7 @@ import com.Phaze1D.RisingFallAndroid.IAB.IabHelper.OnIabSetupFinishedListener;
 import com.Phaze1D.RisingFallAndroid.IAB.IabResult;
 import com.Phaze1D.RisingFallAndroid.IAB.Purchase;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.android.vending.billing.IInAppBillingService;
 
@@ -39,6 +40,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 	private Context context;
 	private IabHelper mHelper;
 	private Player myPlayer;
+	private PaymentFlowCompletionListener paymentCompleteListener;
 
 	
 	private AndroidPaymentClass(Context context) {
@@ -54,9 +56,16 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 	@Override
 	public void setPlayer(Player player) {
+		Log.d(TAG, "Did set player " + player);
 		if (myPlayer == null) {
 			myPlayer = player;
 		}
+	}
+	
+	@Override
+	public void setPaymentFlowCompletionListener(PaymentFlowCompletionListener lis){
+		this.paymentCompleteListener = null;
+		this.paymentCompleteListener = lis;
 	}
 
 	public void consumeOwnedItems(Inventory inv) {
@@ -103,9 +112,17 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 								if (results.get(i).isSuccess()) {
 									myPlayer.itemBought(purchases.get(i)
 											.getSku());
+									
+									if(paymentCompleteListener != null){
+										paymentCompleteListener.paymentComplete(true);
+									}
+									
 								} else {
 									((AndroidLauncher) context)
 											.displayInAppError("Error while consuming: " + results.get(i));
+									if(paymentCompleteListener != null){
+										paymentCompleteListener.paymentComplete(false);
+									}
 								}
 							}
 
@@ -154,7 +171,6 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 				myList.add(POWER4_ID);
 				myList.add(POWER5_ID);
 				myList.add(MORE_LIFES_ID);
-				myList.add("test_product");
 				mHelper.queryInventoryAsync(true, myList, new MyInventoryListener());
 			}
 		});
@@ -211,7 +227,16 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
     	return mHelper.handleActivityResult(requestCode, resultCode, data);
     }
 
-	
+	public void dispose(){
+		 Log.d(TAG, "Destroying helper.");
+	        if (mHelper != null) {
+	            mHelper.dispose();
+	            mHelper = null;
+	        }
+	        
+	        paymentCompleteListener = null;
+	}
+    
 	private class MyInventoryListener implements QueryInventoryFinishedListener {
 
 		@Override
@@ -246,11 +271,17 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 	            if (result.isFailure()) {
 	                //complain("Error purchasing: " + result);
 	            	((AndroidLauncher) context).displayInAppError("Error purchasing: " + result);
+	            	if(paymentCompleteListener != null){
+						paymentCompleteListener.paymentComplete(false);
+					}
 	                return;
 	            }
 	            if (!verifyDeveloperPayload(purchase)) {
 	                //complain("Error purchasing. Authenticity verification failed.");
 	            	((AndroidLauncher) context).displayInAppError("Error purchasing. Authenticity verification failed.");
+	            	if(paymentCompleteListener != null){
+						paymentCompleteListener.paymentComplete(false);
+					}
 	                return;
 	            }
 

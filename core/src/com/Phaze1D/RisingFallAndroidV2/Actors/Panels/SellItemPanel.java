@@ -1,6 +1,8 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
@@ -19,18 +21,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
  * Created by davidvillarreal on 9/3/14.
  * Rising Fall Android Version
  */
-public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDelegate {
+public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDelegate, PaymentFlowCompletionListener {
     public TextArea textView;
     public int powerType;
-
+    
+    public String powerID;
     public TextureAtlas buttonAtlas;
     public TextureAtlas storeSceneAtlas;
 
     private LocaleStrings strings;
 
-    public SellItemPanel(Sprite panelSprite) {
+    public CorePaymentDelegate corePaymentDelegate;
+    
+    public SellItemPanel(Sprite panelSprite, CorePaymentDelegate cpd) {
         super(panelSprite);
         strings = LocaleStrings.getOurInstance();
+        corePaymentDelegate = cpd;
+        
     }
 
     public void createPanel(int powerType, boolean isValidProduct){
@@ -90,17 +97,15 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
 
     @Override
     public void buttonPressed(int type) {
-
-        if (payButtonPressed()){
-            Player player = Player.shareInstance();
-            player.increasePower(powerType);
-        }else {
-            //Failed to pay
-        }
+    	corePaymentDelegate.setPaymentFlowCompletionListener(this);
+    	corePaymentDelegate.buyItem(powerID);
+        
     }
-
-
-    private boolean payButtonPressed(){
-        return true;
-    }
+    
+    @Override
+	public void paymentComplete(boolean didPay) {
+    	System.out.println("DID CALL PAYMENT COMPLETE WITH " + didPay);
+    	
+		
+	}
 }

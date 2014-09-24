@@ -4,6 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.*;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LevelFactory;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LinkedList;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
@@ -112,6 +113,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private Group ballGroup;
     public PhysicsWorld world;
+    public CorePaymentDelegate corePaymentDelegate;
 
     public GameplayScene(int levelID){
         this.levelID = levelID;
@@ -209,8 +211,16 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public void resume() {
 
     }
+    
+    
 
-    public void createScene(){
+    @Override
+	public void dispose() {
+		corePaymentDelegate = null;
+		super.dispose();
+	}
+
+	public void createScene(){
         initVariables();
         createPositions();
         createBackground();
@@ -565,7 +575,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                                 didWin = true;
                             }
 
-                            settingPanel.createGameOverPanel(didWin);
+                            settingPanel.createGameOverPanel(didWin, corePaymentDelegate);
                             addActor(settingPanel);
 
 
@@ -586,7 +596,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                         didWin = true;
                     }
 
-                    settingPanel.createGameOverPanel(didWin);
+                    settingPanel.createGameOverPanel(didWin, corePaymentDelegate);
                     addActor(settingPanel);
                 }
             }
@@ -609,6 +619,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         settingPanel.clear();
         settingPanel.remove();
+        settingPanel.corePaymentDelegate = null;
         settingPanel = null;
         optionPanel.setTouchable(Touchable.enabled);
         isSettingCreated = false;

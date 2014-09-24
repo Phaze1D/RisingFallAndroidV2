@@ -38,7 +38,7 @@ public class Player implements Serializable{
     public synchronized static Player shareInstance() {
 
         if (ourInstance == null){
-           if (Gdx.files.local("assets/SupportFiles/player.dat").exists()){
+           if (Gdx.files.local("player.dat").exists()){
                ourInstance = readPlayer();
                if (ourInstance == null){
                    ourInstance = new Player();
@@ -53,11 +53,11 @@ public class Player implements Serializable{
     
 
     private void setInitialConditions(){
-        power1 = 5;
-        power2 = 5;
-        power3 = 5;
-        power4 = 5;
-        power5 = 5;
+        power1 = 0;
+        power2 = 0;
+        power3 = 0;
+        power4 = 0;
+        power5 = 0;
         levelAt = 99;
         livesLeft = 5;
         scores = new int[100];
@@ -145,13 +145,13 @@ public class Player implements Serializable{
     /** Calculates the next available time to share in social media*/
     public void calculateNextShareTime(){
         //timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 172800;
-    	timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 15;
+    	timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 30;
     }
 
     /** Calculates the next time for 5 new lives */
     public void calculateNextLifeTime(){
 
-        timeLeftOnLifes = System.currentTimeMillis()/1000 + 300;
+        timeLeftOnLifes = System.currentTimeMillis()/1000 + 600;
 
     }
 
@@ -209,7 +209,7 @@ public class Player implements Serializable{
 
     /** Saves the player information into a file*/
     public static void savePlayer(){
-        FileHandle file = Gdx.files.local("assets/SupportFiles/player.dat");
+        FileHandle file = Gdx.files.local("player.dat");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = null;
 
@@ -235,7 +235,7 @@ public class Player implements Serializable{
     /** Reads and creates a new instances of Player*/
     public static Player readPlayer(){
         Player player = null;
-        FileHandle file = Gdx.files.local("assets/SupportFiles/player.dat");
+        FileHandle file = Gdx.files.local("player.dat");
         ByteArrayInputStream byteArrayInputStream  = null;
         ObjectInputStream objectInputStream = null;
 

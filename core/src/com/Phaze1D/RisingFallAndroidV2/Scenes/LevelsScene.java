@@ -3,6 +3,7 @@ package com.Phaze1D.RisingFallAndroidV2.Scenes;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.LevelButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.LifePanel;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.Gdx;
@@ -51,6 +52,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
     private LifePanel lifePanel;
 
+    public CorePaymentDelegate corePaymentDelegate;
 
 
     @Override
@@ -80,7 +82,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
     @Override
     public void hide() {
-
+    
     }
 
     @Override
@@ -92,8 +94,18 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     public void resume() {
 
     }
+    
+    
 
-    private void createScene(){
+    @Override
+	public void dispose() {
+		corePaymentDelegate = null;
+		lifePanel.corePaymentDelegate = null;
+		lifePanel.clear();
+		super.dispose();
+	}
+
+	private void createScene(){
         playerInfo = Player.shareInstance();
         createPosition();
         createNavigationButton();
@@ -190,7 +202,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
     private void createLifePanel(){
 
-        lifePanel = new LifePanel(sceneAtlas.createSprite("lifePanel"));
+        lifePanel = new LifePanel(sceneAtlas.createSprite("lifePanel"), corePaymentDelegate);
         lifePanel.setPosition((int) (getWidth() / 2 - lifePanel.getWidth() / 2), (int) (getHeight() / 2 - lifePanel.getHeight() / 2));
         if(playerInfo.livesLeft > 0){
             lifePanel.createLifePanel();

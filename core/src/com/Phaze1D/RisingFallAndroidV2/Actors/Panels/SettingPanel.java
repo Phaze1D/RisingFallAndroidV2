@@ -2,6 +2,8 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.graphics.Color;
@@ -25,7 +27,7 @@ import com.badlogic.gdx.utils.Array;
  * Created by davidvillarreal on 8/26/14.
  * Rising Fall Android Version
  */
-public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDelegate, SocialMediaButton.SocialMediaButtonDelegate {
+public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDelegate, SocialMediaButton.SocialMediaButtonDelegate, PaymentFlowCompletionListener {
 
     public SettingPanelDelegate delegate;
 
@@ -47,6 +49,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
     private SocialMediaButton backB;
     private LocaleStrings strings;
+    public CorePaymentDelegate corePaymentDelegate;
 
 
     public SettingPanel(Sprite panelSprite) {
@@ -137,10 +140,11 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
     }
 
-    public void createGameOverPanel(boolean didWin){
+    public void createGameOverPanel(boolean didWin, CorePaymentDelegate cPD){
         if (didWin){
             createGameWon();
         }else{
+        	corePaymentDelegate = cPD;
             createGameLost();
         }
     }
@@ -326,15 +330,11 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         }else if (type == SimpleButton.RESTART_BUTTON){
             delegate.restartButtonPressed();
         }else if (type == SimpleButton.PAY_BUTTON){
-            if (payButtonPressed()){
-                delegate.continuePlaying();
-            }
+        	corePaymentDelegate.setPaymentFlowCompletionListener(this);
+            corePaymentDelegate.buyItem(CorePaymentDelegate.KEEP_PLAYING_ID);
         }
     }
 
-    public boolean payButtonPressed(){
-        return true;
-    }
 
     @Override
     public void socialButtonPressed() {
@@ -373,8 +373,20 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     public void enableChild() {
 
     }
+    
+    
 
-    public interface SettingPanelDelegate{
+    @Override
+	public void paymentComplete(boolean didPay) {
+		if(didPay){
+			delegate.continuePlaying();
+		}
+		
+	}
+
+
+
+	public interface SettingPanelDelegate{
 
         public void quitButtonPressed();
         public void resumeButtonPressed();

@@ -38,6 +38,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     public GameController(SpriteBatch batch, CorePaymentDelegate paymentDelegate){
         this.batch = batch;
         this.paymentDelegate = paymentDelegate;
+        
     }
     
     public CorePaymentDelegate getPaymentDelegate(){
@@ -49,7 +50,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     public void create() {
         if (!isCreated) {
 
-            Player.shareInstance();
+            paymentDelegate.setPlayer(Player.shareInstance());
             viewport = new ScalingViewport(Scaling.fill, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
             textureLoader = TextureLoader.shareTextureLoader();
             loadStartScreen();
@@ -77,6 +78,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         Player.savePlayer();
         textureLoader.dispose();
         BitmapFontSizer.clear();
+        paymentDelegate = null;
     }
 
     /** Loads the StartScreen data*/
@@ -84,6 +86,9 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     	adDelegate.currentScene(1);
     	if(isCreated){
     		adDelegate.showAd();
+    	}
+    	if(getScreen() != null){
+    		getScreen().dispose();
     	}
         setScreen(null);
         textureLoader.dispose();
@@ -101,12 +106,14 @@ public class GameController extends Game implements StartScene.StartScreenDelega
 
     /** Loads the LevelScreen*/
     private void loadLevelScreen(){
+    	getScreen().dispose();
     	 adDelegate.currentScene(2);
     	adDelegate.showAd();
         setScreen(null);
         textureLoader.dispose();
         textureLoader.loadLevelsScreenAtlases();
         LevelsScene levelsScene = new LevelsScene();
+        levelsScene.corePaymentDelegate = paymentDelegate;
         levelsScene.buttonAtlas = textureLoader.getButtonAtlas();
         levelsScene.sceneAtlas = textureLoader.getLevelsScreenAtlas();
         levelsScene.delegate = this;
@@ -116,6 +123,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     }
 
     private void loadGameplayScreen(int levelID){
+    	getScreen().dispose();
     	adDelegate.currentScene(3);
     	adDelegate.hideAd();
         setScreen(null);
@@ -131,12 +139,14 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         gameplayScreen.socialMediaAtlas = textureLoader.getSocialMediaAtlas();
         gameplayScreen.infoAtlas = textureLoader.getInfoAtlas();
         gameplayScreen.delegate = this;
+        gameplayScreen.corePaymentDelegate = paymentDelegate;
         setScreen(gameplayScreen);
         
 
     }
 
     private void loadStoreScreen(){
+    	getScreen().dispose();
     	adDelegate.currentScene(4);
     	adDelegate.hideAd();
         setScreen(null);
@@ -147,6 +157,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         storeScene.buttonAtlas = textureLoader.getButtonAtlas();
         storeScene.ballsAtlas = textureLoader.getBallsAtlas();
         storeScene.delegate = this;
+        storeScene.corePaymentDelegate = paymentDelegate;
         setScreen(storeScene);
 
 

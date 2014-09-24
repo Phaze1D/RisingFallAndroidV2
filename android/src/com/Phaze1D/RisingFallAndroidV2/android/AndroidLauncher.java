@@ -136,6 +136,8 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 
 	@Override
 	protected void onDestroy() {
+		payDelegate.dispose();
+		payDelegate = null;
 		
 		if (adView != null) {
 			adView.destroy();

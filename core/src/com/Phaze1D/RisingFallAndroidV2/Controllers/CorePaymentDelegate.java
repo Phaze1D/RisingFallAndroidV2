@@ -15,6 +15,7 @@ public interface CorePaymentDelegate{
 	
 	public void setPlayer(Player player);
 	public boolean buyItem(String itemID);
+	public void setPaymentFlowCompletionListener(PaymentFlowCompletionListener lis);
 	
 }
 
