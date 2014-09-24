@@ -40,6 +40,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 	private IabHelper mHelper;
 	private Player myPlayer;
 
+	
 	private AndroidPaymentClass(Context context) {
 		this.context = context;
 	}
@@ -104,7 +105,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 											.getSku());
 								} else {
 									((AndroidLauncher) context)
-											.displayInAppError();
+											.displayInAppError("Error while consuming: " + results.get(i));
 								}
 							}
 
@@ -134,7 +135,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 				if (!result.isSuccess()) {
 					// Oh noes, there was a problem.
-					((AndroidLauncher) context).displayInAppError();
+					((AndroidLauncher) context).displayInAppError("Problem setting up in-app billing: " + result);
 					return;
 				}
 
@@ -223,7 +224,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 			// Is it a failure?
 			if (result.isFailure()) {
-				((AndroidLauncher) context).displayInAppError();
+				((AndroidLauncher) context).displayInAppError("Failed to query inventory: " + result);
 				return;
 			}
 
@@ -244,12 +245,12 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 	            if (result.isFailure()) {
 	                //complain("Error purchasing: " + result);
-	            	((AndroidLauncher) context).displayInAppError();
+	            	((AndroidLauncher) context).displayInAppError("Error purchasing: " + result);
 	                return;
 	            }
 	            if (!verifyDeveloperPayload(purchase)) {
 	                //complain("Error purchasing. Authenticity verification failed.");
-	            	((AndroidLauncher) context).displayInAppError();
+	            	((AndroidLauncher) context).displayInAppError("Error purchasing. Authenticity verification failed.");
 	                return;
 	            }
 

@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -241,10 +242,23 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 		
 	}
 	
-	public void displayInAppError(){
-		
+	public void displayInAppError(String message){
+		complain(message);
 	}
 
+
+	void complain(String message) {
+        Log.e("DAVID VILLARREAL", message);
+        alert("Error: " + message);
+    }
+
+    void alert(String message) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(this);
+        bld.setMessage(message);
+        bld.setNeutralButton("OK", null);
+        Log.d("DAVID VILLARREAL", "Showing alert dialog: " + message);
+        bld.create().show();
+    }
 
 
 	private class MyAdListener extends AdListener {
