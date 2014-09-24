@@ -48,7 +48,8 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 		
 		
 		payDelegate = AndroidPaymentClass.shareInstance(this);
-		payDelegate.bindPaymentService();
+		payDelegate.setUpAndroidPayment();
+
 		
 		RelativeLayout layout = new RelativeLayout(this);
 
@@ -134,7 +135,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 
 	@Override
 	protected void onDestroy() {
-		payDelegate.unBindPaymentService();
+		
 		if (adView != null) {
 			adView.destroy();
 		}
@@ -191,11 +192,15 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 			androidSocialControl.smcEnable();
 			androidSocialControl.postSuccessUpdate();
 		}
+		
+		if(requestCode == AndroidPaymentClass.ANDROID_PAYMENT_BUY_RC){
+			payDelegate.myHandleActivityResult(requestCode, resultCode, data);
+		}
 
 		if (requestCode == VKSdk.VK_SDK_REQUEST_CODE) {
 			VKUIHelper.onActivityResult(this, requestCode, resultCode, data);
 		} else if (requestCode != GOOGLE_RC_SIGN_IN
-				&& requestCode != GOOGLE_RC_SHARE && requestCode != EMAIL_RC) {
+				&& requestCode != GOOGLE_RC_SHARE && requestCode != EMAIL_RC && requestCode != AndroidPaymentClass.ANDROID_PAYMENT_BUY_RC) {
 			Session.getActiveSession().onActivityResult(this, requestCode,
 					resultCode, data);
 		}

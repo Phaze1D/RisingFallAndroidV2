@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-public class SocialShareDialog extends Dialog {
+public class MySocialShareDialog extends Dialog {
 
 	// width below which there are no extra margins
 	private static final int NO_PADDING_SCREEN_WIDTH = 480;
@@ -42,12 +42,12 @@ public class SocialShareDialog extends Dialog {
 	private LinearLayout frameLayout;
 	private TextView titleTV;
 
-	public SocialShareDialog(Context context, int theme) {
+	public MySocialShareDialog(Context context, int theme) {
 		super(context, theme);
 
 	}
 
-	public SocialShareDialog(Context context) {
+	public MySocialShareDialog(Context context) {
 		super(context, android.R.style.Theme_DeviceDefault_Light_Dialog);
 	}
 
@@ -138,7 +138,7 @@ public class SocialShareDialog extends Dialog {
 				
 				
 				onCompleteSharing.complete(SHARED, textArea.getText().toString());
-				SocialShareDialog.this.dismiss();
+				MySocialShareDialog.this.dismiss();
 			} 
 			
 		});

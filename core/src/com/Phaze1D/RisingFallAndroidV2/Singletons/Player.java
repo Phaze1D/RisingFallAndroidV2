@@ -189,22 +189,21 @@ public class Player implements Serializable{
     }
     
     public void itemBought(String itemID){
-    	if(itemID == CorePaymentDelegate.KEEP_PLAYING_ID){
+    	if(itemID.contains(CorePaymentDelegate.KEEP_PLAYING_ID)){
     		
-    	}else if(itemID == CorePaymentDelegate.POWER1_ID){
+    	}else if(itemID.contains(CorePaymentDelegate.POWER1_ID)){
     		increasePower(1);
-    	}else if(itemID == CorePaymentDelegate.POWER2_ID){
+    	}else if(itemID.contains(CorePaymentDelegate.POWER2_ID)){
     		increasePower(2);
-    	}else if(itemID == CorePaymentDelegate.POWER3_ID){
+    	}else if(itemID.contains(CorePaymentDelegate.POWER3_ID)){
     		increasePower(3);
-    	}else if(itemID == CorePaymentDelegate.POWER4_ID){
+    	}else if(itemID.contains(CorePaymentDelegate.POWER4_ID)){
     		increasePower(4);
-    	}else if(itemID == CorePaymentDelegate.POWER5_ID){
+    	}else if(itemID.contains(CorePaymentDelegate.POWER5_ID)){
     		increasePower(5);
-    	}else if(itemID == CorePaymentDelegate.MORE_LIFES_ID){
-    		if(livesLeft == 0){
-    			addLives();
-    		}
+    	}else if(itemID.contains(CorePaymentDelegate.MORE_LIFES_ID)){
+    		addLives();
+    		
     	}
     }
 

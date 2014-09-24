@@ -14,8 +14,7 @@ public interface CorePaymentDelegate{
 	public static final String MORE_LIFES_ID = "lifes_5";
 	
 	public void setPlayer(Player player);
-	public void onClickBuy(int itemID);
-	public String getItemPrice(int itemID);
+	public boolean buyItem(String itemID);
 	
 }
 

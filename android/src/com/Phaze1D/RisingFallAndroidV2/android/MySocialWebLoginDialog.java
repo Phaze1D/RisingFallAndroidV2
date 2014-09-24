@@ -26,7 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class SocialWebLoginDialog extends Dialog {
+public class MySocialWebLoginDialog extends Dialog {
 
 	public static final int NOT_POSTED = 0;
 	public static final int POSTED = 1;
@@ -64,20 +64,20 @@ public class SocialWebLoginDialog extends Dialog {
 
 	}
 
-	public SocialWebLoginDialog(Context context, boolean cancelable,
+	public MySocialWebLoginDialog(Context context, boolean cancelable,
 			OnCancelListener cancelListener, String url) {
 		super(context, cancelable, cancelListener);
 		this.url = url;
 
 	}
 
-	public SocialWebLoginDialog(Context context, int theme, String url) {
+	public MySocialWebLoginDialog(Context context, int theme, String url) {
 		super(context, theme);
 		this.url = url;
 
 	}
 
-	public SocialWebLoginDialog(Context context, String url) {
+	public MySocialWebLoginDialog(Context context, String url) {
 		super(context,DEFAULT_THEME);
 		this.url = url;
 
@@ -120,8 +120,8 @@ public class SocialWebLoginDialog extends Dialog {
 		setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialogInterface) {
-				SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
-				SocialWebLoginDialog.this.dismiss();
+				MySocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+				MySocialWebLoginDialog.this.dismiss();
 			}
 		});
 
@@ -130,8 +130,8 @@ public class SocialWebLoginDialog extends Dialog {
 		spinner.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialogInterface) {
-				SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
-				SocialWebLoginDialog.this.dismiss();
+				MySocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+				MySocialWebLoginDialog.this.dismiss();
 			}
 		});
 
@@ -164,8 +164,8 @@ public class SocialWebLoginDialog extends Dialog {
 		crossImageView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
-				SocialWebLoginDialog.this.dismiss();
+				MySocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+				MySocialWebLoginDialog.this.dismiss();
 			}
 		});
 		Drawable crossDrawable = getContext().getResources().getDrawable(
@@ -242,12 +242,12 @@ public class SocialWebLoginDialog extends Dialog {
 				Uri uri = Uri.parse( url );				
 	            String oauthVerifier = uri.getQueryParameter( "oauth_verifier" );
 	            if(oauthVerifier != null){
-	            	 SocialWebLoginDialog.this.onComplete.loginComplete(VERIFIED, oauthVerifier);
+	            	 MySocialWebLoginDialog.this.onComplete.loginComplete(VERIFIED, oauthVerifier);
 	            }else{
-	            	 SocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
+	            	 MySocialWebLoginDialog.this.onComplete.loginComplete(NOT_VERIFIED, null);
 	            }
 	            
-	            SocialWebLoginDialog.this.dismiss();
+	            MySocialWebLoginDialog.this.dismiss();
 	            return true;
 			}
 			

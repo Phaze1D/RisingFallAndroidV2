@@ -28,8 +28,8 @@ import android.widget.Toast;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl.SocialMediaConnectionDelegate;
 import com.Phaze1D.RisingFallAndroidV2.android.MyVKShareDialog.MyVKShareDialogListener;
-import com.Phaze1D.RisingFallAndroidV2.android.SocialShareDialog.OnCompleteSharing;
-import com.Phaze1D.RisingFallAndroidV2.android.SocialWebLoginDialog.SocialCompleteListener;
+import com.Phaze1D.RisingFallAndroidV2.android.MySocialShareDialog.OnCompleteSharing;
+import com.Phaze1D.RisingFallAndroidV2.android.MySocialWebLoginDialog.SocialCompleteListener;
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
@@ -380,18 +380,18 @@ public class AndroidSocialMediaControl implements
 			@Override
 			public void run() {
 
-				SocialShareDialog test = new SocialShareDialog(androidLan);
+				MySocialShareDialog test = new MySocialShareDialog(androidLan);
 				test.setOnCompleteSharing(new OnCompleteSharing() {
 
 					@Override
 					public void complete(int status, String post) {
 
-						if (status == SocialShareDialog.CANCELED) {
+						if (status == MySocialShareDialog.CANCELED) {
 							postErrorMessage();
 							logoutTwitter();
 							smcEnable();
 							androidLan.appControl.resume();
-						} else if (status == SocialShareDialog.SHARED) {
+						} else if (status == MySocialShareDialog.SHARED) {
 							new TwitterUpdateStatus().execute(post);
 
 						}
@@ -488,7 +488,7 @@ public class AndroidSocialMediaControl implements
 				@Override
 				public void run() {
 					pDialog.dismiss();
-					SocialWebLoginDialog twitterLoginDialog = new SocialWebLoginDialog(
+					MySocialWebLoginDialog twitterLoginDialog = new MySocialWebLoginDialog(
 							androidLan, url2);
 					twitterLoginDialog
 							.setSocialComplete(new SocialCompleteListener() {
@@ -497,9 +497,9 @@ public class AndroidSocialMediaControl implements
 								public void loginComplete(int status,
 										String oauth) {
 
-									if (status == SocialWebLoginDialog.VERIFIED) {
+									if (status == MySocialWebLoginDialog.VERIFIED) {
 										postToTwitter(oauth);
-									} else if (status == SocialWebLoginDialog.NOT_VERIFIED) {
+									} else if (status == MySocialWebLoginDialog.NOT_VERIFIED) {
 										postErrorMessage();
 										androidLan.appControl.resume();
 										smcEnable();
