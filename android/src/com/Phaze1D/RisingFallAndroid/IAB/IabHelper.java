@@ -551,6 +551,7 @@ public class IabHelper {
             if (querySkuDetails) {
                 r = querySkuDetails(ITEM_TYPE_INAPP, inv, moreItemSkus);
                 if (r != BILLING_RESPONSE_RESULT_OK) {
+                	logDebug("IN APP BILLING IS OK OR NOT WE DONT KNOW");
                     throw new IabException(r, "Error refreshing inventory (querying prices of items).");
                 }
             }
@@ -559,6 +560,7 @@ public class IabHelper {
             if (mSubscriptionsSupported) {
                 r = queryPurchases(inv, ITEM_TYPE_SUBS);
                 if (r != BILLING_RESPONSE_RESULT_OK) {
+//                	logDebug("SUB BILLING IS OK OR NOT WE DONT KNOW");
                     throw new IabException(r, "Error refreshing inventory (querying owned subscriptions).");
                 }
 

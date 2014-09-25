@@ -354,6 +354,15 @@ public class StoreScene extends Stage implements Screen,
 		}
 
 	}
+	
+	public void disableBackButton(){
+		backB.setTouchable(Touchable.disabled);
+	}
+	
+	public void enableBackButton(){
+		backB.setTouchable(Touchable.enabled);
+		
+	}
 
 	@Override
 	public void pButtonPressed(int powerTyped) {

@@ -56,7 +56,6 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 	@Override
 	public void setPlayer(Player player) {
-		Log.d(TAG, "Did set player " + player);
 		if (myPlayer == null) {
 			myPlayer = player;
 		}
@@ -98,6 +97,8 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 			ownedPurchase.add(inv.getPurchase(POWER5_ID));
 		}
 
+		Log.d(TAG, "OWNED ITEMS " + ownedPurchase.size() + " ITEMS " + ownedPurchase.toString());
+		
 		if (ownedPurchase.size() > 0) {
 			AndroidPaymentClass.this.mHelper.consumeAsync(ownedPurchase,
 					new OnConsumeMultiFinishedListener() {
@@ -171,7 +172,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 				myList.add(POWER4_ID);
 				myList.add(POWER5_ID);
 				myList.add(MORE_LIFES_ID);
-				mHelper.queryInventoryAsync(true, myList, new MyInventoryListener());
+				mHelper.queryInventoryAsync(false, null, new MyInventoryListener());
 			}
 		});
 

@@ -330,6 +330,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         }else if (type == SimpleButton.RESTART_BUTTON){
             delegate.restartButtonPressed();
         }else if (type == SimpleButton.PAY_BUTTON){
+        	this.setTouchable(Touchable.disabled);
         	corePaymentDelegate.setPaymentFlowCompletionListener(this);
             corePaymentDelegate.buyItem(CorePaymentDelegate.KEEP_PLAYING_ID);
         }
@@ -378,13 +379,12 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
     @Override
 	public void paymentComplete(boolean didPay) {
+    	this.setTouchable(Touchable.enabled);
 		if(didPay){
 			delegate.continuePlaying();
 		}
 		
 	}
-
-
 
 	public interface SettingPanelDelegate{
 

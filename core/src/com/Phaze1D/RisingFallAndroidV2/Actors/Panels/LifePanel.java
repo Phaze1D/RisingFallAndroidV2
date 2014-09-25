@@ -10,6 +10,7 @@ import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
@@ -130,12 +131,13 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     public void buttonPressed(int type) {
 		corePaymentDelegate.setPaymentFlowCompletionListener(this);
     	corePaymentDelegate.buyItem(CorePaymentDelegate.MORE_LIFES_ID);
-        
+        buyButton.setTouchable(Touchable.disabled);
 
     }
 
 	@Override
 	public void paymentComplete(boolean didPay) {
+		buyButton.setTouchable(Touchable.enabled);
 		if(didPay){
 			clear();
 	        createLifePanel();

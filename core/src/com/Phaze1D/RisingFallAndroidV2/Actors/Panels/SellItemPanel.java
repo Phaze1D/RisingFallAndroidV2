@@ -3,6 +3,7 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
+import com.Phaze1D.RisingFallAndroidV2.Scenes.StoreScene;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
@@ -97,6 +98,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
 
     @Override
     public void buttonPressed(int type) {
+    	((StoreScene)getStage()).disableBackButton();
     	corePaymentDelegate.setPaymentFlowCompletionListener(this);
     	corePaymentDelegate.buyItem(powerID);
         
@@ -104,6 +106,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
     
     @Override
 	public void paymentComplete(boolean didPay) {
+    	((StoreScene)getStage()).enableBackButton();
     	System.out.println("DID CALL PAYMENT COMPLETE WITH " + didPay);
     	
 		
