@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -117,17 +118,18 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
     private void createPosition() {
 
-        naviPosition = new Vector2(getWidth()/2, sceneAtlas.createSprite("naviB").getHeight()/2 );
+       
 
         levelBPositions = new Vector2[10];
         subLevelBPosition = new Vector2[10];
 
-        float height = buttonAtlas.createSprite("levelButton").getHeight();
-        float width = buttonAtlas.createSprite("levelButton").getWidth();
+        float height = buttonAtlas.createSprite("levelbutton").getHeight();
+        float width = buttonAtlas.createSprite("levelbutton").getWidth();
         float yOffset = (getHeight() - height * 5)/6;
         float xOffset = (getWidth() - 4*width)/5;
 
-
+        naviPosition = new Vector2(getWidth()/2, yOffset );
+        
         int count = 0;
         //Parent level position
         for (int i = 0 ; i < 2; i++) {
@@ -158,32 +160,46 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     }
 
     private void createNavigationButton() {
+    	    	
+		Image backbo = new Image(sceneAtlas.createSprite("background"));
+		backbo.setCenterPosition((int) (this.getWidth() / 2),
+				(int) (this.getHeight() / 2));
+		addActor(backbo);
+
+		Image backgroundUI = new Image(sceneAtlas.createSprite("backgroundui"));
+		backgroundUI.setPosition(0, 0);
+		backgroundUI.setSize((int) this.getWidth(), (int) this.getHeight());
+		addActor(backgroundUI);
+    	
 
         SpriteDrawable up  = new SpriteDrawable(sceneAtlas.createSprite("naviB"));
         SpriteDrawable down = new SpriteDrawable(sceneAtlas.createSprite("naviBPressed"));
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down,null,BitmapFontSizer.getFontWithSize(14));
 
         navigationB = new SimpleButton("",style);
-        navigationB.setCenterPosition(naviPosition.x, naviPosition.y);
+        navigationB.setCenterPosition((int)naviPosition.x, (int)naviPosition.y);
         navigationB.delegate = this;
         navigationB.type = SimpleButton.LEVEL_BACK_BUTTON;
         addActor(navigationB);
     }
 
     private void createLevelButton() {
+    	
+    	// Add Level at Action 
 
         parentLevelButtons = new LevelButton[10];
 
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
         style.font = BitmapFontSizer.getFontWithSize(14);
         style.fontColor = Color.BLACK;
-        SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelButton"));
+        SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelbutton"));
         style.up = up;
-
+        int max = -1;
+        
         for (int i = 0; i < 10; i++){
 
             LevelButton levelB = new LevelButton("" + i*10, style);
-            levelB.setPosition(levelBPositions[i].x, levelBPositions[i].y);
+            levelB.setPosition((int)levelBPositions[i].x, (int)levelBPositions[i].y);
             levelB.parentNumber = i;
             if (levelB.parentNumber * 10 > playerInfo.levelAt) {
                 levelB.setTouchable(Touchable.disabled);
@@ -191,12 +207,14 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             }else{
                 levelB.setTouchable(Touchable.enabled);
                 levelB.delegate = this;
+                max = i;
             }
 
             parentLevelButtons[i] = levelB;
             addActor(levelB);
         }
 
+        parentLevelButtons[max].currentLevelAnimation();
     }
 
 
@@ -207,7 +225,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         if(playerInfo.livesLeft > 0){
             lifePanel.createLifePanel();
         }else{
-            lifePanel.createTimePanel(buttonAtlas.createSprite("buttonXS1"));
+            lifePanel.createTimePanel(buttonAtlas.createSprite("buttonS1B"));
         }
 
         addActor(lifePanel);
@@ -266,6 +284,8 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     }
 
     private void createChildLevels(final int parentNumber){
+    	
+    	//Add Level at Action
 
         navigationB.setVisible(false);
 
@@ -285,7 +305,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
             style.font = BitmapFontSizer.getFontWithSize(14);
             style.fontColor = Color.BLACK;
-            SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelButton"));
+            SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelbutton"));
             style.up = up;
 
             LevelButton childB = new LevelButton(childNumber + "", style);
@@ -307,6 +327,11 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
                 AlphaAction alphaAction = Actions.alpha(1f, duration);
                 parallelAction = Actions.parallel(moveToAction, alphaAction);
             }
+            
+            if (childB.levelNumber == playerInfo.levelAt) {
+                childB.currentLevelAnimation();
+            }
+
 
             childLevelButtons[i] = childB;
 

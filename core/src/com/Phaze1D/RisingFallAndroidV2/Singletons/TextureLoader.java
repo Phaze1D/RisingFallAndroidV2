@@ -52,13 +52,13 @@ public class TextureLoader implements Disposable {
     /** Loads the start screen atlases into memory*/
     public void loadStartScreenAtlases(){
         assetManager.load("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
-        assetManager.load("SocialMediaAtlas/SocialMediaArt.atlas", TextureAtlas.class);
+        //assetManager.load("SocialMediaAtlas/SocialMediaArt.atlas", TextureAtlas.class);
         assetManager.load("StartScreenAtlas/StartScreen.atlas", TextureAtlas.class);
         assetManager.load("BallAtlas/Ball.atlas", TextureAtlas.class);
         assetManager.finishLoading();
 
         startScreenAtlas = assetManager.get("StartScreenAtlas/StartScreen.atlas", TextureAtlas.class);
-        socialMediaAtlas = assetManager.get("SocialMediaAtlas/SocialMediaArt.atlas", TextureAtlas.class);
+        //socialMediaAtlas = assetManager.get("SocialMediaAtlas/SocialMediaArt.atlas", TextureAtlas.class);
         buttonAtlas = assetManager.get("ButtonsAtlas/Buttons.atlas", TextureAtlas.class);
         ballsAtlas = assetManager.get("BallAtlas/Ball.atlas", TextureAtlas.class);
         isStartScreenLoaded = true;
@@ -196,7 +196,6 @@ public class TextureLoader implements Disposable {
 
     private void disposeStartMenuAssets(){
         startScreenAtlas.dispose();
-        socialMediaAtlas.dispose();
         buttonAtlas.dispose();
         ballsAtlas.dispose();
         assetManager.clear();

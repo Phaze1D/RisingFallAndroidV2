@@ -6,35 +6,35 @@ repeat: none
 powerBall1
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
-  index: 0
+  index: -1
 powerBall2
   rotate: false
-  xy: 33, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 67, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
-  index: 1
+  index: -1
 powerBall3
   rotate: false
-  xy: 65, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 133, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
-  index: 2
+  index: -1
 powerBall4
   rotate: false
-  xy: 97, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 199, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
-  index: 3
+  index: -1
 powerBall5
   rotate: false
-  xy: 129, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 265, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
-  index: 4
+  index: -1

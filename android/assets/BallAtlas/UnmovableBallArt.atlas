@@ -6,42 +6,42 @@ repeat: none
 unBall0
   rotate: false
   xy: 1, 1
-  size: 30, 30
-  orig: 30, 30
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 unBall1
   rotate: false
-  xy: 33, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 67, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 unBall2
   rotate: false
-  xy: 65, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 133, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 unBall3
   rotate: false
-  xy: 97, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 199, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 unBall4
   rotate: false
-  xy: 129, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 265, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 unBall5
   rotate: false
-  xy: 161, 1
-  size: 30, 30
-  orig: 30, 30
+  xy: 331, 1
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1

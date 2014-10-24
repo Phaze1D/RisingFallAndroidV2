@@ -47,14 +47,16 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     /** Creates the life panel showing how many lives the player has left*/
     public void createLifePanel(){
-        font = BitmapFontSizer.getFontWithSize(19);
+        font = BitmapFontSizer.getFontWithSize(24);
         Player playerInfo = Player.shareInstance();
+        
+        //Changes position
 
-        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.BLACK));
+        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.WHITE));
         titleLabel.setPosition((int) (getWidth() / 2 - titleLabel.getWidth() / 2), (int) (getHeight() * 2 / 3 - titleLabel.getHeight() / 2));
         addActor(titleLabel);
 
-        Label livesLeft = new Label("" + playerInfo.livesLeft, new Label.LabelStyle(font, Color.BLACK));
+        Label livesLeft = new Label("" + playerInfo.livesLeft, new Label.LabelStyle(font, Color.WHITE));
         livesLeft.setPosition((int) (getWidth() / 2 - livesLeft.getWidth() / 2), (int) (getHeight() / 3 - livesLeft.getHeight() / 2));
         addActor(livesLeft);
 
@@ -63,17 +65,20 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     /** Creates time panel showing how much time the player has for the next 5 lives*/
     public void createTimePanel(Sprite buttonSprite){
-        font = BitmapFontSizer.getFontWithSize(12);
+    	
+    	//Change position
+    	
+        font = BitmapFontSizer.getFontWithSize(24);
         Player playerInfo = Player.shareInstance();
         timeLeft = playerInfo.getTimeLeftOnLifes() - System.currentTimeMillis()/1000;
 
-        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.BLACK));
+        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.WHITE));
         titleLabel.setPosition((int) (getWidth() / 2 - titleLabel.getWidth() / 2), (int) (getHeight() - titleLabel.getHeight()));
         addActor(titleLabel);
 
         SpriteDrawable up = new SpriteDrawable(buttonSprite);
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,font);
-        style.fontColor = Color.BLACK;
+        style.fontColor = Color.WHITE;
 
         buyButton = new SimpleButton(strings.getValue(".99k"), style);
         buyButton.setPosition((int) (getWidth() / 2 - buyButton.getWidth() / 2), (int) (buttonSprite.getHeight() / 2 - buyButton.getHeight()));
@@ -85,7 +90,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         int minutes = (int)timeLeft/60;
         int seconds = (int) (timeLeft - minutes*60);
         String formatted = String.format("%02d:%02d",minutes, seconds);
-        timeLabel = new CustomLabel(formatted, new Label.LabelStyle(font, Color.BLACK));
+        timeLabel = new CustomLabel(formatted, new Label.LabelStyle(font, Color.WHITE));
         timeLabel.setPosition((int) (getWidth() / 2 - timeLabel.getWidth() / 2), (int) (getHeight() / 2 - timeLabel.getHeight() / 2));
         timeLabel.setAlignment(Align.center);
         addActor(timeLabel);

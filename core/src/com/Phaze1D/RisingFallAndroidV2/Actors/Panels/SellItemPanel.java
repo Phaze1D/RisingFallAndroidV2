@@ -73,11 +73,11 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
 //        NSString * textureName = [NSString stringWithFormat:@"st%d",_powerType];
 
         Sprite powerItemSp = storeSceneAtlas.createSprite("st"+powerType);
-        Sprite buyButtonSp = buttonAtlas.createSprite("buttonS1");
+        Sprite buyButtonSp = buttonAtlas.createSprite("buttonS1B");
         float yOffset = (getHeight() - powerItemSp.getHeight() - buyButtonSp.getHeight())/4;
 
         Image titleNode = new Image(new SpriteDrawable(powerItemSp));
-        titleNode.setPosition((int)(getWidth()/2 - titleNode.getWidth()/2), (int)(getHeight() - yOffset));
+        titleNode.setPosition((int)(getWidth()/2 - titleNode.getWidth()/2), (int)(getHeight() - yOffset - titleNode.getHeight()/2));
         addActor(titleNode);
 
         SpriteDrawable up = new SpriteDrawable(buyButtonSp);
@@ -86,7 +86,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         style.fontColor = Color.BLACK;
 
         SimpleButton buyButton = new SimpleButton(strings.getValue(".99K"),style );
-        buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()) );
+        buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()/2) );
         buyButton.delegate = this;
         addActor(buyButton);
 

@@ -97,7 +97,6 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         startScreen.startScreenAtlas =  textureLoader.getStartScreenAtlas();
         startScreen.buttonAtlas = textureLoader.getButtonAtlas();
         startScreen.ballsAtlas = textureLoader.getBallsAtlas();
-        startScreen.socialMediaAtlas = textureLoader.getSocialMediaAtlas();
         startScreen.delegate = this;
         setScreen(startScreen);
         

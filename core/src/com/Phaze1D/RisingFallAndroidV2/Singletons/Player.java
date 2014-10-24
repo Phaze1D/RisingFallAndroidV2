@@ -58,7 +58,7 @@ public class Player implements Serializable{
         power3 = 0;
         power4 = 0;
         power5 = 0;
-        levelAt = 99;
+        levelAt = 25;
         livesLeft = 5;
         scores = new int[100];
     }

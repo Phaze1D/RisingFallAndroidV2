@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
@@ -176,7 +177,6 @@ public class StoreScene extends Stage implements Screen,
 		initPointSellPanel = new Vector2();
 		physicsWorld = new PhysicsWorld();
 		ballGroup = new Group();
-		addActor(ballGroup);
 		itemsArea = sceneAtlas.createSprite("itemsArea");
 		backButton = sceneAtlas.createSprite("backButton");
 		sellItemArea = sceneAtlas.createSprite("sellItemArea");
@@ -185,6 +185,18 @@ public class StoreScene extends Stage implements Screen,
 
 	private void createBackground() {
 		createSpawners();
+		
+		Image backbo = new Image(sceneAtlas.createSprite("backbox"));
+		backbo.setCenterPosition((int) (this.getWidth() / 2),
+				(int) (this.getHeight() / 2));
+		addActor(backbo);
+		
+		addActor(ballGroup);
+		
+		Image backgroundUI = new Image(sceneAtlas.createSprite("background"));
+		backgroundUI.setPosition(0, 0);
+		backgroundUI.setSize((int) this.getWidth(), (int) this.getHeight());
+		addActor(backgroundUI);
 	}
 
 	private void createSpawners() {

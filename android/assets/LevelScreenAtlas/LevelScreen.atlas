@@ -3,24 +3,38 @@ LevelScreen.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-lifePanel
+backgroundui
   rotate: false
   xy: 1, 1
-  size: 128, 101
-  orig: 128, 101
+  size: 640, 960
+  orig: 640, 960
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 643, 558
+  size: 300, 403
+  orig: 300, 403
+  offset: 0, 0
+  index: -1
+lifePanel
+  rotate: false
+  xy: 643, 364
+  size: 205, 192
+  orig: 205, 192
   offset: 0, 0
   index: -1
 naviB
   rotate: false
-  xy: 131, 44
-  size: 50, 58
-  orig: 50, 58
+  xy: 643, 281
+  size: 81, 81
+  orig: 81, 81
   offset: 0, 0
   index: -1
 naviBPressed
   rotate: false
-  xy: 131, 44
-  size: 50, 58
-  orig: 50, 58
+  xy: 850, 475
+  size: 81, 81
+  orig: 81, 81
   offset: 0, 0
   index: -1

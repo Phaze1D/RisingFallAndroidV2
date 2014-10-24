@@ -5,6 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SizeByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SizeToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -38,6 +43,14 @@ public class LevelButton extends ImageTextButton {
     public void setAlpha(float alpha){
         AlphaAction alphaAction = Actions.alpha(alpha);
         addAction(alphaAction);
+    }
+    
+    public void currentLevelAnimation(){
+    	
+    	SizeToAction up = Actions.sizeTo(getWidth()*1.1f, getHeight()*1.1f, .6f);
+    	SizeToAction down = Actions.sizeTo(getWidth()/1.1f, getHeight()/1.1f,.6f);
+        SequenceAction seq = Actions.sequence(up, down);
+        addAction(Actions.forever(seq));
     }
 
     private class LevelButtonListener extends InputListener{

@@ -6,42 +6,42 @@ repeat: none
 contacts
   rotate: false
   xy: 1, 1
-  size: 35, 38
-  orig: 35, 38
+  size: 98, 98
+  orig: 98, 98
   offset: 0, 0
-  index: 0
+  index: -1
 facebook
   rotate: false
-  xy: 38, 1
-  size: 35, 38
-  orig: 35, 38
+  xy: 101, 2
+  size: 97, 97
+  orig: 97, 97
   offset: 0, 0
-  index: 1
+  index: -1
 google
   rotate: false
-  xy: 75, 1
-  size: 35, 38
-  orig: 35, 38
+  xy: 200, 2
+  size: 97, 97
+  orig: 97, 97
   offset: 0, 0
-  index: 2
-vk
-  rotate: false
-  xy: 112, 1
-  size: 35, 38
-  orig: 35, 38
-  offset: 0, 0
-  index: 3
+  index: -1
 twitter
   rotate: false
-  xy: 149, 4
-  size: 35, 35
-  orig: 35, 35
+  xy: 299, 2
+  size: 97, 97
+  orig: 97, 97
   offset: 0, 0
-  index: 4
+  index: -1
+vk
+  rotate: false
+  xy: 398, 2
+  size: 97, 97
+  orig: 97, 97
+  offset: 0, 0
+  index: -1
 weibo
   rotate: false
-  xy: 186, 4
-  size: 35, 35
-  orig: 35, 35
+  xy: 497, 2
+  size: 97, 97
+  orig: 97, 97
   offset: 0, 0
-  index: 5
+  index: -1

@@ -3,10 +3,43 @@ StartScreen.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+background
+  rotate: false
+  xy: 1, 1
+  size: 640, 960
+  orig: 640, 960
+  offset: 0, 0
+  index: -1
+background0
+  rotate: false
+  xy: 643, 562
+  size: 300, 399
+  orig: 300, 399
+  offset: 0, 0
+  index: -1
+soundOff
+  rotate: false
+  xy: 643, 490
+  size: 69, 70
+  orig: 69, 70
+  offset: 0, 0
+  index: -1
+soundOn
+  rotate: false
+  xy: 945, 891
+  size: 69, 70
+  orig: 69, 70
+  offset: 0, 0
+  index: -1
+
+StartScreen2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 Title
   rotate: false
   xy: 1, 1
-  size: 200, 40
-  orig: 200, 40
+  size: 392, 84
+  orig: 392, 84
   offset: 0, 0
   index: -1
