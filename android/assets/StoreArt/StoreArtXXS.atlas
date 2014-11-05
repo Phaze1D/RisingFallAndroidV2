@@ -1,0 +1,33 @@
+
+StoreArtXXS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 1
+  size: 320, 480
+  orig: 320, 480
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 323, 139
+  size: 260, 342
+  orig: 260, 342
+  offset: 0, 0
+  index: -1
+sellItemArea
+  rotate: false
+  xy: 585, 241
+  size: 210, 240
+  orig: 210, 240
+  offset: 0, 0
+  index: -1
+itemsArea
+  rotate: false
+  xy: 797, 146
+  size: 84, 335
+  orig: 84, 335
+  offset: 0, 0
+  index: -1

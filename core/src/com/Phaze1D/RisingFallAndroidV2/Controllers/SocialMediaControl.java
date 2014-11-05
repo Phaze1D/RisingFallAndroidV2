@@ -32,6 +32,7 @@ public class SocialMediaControl {
 
 
     public void facebookClicked(){
+    	System.out.println("FACEBOOK IS PRESSEDLAKJDSFLAJFALKDJF");
     	androidDelegate.androidFacebookClicked();
     }
 

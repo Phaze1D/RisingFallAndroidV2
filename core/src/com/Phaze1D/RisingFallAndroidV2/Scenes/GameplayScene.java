@@ -11,6 +11,7 @@ import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
 import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -44,6 +45,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public int power2BallNum;
     public int powerMaxAmount;
     public int nextBallChange;
+    public int passEndTexture;
 
     public float maxColumns;
     public float firstX;
@@ -83,10 +85,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public TextureAtlas infoAtlas;
 
     public Sprite playAreaSprite;
-    public Sprite ceilingAreaSprite;
 
-    public Image ceiling;
     public Image playArea;
+    public Image endAnimationNode;
 
     public ObjectivePanel objectivePanel;
     public SettingPanel settingPanel;
@@ -107,11 +108,13 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public Vector2 scorePosition;
     public Vector2 powerTimePosition;
     public Vector2 settingPosition;
-    public Vector2 ceilingPosition;
-
+    public Vector2 infoAreaPosition;
+    
     private RandomXS128 randGen = new RandomXS128();
 
     private Group ballGroup;
+    private Group endAnimationGroup;
+    
     public PhysicsWorld world;
     public CorePaymentDelegate corePaymentDelegate;
 
@@ -169,6 +172,15 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }
 
             objectiveReached = objectivePanel.updateObjective(currentTime);
+
+            if(levelFactory.gameType == 1 && objectivePanel.time <= 6 && !objectiveReached){
+            	startAlmostFinishAnimation((int)objectivePanel.time);
+            }
+            
+            if(levelFactory.gameType == 2 && objectivePanel.ballsLeft <= 5 && !objectiveReached){
+            	startAlmostFinishAnimation(objectivePanel.ballsLeft);
+            }
+            
             if (objectiveReached && movingBallList.count == 0){
                 stageAt = 3;
                 didReachScore = scorePanel.didReachScore();
@@ -235,14 +247,15 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     private void initVariables() {
 
         ballGroup = new Group();
+        endAnimationGroup = new Group();
         ballGroup.setSize(getWidth(), getHeight());
         world = new PhysicsWorld();
         powerTypeAt = -1;
         powerMaxAmount = 0;
         playerInfo = Player.shareInstance();
         stageAt = 1;
-        ceilingAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayAreaCeilingArea/ceiling" + levelFactory.ceilingHeight + ".png")));
-        playAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayAreaCeilingArea/playArea" + levelFactory.ceilingHeight + ".png")));
+        
+        playAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayAreaCeilingArea/playArea" + levelFactory.ceilingHeight + TextureLoader.shareTextureLoader().screenSizeAlt + ".png")));
         maxColumns = 8;
 
         float ballWidth = ballAtlas.createSprite("ball0").getWidth();
@@ -277,38 +290,35 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         }
     }
 
-    private void createPositions() {
+    private void createPositions() {    	    
 
         Sprite powerAreaTest = gameSceneAtlas.createSprite("powerArea");
-        Sprite scoreTest = gameSceneAtlas.createSprite("scoreArea");
+        Sprite powerTimeTest = gameSceneAtlas.createSprite("playerTimeArea");
         Sprite optionTest = gameSceneAtlas.createSprite("optionArea");
         Sprite levelIDtest = gameSceneAtlas.createSprite("LevelIDArea");
         Sprite gameOverTest = gameSceneAtlas.createSprite("gameOverArea");
         Sprite ballTest = ballAtlas.createSprite("ball0");
+        
 
         float playAreaWidth = playAreaSprite.getWidth();
-        float playCielingHeight = playAreaSprite.getHeight() + ceilingAreaSprite.getHeight();
-
-        float sideViewWidth = gameSceneAtlas.createSprite("powerArea").getWidth();
-        float xOffset1 = (getWidth() - playAreaWidth - sideViewWidth)/2f;
-        float yOffset1 = (getHeight() - playCielingHeight - scoreTest.getHeight() )/2f;
-
-        float yOffset2 = ( getHeight() - yOffset1 - optionTest.getHeight() - powerAreaTest.getHeight() - levelIDtest.getHeight())/2f;
-
-        playAreaPosition = new Vector2(xOffset1, yOffset1);
-        ceilingPosition = new Vector2(xOffset1, yOffset1 + playAreaSprite.getHeight() - 2);
-        powerAreaPosition = new Vector2(xOffset1 * 2 + playAreaWidth, yOffset2  + yOffset1 + optionTest.getHeight());
-
-        optionAreaPosition = new Vector2(xOffset1*2 + playAreaWidth, yOffset1);
-
-        float xOffset2 = (playAreaWidth - scoreTest.getWidth()*3)/2f;
-
-        objectivePosition = new Vector2(xOffset1, yOffset1 * 2 + playCielingHeight);
-        scorePosition = new Vector2(objectivePosition.x + xOffset2 + scoreTest.getWidth(), yOffset1*2 + playCielingHeight);
-        powerTimePosition = new Vector2(scorePosition.x + xOffset2 + scoreTest.getWidth(), yOffset1*2 + playCielingHeight);
-
-        settingPosition = new Vector2(playAreaPosition.x + playAreaWidth/2 - gameOverTest.getWidth()/2, getHeight()/2 - gameOverTest.getHeight()/2);
-
+        
+        float xOffset = (this.getWidth() - playAreaWidth - optionTest.getWidth())/3;
+        float yOffset = (this.getHeight() - playAreaSprite.getHeight() - powerAreaTest.getHeight())/2;
+        
+        playAreaPosition = new Vector2(xOffset, yOffset);
+        optionAreaPosition = new Vector2(xOffset * 2 + playAreaWidth, (getHeight() - playAreaSprite.getHeight() - powerAreaTest.getHeight())/2);
+        
+        float topXOffset = (getWidth() - powerAreaTest.getWidth() - powerTimeTest.getWidth() - levelIDtest.getWidth() )/3;
+        
+        powerAreaPosition = new Vector2(topXOffset, yOffset* 2 + playAreaSprite.getHeight());
+        powerTimePosition = new Vector2(topXOffset * 2 + powerAreaTest.getWidth(), yOffset* 2 + playAreaSprite.getHeight() );
+        infoAreaPosition = new Vector2(topXOffset*3 + powerAreaTest.getWidth() + powerTimeTest.getWidth(), yOffset* 2 + playAreaSprite.getHeight());
+        
+        settingPosition = new Vector2(playAreaPosition.x + playAreaWidth/2 - gameOverTest.getWidth()/2, playAreaPosition.y  + playAreaSprite.getHeight()/2 - gameOverTest.getHeight()/2);
+        objectivePosition = new Vector2(playAreaPosition.x, playAreaPosition.y + playAreaSprite.getHeight());
+        scorePosition = new Vector2(playAreaPosition.x + playAreaWidth, playAreaPosition.y + playAreaSprite.getHeight());
+        
+        
         if (maxColumns == levelFactory.numOfColumns) {
             firstX = playAreaPosition.x + xOffsetPA;
             firstY = playAreaPosition.y + yOffsetPA;
@@ -322,28 +332,32 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private void createBackground() {
 
+    	
+    	Image backboxes = new Image(gameSceneAtlas.createSprite("backBoxes"));
+    	backboxes.setCenterPosition((int)getWidth()/2, (int)getHeight()/2);
+    	addActor(backboxes);
+    	
     }
 
     private void createPlayArea() {
 
         playArea = new Image(playAreaSprite);
         playArea.setPosition((int)playAreaPosition.x, (int)playAreaPosition.y);
+        addActor(endAnimationGroup);
         addActor(playArea);
         addActor(ballGroup);
 
-        ceiling = new Image(ceilingAreaSprite);
-        ceiling.setPosition((int)ceilingPosition.x, (int)ceilingPosition.y);
-        addActor(ceiling);
 
         createSpawners();
     }
 
     private void createSpawners(){
+    	
 
         for (int i = 0; i < levelFactory.numOfColumns; i++){
             Spawner spawner = new Spawner();
             spawner.column = i;
-            spawner.position = new Vector2(firstX + (xOffsetPA + ballAtlas.createSprite("ball0").getWidth())*i, ceilingPosition.y);
+            spawner.position = new Vector2(firstX + (xOffsetPA + ballAtlas.createSprite("ball0").getWidth())*i, playAreaPosition.y + playAreaSprite.getHeight() - ballAtlas.createSprite("ball0").getHeight()/1.5f);
             spawner.powerUpProb = levelFactory.powerBallDrop;
             spawner.doubleBallProb = levelFactory.doubleBallProb;
             spawner.unMovableProb = levelFactory.unMovableProb;
@@ -375,7 +389,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
 
         objectivePanel = new ObjectivePanel(gameSceneAtlas.createSprite("objectiveArea"));
-        objectivePanel.setPosition((int)objectivePosition.x, (int)objectivePosition.y);
+        objectivePanel.setPosition((int)objectivePosition.x, (int)objectivePosition.y - objectivePanel.getHeight());
         objectivePanel.gameType = levelFactory.gameType;
 
 
@@ -390,7 +404,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         addActor(objectivePanel);
 
         scorePanel = new ScorePanel(gameSceneAtlas.createSprite("scoreArea"));
-        scorePanel.setPosition((int)scorePosition.x, (int)scorePosition.y);
+        scorePanel.setPosition((int)scorePosition.x - scorePanel.getWidth(), (int)scorePosition.y - scorePanel.getHeight());
         scorePanel.targetScore = levelFactory.targetScore;
         scorePanel.createScorePanel(levelFactory.targetScore);
         addActor(scorePanel);
@@ -510,8 +524,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         AlphaAction alphaAction = Actions.alpha(.3f);
         playArea.addAction(alphaAction);
-        AlphaAction alph = Actions.alpha(.3f);
-        ceiling.addAction(alph);
+
 
         if ( !isSettingCreated){
 
@@ -522,6 +535,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel = new SettingPanel(gameSceneAtlas.createSprite("gameOverArea"));
             settingPanel.socialMediaAtlas = socialMediaAtlas;
             settingPanel.buttonAtlas = buttonAtlas;
+            settingPanel.gameAtlas = gameSceneAtlas;
             settingPanel.infoAtlas = infoAtlas;
             settingPanel.setPosition((int)settingPosition.x, (int)settingPosition.y);
             settingPanel.gameType = levelFactory.gameType;
@@ -630,8 +644,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         AlphaAction alphaAction = Actions.alpha(1f);
         playArea.addAction(alphaAction);
-        AlphaAction alph = Actions.alpha(1f);
-        ceiling.addAction(alph);
+
 
         if (levelFactory.gameType == 1){
             objectivePanel.futureTime = currentTime + objectivePanel.time;
@@ -768,6 +781,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 //                ((Ball *)[_ballsArray objectAtIndex:i]).userInteractionEnabled = NO;
 //            }
 //        }
+    	
+    	
 
     }
 
@@ -1153,10 +1168,28 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         stageAt = 2;
 
-        scorePanel.scoreLabel.clearActions();
-        scorePanel.scoreLabel.addAction(Actions.scaleTo(1,1));
+        scorePanel.titleLabel.clearActions();
+        scorePanel.titleLabel.addAction(Actions.scaleTo(1,1));
         removeSettingPanel();
         pauseGame();
+    }
+    
+    
+    
+    private void startAlmostFinishAnimation(int amount){
+    	if(amount != passEndTexture){
+    		if(amount == 5){
+    			endAnimationNode = new Image(new SpriteDrawable(gameSceneAtlas.createSprite("end"+amount)));
+    			endAnimationNode.setCenterPosition((int)(playAreaPosition.x + playArea.getWidth()/2), (int)(playAreaPosition.y + playArea.getHeight()/2));
+    			endAnimationGroup.addActor(endAnimationNode);
+    			
+    		}else{
+    			endAnimationNode.setDrawable(new SpriteDrawable(gameSceneAtlas.createSprite("end"+amount)));
+    			
+    		}
+    		
+    		passEndTexture = amount;
+    	}
     }
 
     private class ScreenListener extends InputListener {

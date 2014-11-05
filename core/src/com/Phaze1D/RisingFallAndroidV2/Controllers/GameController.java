@@ -53,6 +53,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
             paymentDelegate.setPlayer(Player.shareInstance());
             viewport = new ScalingViewport(Scaling.fill, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
             textureLoader = TextureLoader.shareTextureLoader();
+            textureLoader.selectScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             loadStartScreen();
             isCreated = true;
             BitmapFontSizer.sharedInstance();

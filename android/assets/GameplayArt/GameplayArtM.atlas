@@ -1,0 +1,136 @@
+
+GameplayArtM.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+backBoxes
+  rotate: false
+  xy: 1, 34
+  size: 653, 972
+  orig: 653, 972
+  offset: 0, 0
+  index: -1
+objectiveArea
+  rotate: false
+  xy: 656, 933
+  size: 278, 73
+  orig: 278, 73
+  offset: 0, 0
+  index: -1
+scoreArea
+  rotate: false
+  xy: 656, 933
+  size: 278, 73
+  orig: 278, 73
+  offset: 0, 0
+  index: -1
+end0
+  rotate: false
+  xy: 656, 756
+  size: 151, 175
+  orig: 151, 175
+  offset: 0, 0
+  index: -1
+end1
+  rotate: false
+  xy: 656, 579
+  size: 151, 175
+  orig: 151, 175
+  offset: 0, 0
+  index: -1
+end2
+  rotate: false
+  xy: 656, 402
+  size: 151, 175
+  orig: 151, 175
+  offset: 0, 0
+  index: -1
+end3
+  rotate: false
+  xy: 656, 225
+  size: 151, 175
+  orig: 151, 175
+  offset: 0, 0
+  index: -1
+end4
+  rotate: false
+  xy: 656, 48
+  size: 151, 175
+  orig: 151, 175
+  offset: 0, 0
+  index: -1
+end5
+  rotate: false
+  xy: 809, 756
+  size: 151, 175
+  orig: 151, 175
+  offset: 0, 0
+  index: -1
+shareB1
+  rotate: false
+  xy: 809, 620
+  size: 134, 134
+  orig: 134, 134
+  offset: 0, 0
+  index: -1
+shareB2
+  rotate: false
+  xy: 809, 484
+  size: 134, 134
+  orig: 134, 134
+  offset: 0, 0
+  index: -1
+playerTimeArea
+  rotate: false
+  xy: 809, 394
+  size: 152, 88
+  orig: 152, 88
+  offset: 0, 0
+  index: -1
+LevelIDArea
+  rotate: false
+  xy: 809, 303
+  size: 87, 89
+  orig: 87, 89
+  offset: 0, 0
+  index: -1
+optionArea
+  rotate: false
+  xy: 936, 937
+  size: 69, 69
+  orig: 69, 69
+  offset: 0, 0
+  index: -1
+optionAreaPressed
+  rotate: false
+  xy: 809, 232
+  size: 69, 69
+  orig: 69, 69
+  offset: 0, 0
+  index: -1
+notificationCircle
+  rotate: false
+  xy: 1, 1
+  size: 31, 31
+  orig: 31, 31
+  offset: 0, 0
+  index: -1
+
+GameplayArtM2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gameOverArea
+  rotate: false
+  xy: 1, 91
+  size: 525, 647
+  orig: 525, 647
+  offset: 0, 0
+  index: -1
+powerArea
+  rotate: false
+  xy: 1, 1
+  size: 481, 88
+  orig: 481, 88
+  offset: 0, 0
+  index: -1

@@ -83,16 +83,22 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
                     didShare = false;
 
                     if (subType == FACEBOOK){
+                    	System.out.println("Facebook pressed");
                         control.facebookClicked();
                     }else if (subType == CONTACTS){
+                    	System.out.println("Contacts pressed");
                         control.contactsClicked();
                     }else if (subType == GOOGLE){
+                    	System.out.println("Google pressed");
                         control.googleClicked();
                     }else if (subType == WEIBO){
+                    	System.out.println("Weibo pressed");
                         control.weiboClicked();
                     }else if (subType == TWITTER){
+                    	System.out.println("Twitter pressed");
                         control.twitterClicked();
                     }else if (subType == VK){
+                    	System.out.println("Vk pressed");
                         control.vkClicked();
                     }
 

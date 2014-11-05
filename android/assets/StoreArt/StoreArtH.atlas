@@ -1,0 +1,38 @@
+
+StoreArtH.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 278
+  size: 1080, 1750
+  orig: 1080, 1750
+  offset: 0, 0
+  index: -1
+backbox
+  rotate: false
+  xy: 1083, 770
+  size: 956, 1258
+  orig: 956, 1258
+  offset: 0, 0
+  index: -1
+sellItemArea
+  rotate: false
+  xy: 1083, 1
+  size: 670, 767
+  orig: 670, 767
+  offset: 0, 0
+  index: -1
+
+StoreArtH2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+itemsArea
+  rotate: false
+  xy: 1, 1
+  size: 322, 1218
+  orig: 322, 1218
+  offset: 0, 0
+  index: -1

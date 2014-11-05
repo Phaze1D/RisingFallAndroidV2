@@ -1,0 +1,40 @@
+
+PowerBallArtXS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+powerBall1
+  rotate: false
+  xy: 1, 1
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+powerBall2
+  rotate: false
+  xy: 48, 1
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+powerBall3
+  rotate: false
+  xy: 95, 1
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+powerBall4
+  rotate: false
+  xy: 142, 1
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+powerBall5
+  rotate: false
+  xy: 189, 1
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1

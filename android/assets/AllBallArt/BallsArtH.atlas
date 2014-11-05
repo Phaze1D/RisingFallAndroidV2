@@ -1,0 +1,47 @@
+
+BallsArtH.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ball0
+  rotate: false
+  xy: 1, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+ball1
+  rotate: false
+  xy: 113, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+ball2
+  rotate: false
+  xy: 225, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+ball3
+  rotate: false
+  xy: 337, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+ball4
+  rotate: false
+  xy: 449, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+ball5
+  rotate: false
+  xy: 561, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1

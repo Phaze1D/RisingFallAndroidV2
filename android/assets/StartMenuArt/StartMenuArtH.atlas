@@ -1,0 +1,26 @@
+
+StartMenuArtH.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 141
+  size: 1080, 1750
+  orig: 1080, 1750
+  offset: 0, 0
+  index: -1
+background0
+  rotate: false
+  xy: 1083, 403
+  size: 905, 1488
+  orig: 905, 1488
+  offset: 0, 0
+  index: -1
+Title
+  rotate: false
+  xy: 1, 1
+  size: 649, 138
+  orig: 649, 138
+  offset: 0, 0
+  index: -1

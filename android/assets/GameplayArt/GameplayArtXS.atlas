@@ -1,0 +1,131 @@
+
+GameplayArtXS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+backBoxes
+  rotate: false
+  xy: 1, 245
+  size: 452, 673
+  orig: 452, 673
+  offset: 0, 0
+  index: -1
+gameOverArea
+  rotate: false
+  xy: 455, 532
+  size: 315, 386
+  orig: 315, 386
+  offset: 0, 0
+  index: -1
+powerArea
+  rotate: false
+  xy: 1, 186
+  size: 310, 57
+  orig: 310, 57
+  offset: 0, 0
+  index: -1
+end0
+  rotate: false
+  xy: 455, 425
+  size: 91, 105
+  orig: 91, 105
+  offset: 0, 0
+  index: -1
+end1
+  rotate: false
+  xy: 772, 813
+  size: 91, 105
+  orig: 91, 105
+  offset: 0, 0
+  index: -1
+end2
+  rotate: false
+  xy: 1, 79
+  size: 91, 105
+  orig: 91, 105
+  offset: 0, 0
+  index: -1
+end4
+  rotate: false
+  xy: 455, 318
+  size: 91, 105
+  orig: 91, 105
+  offset: 0, 0
+  index: -1
+end5
+  rotate: false
+  xy: 548, 425
+  size: 91, 105
+  orig: 91, 105
+  offset: 0, 0
+  index: -1
+end3
+  rotate: false
+  xy: 772, 706
+  size: 90, 105
+  orig: 90, 105
+  offset: 0, 0
+  index: -1
+objectiveArea
+  rotate: false
+  xy: 865, 876
+  size: 146, 42
+  orig: 146, 42
+  offset: 0, 0
+  index: -1
+scoreArea
+  rotate: false
+  xy: 865, 876
+  size: 146, 42
+  orig: 146, 42
+  offset: 0, 0
+  index: -1
+playerTimeArea
+  rotate: false
+  xy: 313, 186
+  size: 98, 57
+  orig: 98, 57
+  offset: 0, 0
+  index: -1
+shareB1
+  rotate: false
+  xy: 1, 1
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+shareB2
+  rotate: false
+  xy: 94, 108
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+LevelIDArea
+  rotate: false
+  xy: 455, 259
+  size: 56, 57
+  orig: 56, 57
+  offset: 0, 0
+  index: -1
+optionAreaPressed
+  rotate: false
+  xy: 548, 378
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+optionArea
+  rotate: false
+  xy: 641, 486
+  size: 45, 44
+  orig: 45, 44
+  offset: 0, 0
+  index: -1
+notifiactionNode
+  rotate: false
+  xy: 772, 684
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1

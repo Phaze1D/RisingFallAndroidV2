@@ -1,0 +1,40 @@
+
+StoreItemsM.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+st1
+  rotate: false
+  xy: 1, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+st4
+  rotate: false
+  xy: 123, 1
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+st2
+  rotate: false
+  xy: 245, 1
+  size: 119, 120
+  orig: 119, 120
+  offset: 0, 0
+  index: -1
+st3
+  rotate: false
+  xy: 366, 1
+  size: 119, 120
+  orig: 119, 120
+  offset: 0, 0
+  index: -1
+st5
+  rotate: false
+  xy: 487, 2
+  size: 120, 119
+  orig: 120, 119
+  offset: 0, 0
+  index: -1

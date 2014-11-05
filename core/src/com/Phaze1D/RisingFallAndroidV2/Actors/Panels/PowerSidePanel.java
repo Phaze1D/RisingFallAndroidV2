@@ -42,13 +42,14 @@ public class PowerSidePanel extends Panel {
 
         Array<Sprite> powerSprites = powerBallAtlas.createSprites();
         powerBalls = new Ball[powerSprites.size];
-
-        float yOffset = (getHeight() - powerSprites.get(0).getHeight()*5)/6f;
-        float xOffset = getWidth()*.3f;
-
+    
+        
+        float xOffset = (getWidth() - powerSprites.get(0).getWidth() * 5)/6;
+        float yOffset = (getHeight() - powerSprites.get(0).getHeight())/2;
+             
         for (int i = 0; i < powerSprites.size; i++){
             Ball ball = new Ball(powerSprites.get(i));
-            ball.setPosition((int)xOffset,  (int)(yOffset + (ball.getHeight() + yOffset)*i));
+            ball.setPosition((int)(xOffset + (powerSprites.get(0).getWidth() + xOffset)*i  ),  (int)yOffset);
             ball.powerType = i+1;
             ball.isPowerBall = true;
             addActor(ball);
@@ -56,7 +57,8 @@ public class PowerSidePanel extends Panel {
         }
 
 
-        float xOffset2 = xOffset - powerSprites.get(0).getHeight()/2;
+       // float xposition2 = yOffset - [[SizeManager sharedSizeManager] getPowerPanelBallSize].width/4 + [[SizeManager sharedSizeManager] getPowerPanelBallSize].height/2;
+        float xOffset2 = yOffset - powerSprites.get(0).getWidth()/4 + powerSprites.get(0).getHeight()/2 ;
 
         for(int i = 0; i < powerSprites.size; i++){
             final int amount = player.getPowerAmount(i+1);

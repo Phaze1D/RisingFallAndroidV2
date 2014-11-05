@@ -1,0 +1,40 @@
+
+LevelSceneArtM.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+backgroundui
+  rotate: false
+  xy: 2, 304
+  size: 750, 1200
+  orig: 750, 1200
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 756, 547
+  size: 714, 957
+  orig: 714, 957
+  offset: 0, 0
+  index: -1
+lifePanel
+  rotate: false
+  xy: 2, 2
+  size: 326, 298
+  orig: 326, 298
+  offset: 0, 0
+  index: -1
+naviB
+  rotate: false
+  xy: 756, 432
+  size: 111, 111
+  orig: 111, 111
+  offset: 0, 0
+  index: -1
+naviBPressed
+  rotate: false
+  xy: 1474, 1393
+  size: 111, 111
+  orig: 111, 111
+  offset: 0, 0
+  index: -1

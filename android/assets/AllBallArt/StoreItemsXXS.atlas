@@ -1,0 +1,40 @@
+
+StoreItemsXXS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+st1
+  rotate: false
+  xy: 1, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+st2
+  rotate: false
+  xy: 43, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+st3
+  rotate: false
+  xy: 85, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+st4
+  rotate: false
+  xy: 127, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+st5
+  rotate: false
+  xy: 169, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1

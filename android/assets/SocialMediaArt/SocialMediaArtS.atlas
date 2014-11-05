@@ -1,0 +1,47 @@
+
+SocialMediaArtS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+contacts
+  rotate: false
+  xy: 1, 1
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+facebook
+  rotate: false
+  xy: 101, 2
+  size: 97, 97
+  orig: 97, 97
+  offset: 0, 0
+  index: -1
+google
+  rotate: false
+  xy: 200, 2
+  size: 97, 97
+  orig: 97, 97
+  offset: 0, 0
+  index: -1
+twitter
+  rotate: false
+  xy: 299, 2
+  size: 97, 97
+  orig: 97, 97
+  offset: 0, 0
+  index: -1
+vk
+  rotate: false
+  xy: 398, 2
+  size: 97, 97
+  orig: 97, 97
+  offset: 0, 0
+  index: -1
+weibo
+  rotate: false
+  xy: 497, 2
+  size: 97, 97
+  orig: 97, 97
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,26 @@
+
+StarMenuArtM.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 107
+  size: 750, 1200
+  orig: 750, 1200
+  offset: 0, 0
+  index: -1
+background0
+  rotate: false
+  xy: 753, 314
+  size: 604, 993
+  orig: 604, 993
+  offset: 0, 0
+  index: -1
+Title
+  rotate: false
+  xy: 1, 2
+  size: 474, 101
+  orig: 474, 101
+  offset: 0, 0
+  index: -1

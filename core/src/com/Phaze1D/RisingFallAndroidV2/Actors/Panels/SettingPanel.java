@@ -40,6 +40,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     public TextureAtlas socialMediaAtlas;
     public TextureAtlas infoAtlas;
     public TextureAtlas buttonAtlas;
+    public TextureAtlas gameAtlas;
 
     public SocialMediaButton socialB;
 
@@ -73,11 +74,13 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
             }
         }
 
-
+        float xOffset = (getWidth() - infoAtlas.createSprite("correct").getWidth()*2)/3;
+        
         TextField.TextFieldStyle style = new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(15), Color.BLACK,null,null,null);
         textView = new TextArea(info, style);
         textView.setDisabled(true);
-        textView.setBounds(0,0, getWidth(), getHeight()/2 - 5);
+        textView.setBounds(xOffset,0, xOffset + infoAtlas.createSprite("correct").getWidth()*2, getHeight()/2 - 5);
+        
         textView.setTouchable(Touchable.disabled);
         textView.setMessageText("INFO");
 
@@ -150,6 +153,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     }
 
     public void createGameWon(){
+    	
 
         Sprite button1 = buttonAtlas.createSprite("buttonL1");
         Sprite button2 = buttonAtlas.createSprite("buttonL2");
@@ -182,53 +186,66 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     }
 
     public void createGameLost(){
+    	
+        BitmapFont font = BitmapFontSizer.getFontWithSize(21);
+        Sprite button1b = buttonAtlas.createSprite("buttonS1B");
+        Sprite button2b = buttonAtlas.createSprite("buttonS2B");
+        Sprite button1g = buttonAtlas.createSprite("buttonS1G");
+        Sprite button2g = buttonAtlas.createSprite("buttonS2G");
+        
+        float yOffset = (getHeight() - button1b.getHeight()*5)/6;
+        float xOffset = (getWidth() - button1b.getWidth() * 2)/3;
 
-        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
-        Sprite button1 = buttonAtlas.createSprite("buttonS1");
-        Sprite button2 = buttonAtlas.createSprite("buttonS2");
-
-        float yOffset = (getHeight() - button1.getHeight()*5)/6;
-        float xOffset = (getWidth() - button1.getWidth() * 2)/3;
-
-        Vector2 payBPosition = new Vector2(getWidth()/2 - button1.getWidth()/2, getHeight() - yOffset*2 - button1.getHeight()*2);
-        Vector2 socialPosition = new Vector2( getWidth()/2 - button1.getWidth()/2, getHeight() - yOffset*3 - button1.getHeight()*3);
-        Vector2 resetPosition = new Vector2(xOffset, getHeight() - yOffset*5 - button1.getHeight()*5);
-        Vector2 quitPosition = new Vector2(xOffset*2 + button1.getWidth(),getHeight() - yOffset*5 - button1.getHeight()*5 );
+        Vector2 payBPosition = new Vector2(getWidth()/2 - button1b.getWidth()/2, getHeight() - yOffset*2 - button1b.getHeight()*2);
+        Vector2 socialPosition = new Vector2( getWidth()/2, getHeight() - yOffset*3 - button1b.getHeight()*3);
+        Vector2 resetPosition = new Vector2(xOffset, getHeight() - yOffset*5 - button1b.getHeight()*5);
+        Vector2 quitPosition = new Vector2(xOffset*2 + button1b.getWidth(),getHeight() - yOffset*5 - button1b.getHeight()*5 );
 
 
         Label keepPlayLabel = new Label(strings.getValue("KeepPlayingK"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(20), Color.BLACK));
-        keepPlayLabel.setPosition((int)(getWidth()/2 - keepPlayLabel.getWidth()/2), (int)(getHeight() -  yOffset - button1.getHeight()));
+        keepPlayLabel.setPosition((int)(getWidth()/2 - keepPlayLabel.getWidth()/2), (int)(getHeight() -  yOffset - button1b.getHeight()));
         addActor(keepPlayLabel);
 
-        SpriteDrawable up = new SpriteDrawable(button1);
-        SpriteDrawable down = new SpriteDrawable(button2);
+        SpriteDrawable upB = new SpriteDrawable(button1b);
+        SpriteDrawable downB = new SpriteDrawable(button2b);
+        
+        SpriteDrawable upG = new SpriteDrawable(button1g);
+        SpriteDrawable downG = new SpriteDrawable(button2g);
+        
+        
+        ImageTextButton.ImageTextButtonStyle styleB = new ImageTextButton.ImageTextButtonStyle(upB, downB, null, font);
+        styleB.fontColor = Color.BLACK;
+        
+        ImageTextButton.ImageTextButtonStyle styleG = new ImageTextButton.ImageTextButtonStyle(upG, downG, null, font);
+   
 
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
-        style.fontColor = Color.BLACK;
-
-        SimpleButton payButton = new SimpleButton(strings.getValue(".99K"), style);
+        SimpleButton payButton = new SimpleButton(strings.getValue(".99K"), styleB);
         payButton.delegate = this;
         payButton.type = SimpleButton.PAY_BUTTON;
         payButton.setPosition((int)payBPosition.x, (int)payBPosition.y);
         addActor(payButton);
 
-        socialB = new SocialMediaButton(up, down);
-        socialB.setPosition((int)socialPosition.x, (int)socialPosition.y);
+        SpriteDrawable shareUp = new SpriteDrawable(gameAtlas.createSprite("shareB1"));
+        SpriteDrawable shareDown = new SpriteDrawable(gameAtlas.createSprite("shareB2"));
+        
+        
+        socialB = new SocialMediaButton(shareUp, shareDown);
+        socialB.setCenterPosition((int)socialPosition.x, (int)socialPosition.y);
         socialB.delegate = this;
         socialB.type = SocialMediaButton.SOCIAL_BUTTON;
         addActor(socialB);
 
         Label endLabel = new Label(strings.getValue("EndK"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(20), Color.BLACK));
-        endLabel.setPosition((int)(getWidth()/2 - endLabel.getWidth()/2), (int)(getHeight() -  yOffset*4 - button1.getHeight()*4));
+        endLabel.setPosition((int)(getWidth()/2 - endLabel.getWidth()/2), (int)(getHeight() -  yOffset*4 - button1b.getHeight()*4));
         addActor(endLabel);
 
-        SimpleButton resetButton = new SimpleButton(strings.getValue("RestartK"), style);
+        SimpleButton resetButton = new SimpleButton(strings.getValue("RestartK"), styleG);
         resetButton.setPosition((int)resetPosition.x, (int)resetPosition.y);
         resetButton.type = SimpleButton.RESTART_BUTTON;
         resetButton.delegate = this;
         addActor(resetButton);
 
-        SimpleButton quitButton = new SimpleButton(strings.getValue("QuitK"), style);
+        SimpleButton quitButton = new SimpleButton(strings.getValue("QuitK"), styleG);
         quitButton.setPosition((int)quitPosition.x, (int)quitPosition.y);
         quitButton.type = SimpleButton.QUIT_BUTTON;
         quitButton.delegate = this;
@@ -240,7 +257,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
 
         float duration = .3f;
 
-        Sprite button1 = buttonAtlas.createSprite("buttonS1");
+        Sprite button1 = buttonAtlas.createSprite("backButton");
         socialChildren = new SocialMediaButton[6];
 
         float xOffset = (getWidth() - socialMediaAtlas.createSprite("facebook").getWidth()*3)/4;
@@ -282,7 +299,8 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
             }
         }
 
-        backB = new SocialMediaButton(new SpriteDrawable(button1));
+        backB = new SocialMediaButton(new SpriteDrawable(button1), new SpriteDrawable(buttonAtlas.createSprite("backButton2")));
+        
         backB.setPosition((int)(getWidth()/2 - backB.getWidth()/2), (int)(yOffset - backB.getHeight()/2));
         backB.delegate = this;
         backB.type = SocialMediaButton.SOCIAL_BUTTON;

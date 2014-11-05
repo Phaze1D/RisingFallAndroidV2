@@ -20,8 +20,7 @@ public class ScorePanel extends Panel {
     public int targetScore;
 
     public boolean reachYet;
-
-    public CustomLabel scoreLabel;
+    
     public CustomLabel titleLabel;
 
 
@@ -31,29 +30,45 @@ public class ScorePanel extends Panel {
     }
 
     public void createScorePanel(int targetScore){
+    	
+//    	 int fontsize = 16;
+//    	    _currentScore = 0;
+//    	    _targetScore = targetScore;
+//    	    
+//    	    NSMutableString * stringL = [[NSMutableString alloc]init];
+//    	    
+//    	    [stringL appendString:NSLocalizedString(@"Score:", nil)];
+//    	    [stringL appendFormat:@" %d/%d", _currentScore, _targetScore];
+//    	    
+//    	    _titleLabel = [SKLabelNode labelNodeWithFontNamed:@"CooperBlack"];
+//    	    _titleLabel.fontColor = [UIColor whiteColor];
+//    	    _titleLabel.fontSize = fontsize;
+//    	    _titleLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+//    	    _titleLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+//    	    _titleLabel.zPosition = 2;
+//    	    _titleLabel.text = stringL;
+//    	    _titleLabel.position = CGPointMake(-_titleLabel.frame.size.width/1.5, -self.size.height/2);
+//    	    [self addChild: _titleLabel];
+
+    	
         currentScore = 0;
         this.targetScore = targetScore;
+        String titleString = LocaleStrings.getOurInstance().getValue("scorek") + " " + currentScore + "/" + targetScore;
 
-        titleLabel = new CustomLabel(LocaleStrings.getOurInstance().getValue("scorek"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
-        titleLabel.setPosition((int)(getWidth()/2 - titleLabel.getWidth()/2), (int)(getHeight()*4/7) );
+        titleLabel = new CustomLabel(titleString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(25), Color.WHITE));
+        titleLabel.setPosition((int)(titleLabel.getWidth()/5), (int) (getHeight() / 2 - titleLabel.getHeight() / 2) );
         addActor(titleLabel);
 
-        scoreLabel = new CustomLabel(currentScore + "/" + targetScore, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
-        scoreLabel.setPosition((int)(getWidth()/2 - scoreLabel.getWidth()/2),(int)(getHeight()/7));
-        scoreLabel.setAlignment(Align.center);
-        addActor(scoreLabel);
 
     }
 
     public void updateScore(int addScore){
         currentScore += addScore;
-        scoreLabel.setText(currentScore + "/" + targetScore);
+        titleLabel.setText(LocaleStrings.getOurInstance().getValue("scorek") + " " + currentScore + "/" + targetScore);
 
         if (currentScore >= targetScore && !reachYet){
             titleLabel.setVisible(false);
-            scoreLabel.setVisible(false);
-
-            final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(9), Color.BLACK));
+            final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(25), Color.BLACK));
             reachL.setPosition((int)(getWidth()/2 - reachL.getWidth()/2), (int)(getHeight()/2 - reachL.getHeight()/2) );
             reachL.setAlignment(Align.center);
             AlphaAction alphaAction = Actions.alpha(0, 1.5f);
@@ -63,7 +78,6 @@ public class ScorePanel extends Panel {
                 @Override
                 public boolean act(float delta) {
                     titleLabel.setVisible(true);
-                    scoreLabel.setVisible(true);
                     reachL.remove();
                     reachL.clear();
                     return true;
@@ -89,7 +103,7 @@ public class ScorePanel extends Panel {
         ScaleToAction up = Actions.scaleTo(1.5f, 1.5f, 1f);
         ScaleToAction down = Actions.scaleTo(1,1,1f);
         SequenceAction seq = Actions.sequence(up, down);
-        scoreLabel.addAction(Actions.forever(seq));
+        titleLabel.addAction(Actions.forever(seq));
 
     }
 

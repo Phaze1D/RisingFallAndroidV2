@@ -1,0 +1,40 @@
+
+PowerBallArtH.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+powerBall1
+  rotate: false
+  xy: 1, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+powerBall2
+  rotate: false
+  xy: 113, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+powerBall3
+  rotate: false
+  xy: 225, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+powerBall4
+  rotate: false
+  xy: 337, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+powerBall5
+  rotate: false
+  xy: 449, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1

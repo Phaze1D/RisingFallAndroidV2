@@ -1,0 +1,33 @@
+
+StoreArtM.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 833
+  size: 750, 1200
+  orig: 750, 1200
+  offset: 0, 0
+  index: -1
+backbox
+  rotate: false
+  xy: 756, 1173
+  size: 654, 860
+  orig: 654, 860
+  offset: 0, 0
+  index: -1
+itemsArea
+  rotate: false
+  xy: 2, 2
+  size: 207, 827
+  orig: 207, 827
+  offset: 0, 0
+  index: -1
+sellItemArea
+  rotate: false
+  xy: 1414, 1489
+  size: 475, 544
+  orig: 475, 544
+  offset: 0, 0
+  index: -1

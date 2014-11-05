@@ -1,0 +1,26 @@
+
+StartMenuArtXS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 68
+  size: 480, 800
+  orig: 480, 800
+  offset: 0, 0
+  index: -1
+backgroundui
+  rotate: false
+  xy: 483, 206
+  size: 402, 662
+  orig: 402, 662
+  offset: 0, 0
+  index: -1
+Title
+  rotate: false
+  xy: 1, 1
+  size: 300, 65
+  orig: 300, 65
+  offset: 0, 0
+  index: -1
