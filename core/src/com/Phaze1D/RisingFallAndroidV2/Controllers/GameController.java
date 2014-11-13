@@ -156,6 +156,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         storeScene.sceneAtlas = textureLoader.getStoreAtlas();
         storeScene.buttonAtlas = textureLoader.getButtonAtlas();
         storeScene.ballsAtlas = textureLoader.getBallsAtlas();
+        storeScene.itemsAtlas = textureLoader.getItemsAtlas();
         storeScene.delegate = this;
         storeScene.corePaymentDelegate = paymentDelegate;
         setScreen(storeScene);

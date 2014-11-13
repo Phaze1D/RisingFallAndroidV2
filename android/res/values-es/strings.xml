@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">RisingFallAndroidEnEspan</string>
-    <string name="share_text">Playing Rising Fall</string>
+    <string name ="Play">Jugar</string>
+    <string name="Store">Tienda</string>
+    <string name="Powers">Poderes</string>
+
+	<string name ="P5Title">Doble Puentos</string>
+	<string name = "P5Info">El doble de puntos por 10 segundos</string>
+
+	<string name="P4Title">¡Fuera de aquí!</string>
+	<string name ="P4Info">Destruye las dos filas inferiores y te da puntos</string>
+
+	<string name = "P3Title">Cópiame</string>
+	<string name = "P3Info">Cambia todas las pelotas de un color a otro color</string>
+
+	<string name = "P2Title">Somos todos iguales</string>
+	<string name = "P2Info">Genera 10 pelotas del mismo color</string>
+
+	<string name = "P1Title">Lento y Constante</string>
+	<string name = "P1Info">Reduce la velocidad de las pelotas por mitad por 10 segundos</string>
+
+	<string name = "BallsLeft">Pelotas</string>
+	<string name = "TimeLeft">Tiempo</string>
+	<string name = "Score">Puntos</string>
+	<string name ="Resume">Continuar</string>
+	<string name = "Quit">Salir</string>
+	<string name = "YouWon">Has Ganado</string>
+	<string name = "Next">Siguiente</string>
+	<string name = "MainMenu">Menú</string>
+	<string name = "Playon">Seguir Jugando</string>
+	<string name = "GameOver">Game Over</string>
+	<string name = "Restart">De Nuevo</string>
+
+	<string name = "InfoLevel0">Mueve las bolas alrededor para combinar 3 o más bolas del mismo color y toque ellos para destruirlos</string>
+	<string name = "InfoLevel1">Cuanto más grande sea el grupo de bolas del mismo color los más puntos obtendrá.</string>
+	<string name = "InfoLevel2">Llegar a la meta de puntuación y asegúrese de que usted no deje que las bolas de golpear la parte superior.</string>
+	<string name = "InfoLevel18">Pelotas rayadas necesitan ser grupo dos veces para eliminar las</string>
+	<string name = "InfoLevel28">Algo está cambiando</string>
+	<string name = "InfoLevel50">Las cajas cuadradas no puedo ser movidos</string>
+	<string name = "InfoLevel70">Algo está cambiando</string>
+	<string name = "InfoLevel101">Alcanzar %d \n No golpee la parte superior.</string>
+
+	<string name = "PaymentFailed">Pago Error</string>
+	<string name = "NoInternetAccess">Sin acceso a Internet</string>
+	<string name = "TwitterError">Ninguna cuenta de Twitter encontrada</string>
+	<string name = "WeiboError">Ninguna cuenta de Weibo encontrada</string>
+	<string name = "PostFailed">Compartiendo Error</string>
 
 </resources>

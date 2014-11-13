@@ -10,7 +10,7 @@ background
   orig: 480, 800
   offset: 0, 0
   index: -1
-backBoxes
+backbox
   rotate: false
   xy: 483, 350
   size: 404, 530

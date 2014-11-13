@@ -69,15 +69,17 @@ public class TextureLoader implements Disposable {
     	    if(screenWidth >= 750 && screenHeight >= 1200){
     	        screenSizeAlt = "M";
     	    }
-
-    	    if(screenWidth >= 1080 && screenHeight >= 1700){
-    	        screenSizeAlt = "H";
-    	    }
+//
+//    	    if(screenWidth >= 1080 && screenHeight >= 1700){
+//    	        screenSizeAlt = "H";
+//    	    }
 
 //    	    if(screenWidth >= 1440 && screenHeight >= 2200){
 //    	        screenSizeAlt = "XH";
 //    	    }
     	
+    	    
+    	    System.out.println("dalkdjfalkjdfaldjfalsdkjfasldkf ------- " + screenSizeAlt);
     }
 
     /** Loads the start screen atlases into memory*/
@@ -122,9 +124,9 @@ public class TextureLoader implements Disposable {
         assetManager.load("AllBallArt/PowerBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.load("AllBallArt/BallsArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.load("AllBallArt/UnmovableBallArt" + screenSizeAlt + ".atlas",TextureAtlas.class);
-        assetManager.load("BallAtlas/BadBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
+        assetManager.load("AllBallArt/BadBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.load("SocialMediaArt/SocialMediaArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
-        //assetManager.load("InfoAtlas/Info"+levelAt +".atlas", TextureAtlas.class);
+       // assetManager.load("InfoAtlas/Info"+levelAt +".atlas", TextureAtlas.class);
         assetManager.finishLoading();
 
         buttonAtlas = assetManager.get("Buttons/Buttons" + screenSizeAlt + ".atlas", TextureAtlas.class);
@@ -132,9 +134,9 @@ public class TextureLoader implements Disposable {
         powerBallAtlas = assetManager.get("AllBallArt/PowerBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         ballsAtlas = assetManager.get("AllBallArt/BallsArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         unmovableBallAtlas = assetManager.get("AllBallArt/UnmovableBallArt" + screenSizeAlt + ".atlas",TextureAtlas.class);
-        badBallAtlas = assetManager.get("BallAtlas/BadBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
+        badBallAtlas = assetManager.get("AllBallArt/BadBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         socialMediaAtlas = assetManager.get("SocialMediaArt/SocialMediaArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
-        //infoAtlas = assetManager.get("InfoAtlas/Info"+levelAt+".atlas", TextureAtlas.class);
+       // infoAtlas = assetManager.get("InfoAtlas/Info"+levelAt+".atlas", TextureAtlas.class);
         isGameplayScreenLoaded = true;
 
     }
@@ -143,11 +145,13 @@ public class TextureLoader implements Disposable {
         assetManager.load("StoreArt/StoreArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.load("Buttons/Buttons" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.load("AllBallArt/BallsArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
+        assetManager.load("AllBallArt/StoreItems" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.finishLoading();
 
         storeAtlas = assetManager.get("StoreArt/StoreArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         buttonAtlas = assetManager.get("Buttons/Buttons" + screenSizeAlt + ".atlas", TextureAtlas.class);
         ballsAtlas = assetManager.get("AllBallArt/BallsArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
+        itemsAtlas = assetManager.get("AllBallArt/StoreItems" + screenSizeAlt + ".atlas", TextureAtlas.class);
         isStoreScreenLoaded = true;
 
     }

@@ -255,29 +255,35 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         playerInfo = Player.shareInstance();
         stageAt = 1;
         
-        playAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayAreaCeilingArea/playArea" + levelFactory.ceilingHeight + TextureLoader.shareTextureLoader().screenSizeAlt + ".png")));
+        switch (levelFactory.ceilingHeight){
+        case 1:
+            numRows = 13;
+            levelFactory.ceilingHeight = 1;
+            break;
+        case 2:
+        case 3:
+            numRows = 12;
+            levelFactory.ceilingHeight = 2;
+            break;
+        case 4:
+        case 5:
+            numRows = 11;
+            levelFactory.ceilingHeight = 3;
+            break;
+        case 6:
+            numRows = 10;
+            levelFactory.ceilingHeight = 4;
+
+    }
+        
+        playAreaSprite = new Sprite(new Texture(Gdx.files.internal("PlayArea/playArea" + levelFactory.ceilingHeight + TextureLoader.shareTextureLoader().screenSizeAlt + ".png")));
         maxColumns = 8;
 
         float ballWidth = ballAtlas.createSprite("ball0").getWidth();
         xOffsetPA = (playAreaSprite.getWidth() - ballWidth*maxColumns)/(maxColumns + 1);
 
         //float numTest = (playAreaSprite.getHeight() - xOffsetPA)/(xOffsetPA + ballWidth);
-        switch (levelFactory.ceilingHeight){
-            case 1:
-                numRows = 13;
-                break;
-            case 2:
-            case 3:
-                numRows = 12;
-                break;
-            case 4:
-            case 5:
-                numRows = 11;
-                break;
-            case 6:
-                numRows = 10;
-
-        }
+       
         //numRows =(int) Math.ceil(numTest);
         yOffsetPA = (playAreaSprite.getHeight() - ballWidth * numRows)/(numRows + 1);
 
@@ -550,7 +556,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel.delegate = this;
 
             if (stageAt == 1){
-                settingPanel.createIntroPanel(levelID);
+                //settingPanel.createIntroPanel(levelID);
                 addActor(settingPanel);
             }else if (stageAt == 2){
 
@@ -880,7 +886,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private void runBallRemoveEffect(int score, Ball ball){
 
-        final CustomLabel scoreLab = new CustomLabel("" + score, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(15), Color.BLACK));
+        final CustomLabel scoreLab = new CustomLabel("" + score, new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontPopEffect()), Color.BLACK));
         scoreLab.setPosition(ball.getX() + ball.getWidth()/2, ball.getY() + ball.getHeight()/2);
         scoreLab.setScale(0);
 
@@ -1133,7 +1139,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public void continuePlaying() {
 
         int midIndex = (int)ballsArray.length/2;
-
+        if(endAnimationNode != null){
+        	endAnimationNode.remove();
+        }
         for (int i = midIndex - 1; i < ballsArray.length; i++){
             if (ballsArray[i] != null){
                 movingBallList.findNodeRemove(ballsArray[i]);

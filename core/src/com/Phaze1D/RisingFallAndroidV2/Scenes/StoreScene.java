@@ -40,6 +40,7 @@ public class StoreScene extends Stage implements Screen,
 	public TextureAtlas sceneAtlas;
 	public TextureAtlas buttonAtlas;
 	public TextureAtlas ballsAtlas;
+	public TextureAtlas itemsAtlas;
 
 	private Spawner[] spawners;
 	private LinkedList<Ball> ballQuene;
@@ -178,7 +179,7 @@ public class StoreScene extends Stage implements Screen,
 		physicsWorld = new PhysicsWorld();
 		ballGroup = new Group();
 		itemsArea = sceneAtlas.createSprite("itemsArea");
-		backButton = sceneAtlas.createSprite("backButton");
+		backButton = buttonAtlas.createSprite("backButton");
 		sellItemArea = sceneAtlas.createSprite("sellItemArea");
 
 	}
@@ -233,7 +234,7 @@ public class StoreScene extends Stage implements Screen,
 		buyPanel = new StoreBuyPanel(itemsArea);
 		buyPanel.setPosition((int) sidePosition.x, (int) sidePosition.y);
 		buyPanel.delegate = this;
-		buyPanel.itemsAtlas = sceneAtlas;
+		buyPanel.itemsAtlas = itemsAtlas;
 		buyPanel.createPanel();
 		addActor(buyPanel);
 
@@ -284,7 +285,7 @@ public class StoreScene extends Stage implements Screen,
 		sellItemPanel.setPosition((int) initPointSellPanel.x,
 				(int) initPointSellPanel.y);
 		sellItemPanel.buttonAtlas = buttonAtlas;
-		sellItemPanel.storeSceneAtlas = sceneAtlas;
+		sellItemPanel.storeSceneAtlas = itemsAtlas;
 		sellItemPanel.createPanel(powerType, true);
 		sellItemPanel.powerID = getPowerID(powerType);
 		sellItemPanel.addAction(Actions.alpha(0));

@@ -53,13 +53,17 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
 
     public void createTextArea(int powerType){
 
-        int fontSize = 17;
+        int fontSize = (int)BitmapFontSizer.sharedInstance().fontStoreInfo();
 
 //        NSString * key = [NSString stringWithFormat:@"PowerInfoK%d", powerType];
 //        NSString * info = NSLocalizedString(key, nil);
+        
+        String title = strings.getValue("P" + powerType+"Title");
+        String info = strings.getValue("P" + powerType + "Info");
+        
 
 
-        textView = new TextArea(strings.getValue("Infomation about the product that will be bought"), new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null));
+        textView = new TextArea(title + "\n" + info, new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null));
         textView.setSize((int)(getWidth()/1.5f), (int)(getHeight()/2));
         textView.setPosition( getWidth()/2 - textView.getWidth()/2, getHeight()/2 - textView.getHeight()/2);
         textView.setDisabled(true);
@@ -81,9 +85,9 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         addActor(titleNode);
 
         SpriteDrawable up = new SpriteDrawable(buyButtonSp);
-        BitmapFont font = BitmapFontSizer.getFontWithSize(11);
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, null, null, font);
-        style.fontColor = Color.BLACK;
+        style.fontColor = Color.BLUE;
 
         SimpleButton buyButton = new SimpleButton(strings.getValue(".99K"),style );
         buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()/2) );

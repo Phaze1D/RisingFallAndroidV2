@@ -217,11 +217,11 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         SpriteDrawable up = new SpriteDrawable(playSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
-        BitmapFont font = BitmapFontSizer.getFontWithSize(24);
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLUE;
 
-        playButton = new SimpleButton(strings.getValue("PlayK"), style);
+        playButton = new SimpleButton(strings.getValue("Play"), style);
         playButton.setPosition((int)(playButtonPosition.x - playButton.getWidth()/2), (int)(playButtonPosition.y - playButton.getHeight()/2));
         playButton.delegate = this;
         playButton.type = SimpleButton.PLAY_BUTTON;
@@ -233,11 +233,11 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         SpriteDrawable up = new SpriteDrawable(storeSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
-        BitmapFont font = BitmapFontSizer.getFontWithSize(24);
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLUE;
 
-        storeButton = new SimpleButton(strings.getValue("StoreK"), style);
+        storeButton = new SimpleButton(strings.getValue("Store"), style);
         storeButton.setPosition((int)(storeButtonPosition.x - storeButton.getWidth()/2), (int)(storeButtonPosition.y - storeButton.getHeight()/2));
         storeButton.delegate = this;
         storeButton.type = SimpleButton.STORE_BUTTON;

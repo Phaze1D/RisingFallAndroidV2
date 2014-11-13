@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">놀이</string>
+    <string name="Store">상점</string>
+    <string name="Powers">상품</string>
+
+	<string name ="P5Title">더블 포인트</string>
+	<string name = "P5Info">10 초 동안 더블 포인트</string>
+
+	<string name="P4Title">물러 가라</string>
+	<string name ="P4Info">아래 두 행을 파괴하고 당신에게 포인트를 제공합니다</string>
+
+	<string name = "P3Title">나 복사</string>
+	<string name = "P3Info">다른 색으로 하나의 색상의 모든 공을 변경</string>
+
+	<string name = "P2Title">우리는 모두 같은 것</string>
+	<string name = "P2Info">동일한 색깔의 공 (10)를 생성</string>
+
+	<string name = "P1Title">느리고 꾸준한</string>
+	<string name = "P1Info">10 초 동안 반으로 볼의 속도를 줄이기</string>
+
+	<string name = "BallsLeft">공</string>
+	<string name = "TimeLeft">시간</string>
+	<string name = "Score">득점</string>
+	<string name ="Resume">다시 시작하다</string>
+	<string name = "Quit">종료</string>
+	<string name = "YouWon">우승자</string>
+	<string name = "Next">다음 수준</string>
+	<string name = "MainMenu">메인 메뉴</string>
+	<string name = "Playon">경기</string>
+	<string name = "GameOver">게임 오버</string>
+	<string name = "Restart">다시 시작</string>
+
+	<string name = "InfoLevel0">공 동일한 색깔의 3 개 이상의 공을 결합하는 이동하고 그들을 파괴하기 위해 그들을 클릭</string>
+	<string name = "InfoLevel1">같은 색 공 당신이 얻을 더 많은 포인트의 그룹 더 큰.</string>
+	<string name = "InfoLevel2">목표 점수에 도달하고 공 상단을 공격 못하게해야합니다.</string>
+	<string name = "InfoLevel18">스트라이프 공 그들을 제거하는 두 그룹 일 필요</string>
+	<string name = "InfoLevel28">뭔가 변화</string>
+	<string name = "InfoLevel50">사각 상자는 이동할 수 없습니다</string>
+	<string name = "InfoLevel70">뭔가 변화</string>
+	<string name = "InfoLevel101">(%d)에 도달 \n 상단에 충돌하지 마십시오</string>
+
+	<string name = "PaymentFailed">지불 실패</string>
+	<string name = "NoInternetAccess">인터넷 연결을 제공하지 않습니다</string>
+	<string name = "TwitterError">어떤 트위터 계정 설정하지</string>
+	<string name = "WeiboError">더 웨이 보 계정 설정하지</string>
+	<string name = "PostFailed">공유 게시물에 실패했습니다</string>
+    
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">играть</string>
+    <string name="Store">магазин</string>
+    <string name="Powers">продукты</string>
+
+	<string name ="P5Title">Двойные очки</string>
+	<string name = "P5Info">Двойные баллы за 10 секунд</string>
+
+	<string name="P4Title">Покончить с вами</string>
+	<string name ="P4Info">Уничтожает нижние два ряда и дает вам очки</string>
+
+	<string name = "P3Title">Скопируйте меня</string>
+	<string name = "P3Info">Изменяет все шары одного цвета к другому цвету</string>
+
+	<string name = "P2Title">Мы все равно</string>
+	<string name = "P2Info">Создает 10 шаров одного цвета</string>
+
+	<string name = "P1Title">Медленно и постепенно</string>
+	<string name = "P1Info">Уменьшите скорость шаров наполовину в течение 10 секунд</string>
+
+	<string name = "BallsLeft">мяч</string>
+	<string name = "TimeLeft">время</string>
+	<string name = "Score">пунктов</string>
+	<string name ="Resume">возобновлять</string>
+	<string name = "Quit">Quit</string>
+	<string name = "YouWon">победитель</string>
+	<string name = "Next">рядом</string>
+	<string name = "MainMenu">Главное меню</string>
+	<string name = "Playon">Игра на</string>
+	<string name = "GameOver">игра окончена</string>
+	<string name = "Restart">перезапуск</string>
+
+	<string name = "InfoLevel0">Переместите шары объединить 3 или более шариков того же цвета, и нажимать на них, чтобы уничтожить их</string>
+	<string name = "InfoLevel1">Чем больше группа из той же шары цвета, тем больше очков вы получите.</string>
+	<string name = "InfoLevel2">Достичь целевой счет и убедитесь, что вы не позволяйте шары попали в топ.</string>
+	<string name = "InfoLevel18">Полосатые шары должны быть группы дважды, чтобы удалить их</string>
+	<string name = "InfoLevel28">Что-то меняется</string>
+	<string name = "InfoLevel50">Квадратные коробки не могут быть перемещены</string>
+	<string name = "InfoLevel70">Что-то меняется</string>
+	<string name = "InfoLevel101">достигнет %d \n Не попал в топ</string>
+
+	<string name = "PaymentFailed">Оплата удалось</string>
+	<string name = "NoInternetAccess">Нет доступа в Интернет</string>
+	<string name = "TwitterError">Нет Твиттере основал</string>
+	<string name = "WeiboError">Нет счета Weibo основал</string>
+	<string name = "PostFailed">пост не удалось</string>
+    
+</resources>

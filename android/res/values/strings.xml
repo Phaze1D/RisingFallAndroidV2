@@ -4,5 +4,51 @@
     <string name="app_name">RisingFallAndroid</string>
     <string name="app_id">1462139420708376</string>
     <string name="share_text">Playing RisingFall \n https://www.facebook.com/RisingFallApp</string>
+    
+    <string name ="Play">Play</string>
+    <string name="Store">Store</string>
+    <string name="Powers">Powers</string>
+
+	<string name ="P5Title">Double Points</string>
+	<string name = "P5Info">Double Points for 10 seconds</string>
+
+	<string name="P4Title">Away with You</string>
+	<string name ="P4Info">Destroys the bottom two rows and gives you points</string>
+
+	<string name = "P3Title">Copy Me</string>
+	<string name = "P3Info">Changes all the balls of one color to other color</string>
+
+	<string name = "P2Title">We\'re all the same</string>
+	<string name = "P2Info">Spawns 10 balls of the same color</string>
+
+	<string name = "P1Title">Slow and Steady</string>
+	<string name = "P1Info">Reduce the drop rate and velocity of the balls by half for 10 seconds</string>
+
+	<string name = "BallsLeft">Balls Left</string>
+	<string name = "TimeLeft">Time Left</string>
+	<string name = "Score">Score</string>
+	<string name ="Resume">Resume</string>
+	<string name = "Quit">Quit</string>
+	<string name = "YouWon">You Won"</string>
+	<string name = "Next">Next</string>
+	<string name = "MainMenu">Main Menu</string>
+	<string name = "Playon">Play On</string>
+	<string name = "GameOver">Game Over</string>
+	<string name = "Restart">Restart</string>
+
+	<string name = "InfoLevel0">Move the balls around to combine 3 or more balls of the same color and tap them to destroy them.</string>
+	<string name = "InfoLevel1">The bigger the group of the same color balls the more points you get.</string>
+	<string name = "InfoLevel2">Reach the target score and make sure you don’t let the balls hit the top.</string>
+	<string name = "InfoLevel18">Striped balls need to be grouped twice to remove them.</string>
+	<string name = "InfoLevel28">Something is changing</string>
+	<string name = "InfoLevel50">The square boxes cant be moved</string>
+	<string name = "InfoLevel70">Something is changing</string>
+	<string name = "InfoLevel101">Reach %d \n Don’t hit the top.</string>
+
+	<string name = "PaymentFailed">Payment Failed</string>
+	<string name = "NoInternetAccess">No Internet Access</string>
+	<string name = "TwitterError">No Twitter account founded</string>
+	<string name = "WeiboError">No Twitter account founded</string>
+	<string name = "PostFailed">Post Failed</string>
 
 </resources>

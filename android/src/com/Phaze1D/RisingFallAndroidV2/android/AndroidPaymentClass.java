@@ -153,7 +153,8 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 				if (!result.isSuccess()) {
 					// Oh noes, there was a problem.
-					((AndroidLauncher) context).displayInAppError("Problem setting up in-app billing: " + result);
+					((AndroidLauncher) context).displayInAppError(context.getString(R.string.PaymentFailed));
+					
 					return;
 				}
 
@@ -250,7 +251,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 			// Is it a failure?
 			if (result.isFailure()) {
-				((AndroidLauncher) context).displayInAppError("Failed to query inventory: " + result);
+				((AndroidLauncher) context).displayInAppError(context.getString(R.string.PaymentFailed));
 				return;
 			}
 
@@ -271,7 +272,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 
 	            if (result.isFailure()) {
 	                //complain("Error purchasing: " + result);
-	            	((AndroidLauncher) context).displayInAppError("Error purchasing: " + result);
+	            	((AndroidLauncher) context).displayInAppError(context.getString(R.string.PaymentFailed));
 	            	if(paymentCompleteListener != null){
 						paymentCompleteListener.paymentComplete(false);
 					}
@@ -279,7 +280,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 	            }
 	            if (!verifyDeveloperPayload(purchase)) {
 	                //complain("Error purchasing. Authenticity verification failed.");
-	            	((AndroidLauncher) context).displayInAppError("Error purchasing. Authenticity verification failed.");
+	            	((AndroidLauncher) context).displayInAppError(context.getString(R.string.PaymentFailed));
 	            	if(paymentCompleteListener != null){
 						paymentCompleteListener.paymentComplete(false);
 					}

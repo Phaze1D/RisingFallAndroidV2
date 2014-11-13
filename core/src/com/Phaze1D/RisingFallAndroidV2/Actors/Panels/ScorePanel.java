@@ -53,9 +53,11 @@ public class ScorePanel extends Panel {
     	
         currentScore = 0;
         this.targetScore = targetScore;
-        String titleString = LocaleStrings.getOurInstance().getValue("scorek") + " " + currentScore + "/" + targetScore;
+        String titleString = LocaleStrings.getOurInstance().getValue("Score") + " " + currentScore + "/" + targetScore;
 
-        titleLabel = new CustomLabel(titleString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(25), Color.WHITE));
+        int fontSize = (int)BitmapFontSizer.sharedInstance().fontScorePanel();
+        
+        titleLabel = new CustomLabel(titleString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.YELLOW));
         titleLabel.setPosition((int)(titleLabel.getWidth()/5), (int) (getHeight() / 2 - titleLabel.getHeight() / 2) );
         addActor(titleLabel);
 
@@ -64,11 +66,11 @@ public class ScorePanel extends Panel {
 
     public void updateScore(int addScore){
         currentScore += addScore;
-        titleLabel.setText(LocaleStrings.getOurInstance().getValue("scorek") + " " + currentScore + "/" + targetScore);
+        titleLabel.setText(LocaleStrings.getOurInstance().getValue("Score") + " " + currentScore + "/" + targetScore);
 
         if (currentScore >= targetScore && !reachYet){
             titleLabel.setVisible(false);
-            final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(25), Color.BLACK));
+            final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontScorePanel()), Color.YELLOW));
             reachL.setPosition((int)(getWidth()/2 - reachL.getWidth()/2), (int)(getHeight()/2 - reachL.getHeight()/2) );
             reachL.setAlignment(Align.center);
             AlphaAction alphaAction = Actions.alpha(0, 1.5f);

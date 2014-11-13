@@ -53,11 +53,11 @@ public class Player implements Serializable{
     
 
     private void setInitialConditions(){
-        power1 = 0;
-        power2 = 0;
-        power3 = 0;
-        power4 = 0;
-        power5 = 0;
+        power1 =5;
+        power2 = 5;
+        power3 = 5;
+        power4 = 5;
+        power5 = 5;
         levelAt = 25;
         livesLeft = 5;
         scores = new int[100];

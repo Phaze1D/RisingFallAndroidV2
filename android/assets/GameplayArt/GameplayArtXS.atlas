@@ -122,7 +122,7 @@ optionArea
   orig: 45, 44
   offset: 0, 0
   index: -1
-notifiactionNode
+notificationCircle
   rotate: false
   xy: 772, 684
   size: 20, 20

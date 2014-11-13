@@ -174,7 +174,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
         SpriteDrawable up  = new SpriteDrawable(sceneAtlas.createSprite("naviB"));
         SpriteDrawable down = new SpriteDrawable(sceneAtlas.createSprite("naviBPressed"));
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down,null,BitmapFontSizer.getFontWithSize(14));
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down,null,BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL()));
 
         navigationB = new SimpleButton("",style);
         navigationB.setCenterPosition((int)naviPosition.x, (int)naviPosition.y);
@@ -190,7 +190,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         parentLevelButtons = new LevelButton[10];
 
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-        style.font = BitmapFontSizer.getFontWithSize(14);
+        style.font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
         style.fontColor = Color.BLACK;
         SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelbutton"));
         style.up = up;
@@ -303,7 +303,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
         for (int i = 0; i < 10; i++){
             ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-            style.font = BitmapFontSizer.getFontWithSize(14);
+            style.font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
             style.fontColor = Color.BLACK;
             SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelbutton"));
             style.up = up;

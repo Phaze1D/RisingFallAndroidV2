@@ -205,8 +205,8 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
     public static final int CONTACTS = 0;
     public static final int WEIBO = 5;
     public static final int GOOGLE = 2;
-    public static final int TWITTER = 4;
-    public static final int VK = 3;
+    public static final int TWITTER = 3;
+    public static final int VK = 4;
 
 
 

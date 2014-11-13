@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">Spielen</string>
+    <string name="Store">der Laden</string>
+    <string name="Powers">Produkte</string>
+
+	<string name ="P5Title">Doppelpunkte</string>
+	<string name = "P5Info">Doppelte Punkte für 10 Sekunden</string>
+
+	<string name="P4Title">hier raus!</string>
+	<string name ="P4Info">Zerstört die beiden unteren Reihen und wird mit Punkten belohnt</string>
+
+	<string name = "P3Title">kopieren Sie mich</string>
+	<string name = "P3Info">Ändert alle Kugeln einer Farbe zur anderen Farbe</string>
+
+	<string name = "P2Title">Wir sind alle gleich</string>
+	<string name = "P2Info">Laicht 10 Kugeln der gleichen Farbe</string>
+
+	<string name = "P1Title">Langsam und stetig</string>
+	<string name = "P1Info">Reduzieren Sie die Geschwindigkeit der Kugeln um die Hälfte 10 Sekunden</string>
+
+	<string name = "BallsLeft">Bälle</string>
+	<string name = "TimeLeft">Zeit</string>
+	<string name = "Score">Erzielen</string>
+	<string name ="Resume">Fortsetzen</string>
+	<string name = "Quit">Verlassen</string>
+	<string name = "YouWon">Sie gewonnen</string>
+	<string name = "Next">nächste Stufe</string>
+	<string name = "MainMenu">Hauptmenü</string>
+	<string name = "Playon">Bespielen</string>
+	<string name = "GameOver">Spiel ist aus</string>
+	<string name = "Restart">Neustart</string>
+
+	<string name = "InfoLevel0">Bewegen Sie die Kugeln um 3 oder mehr Kugeln der gleichen Farbe zu verbinden und klicken Sie auf sie, um sie zu zerstören</string>
+	<string name = "InfoLevel1">Je größer die Gruppe von der gleichen Farbe Kugeln, desto mehr Punkte erhalten Sie..</string>
+	<string name = "InfoLevel2">Erreiche das Ziel der Gäste und stellen Sie sicher, lassen Sie sich nicht die Kugeln traf den oberen..</string>
+	<string name = "InfoLevel18">Gestreift Kugeln müssen zweimal gruppiert werden, um sie zu entfernen</string>
+	<string name = "InfoLevel28">Etwas verändert sich</string>
+	<string name = "InfoLevel50">Die rechteckigen Kästchen können nicht verschoben werden</string>
+	<string name = "InfoLevel70">Etwas verändert sich</string>
+	<string name = "InfoLevel101">Erreiche %d \n Schlagen Sie nicht die Spitze</string>
+
+	<string name = "PaymentFailed">Zahlung fehlgeschlagen</string>
+	<string name = "NoInternetAccess">Kein Internetzugang</string>
+	<string name = "TwitterError">Kein Twitter-Account Setup</string>
+	<string name = "WeiboError">Kein Weibo-Account Setup</string>
+	<string name = "PostFailed">Post gescheitert</string>
+    
+</resources>

@@ -9,39 +9,39 @@ contacts
   size: 89, 89
   orig: 89, 89
   offset: 0, 0
-  index: -1
+  index: 0
 facebook
   rotate: false
   xy: 92, 1
   size: 89, 89
   orig: 89, 89
   offset: 0, 0
-  index: -1
+  index: 1
 google
   rotate: false
   xy: 183, 1
   size: 89, 89
   orig: 89, 89
   offset: 0, 0
-  index: -1
+  index: 2
 twitter
   rotate: false
   xy: 274, 1
   size: 89, 89
   orig: 89, 89
   offset: 0, 0
-  index: -1
+  index: 3
 vk
   rotate: false
   xy: 365, 1
   size: 89, 89
   orig: 89, 89
   offset: 0, 0
-  index: -1
+  index: 4
 weibo
   rotate: false
   xy: 456, 1
   size: 89, 89
   orig: 89, 89
   offset: 0, 0
-  index: -1
+  index: 5

@@ -65,7 +65,7 @@ public class PowerSidePanel extends Panel {
             if (amount > 0){
                 final Group notiGroup = new Group();
                 final Image noti = new Image(notificationSprite);
-                noti.setPosition((int)(xOffset2 + notificationSprite.getWidth()/2), (int)(powerBalls[i].getY() + powerBalls[i].getHeight() - noti.getHeight()/2));
+                noti.setPosition((int)(powerBalls[i].getX() + powerBalls[i].getWidth() - noti.getHeight()/2),(int)(xOffset2 + notificationSprite.getWidth()/2));
                 notiGroup.setSize(noti.getWidth(), noti.getHeight());
                 notiGroup.addActor(noti);
 
@@ -78,7 +78,7 @@ public class PowerSidePanel extends Panel {
                     @Override
                     public boolean act(float delta) {
 
-                        CustomLabel label = new CustomLabel(amount+"", new Label.LabelStyle(BitmapFontSizer.getFontWithSize(11), Color.BLACK));
+                        CustomLabel label = new CustomLabel(amount+"", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontPowerNoti()), Color.BLACK));
                         label.setAlignment(Align.center);
                         label.setPosition((int)(noti.getX() + notificationSprite.getWidth()/2 - label.getWidth()/2), (int)(noti.getY() + notificationSprite.getHeight()/2 - label.getHeight()/2));
                         notiGroup.addActor(label);

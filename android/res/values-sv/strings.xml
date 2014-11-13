@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">Spela</string>
+    <string name="Store">Butik</string>
+    <string name="Powers">Produkter</string>
+
+	<string name ="P5Title">Dubbla Poäng</string>
+	<string name = "P5Info">Dubbla poäng för 10 sekunder</string>
+
+	<string name="P4Title">Bort med dig</string>
+	<string name ="P4Info">Förstör de två nedersta raderna och ger dig poäng</string>
+
+	<string name = "P3Title">Kopiera mig</string>
+	<string name = "P3Info">Ändrar alla bollar av en färg till en annan färg</string>
+
+	<string name = "P2Title">Vi är alla samma</string>
+	<string name = "P2Info">Droppar 10 bollar av samma färg</string>
+
+	<string name = "P1Title">Sakta och stödja</string>
+	<string name = "P1Info">Minska hastigheten för bollarna genom halv till 10 sekunder</string>
+
+	<string name = "BallsLeft">Boll</string>
+	<string name = "TimeLeft">Tid</string>
+	<string name = "Score">Göra mål</string>
+	<string name ="Resume">Fortgå</string>
+	<string name = "Quit">Sluta</string>
+	<string name = "YouWon">Vinnare</string>
+	<string name = "Next">Nästa nivå</string>
+	<string name = "MainMenu">Startsida</string>
+	<string name = "Playon">Spela på</string>
+	<string name = "GameOver">Game Over</string>
+	<string name = "Restart">Omstart</string>
+
+	<string name = "InfoLevel0">Flytta bollarna att kombinera 3 eller fler bollar av samma färg och klicka på dem för att förstöra dem</string>
+	<string name = "InfoLevel1">Ju större grupp av samma färg bollar desto fler poäng får du.</string>
+	<string name = "InfoLevel2">Nå målet poäng och se till att du inte låter bollarna träffade toppen.</string>
+	<string name = "InfoLevel18">Randiga bollar måste grupperas två gånger för att ta bort dem</string>
+	<string name = "InfoLevel28">Något håller på att förändras</string>
+	<string name = "InfoLevel50">De fyrkantiga lådor kan inte flyttas</string>
+	<string name = "InfoLevel70">Något håller på att förändras</string>
+	<string name = "InfoLevel101">Nå %d \n Slå inte toppen</string>
+
+	<string name = "PaymentFailed">Betalning Misslyckades</string>
+	<string name = "NoInternetAccess">Inget internet</string>
+	<string name = "TwitterError">Inget Twitter-konto installation</string>
+	<string name = "WeiboError">Inget Weibo Kontoinställning</string>
+	<string name = "PostFailed">Post Misslyckades</string>
+    
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">Jouer</string>
+    <string name="Store">Boutique</string>
+    <string name="Powers">Produits</string>
+
+	<string name ="P5Title">Double de Points</string>
+	<string name = "P5Info">Le double de points pendant 10 secondes</string>
+
+	<string name="P4Title">Loin avec vous</string>
+	<string name ="P4Info">Détruit les deux rangées du bas et vous donne des points</string>
+
+	<string name = "P3Title">Me Copier</string>
+	<string name = "P3Info">Change toutes les boules de même couleur pour les autres couleurs</string>
+
+	<string name = "P2Title">Nous sommes tous les mêmes</string>
+	<string name = "P2Info">Génère 10 boules de la même couleur</string>
+
+	<string name = "P1Title">Lente et régulière</string>
+	<string name = "P1Info">Réduire la vitesse des billes de moitié pendant 10 secondes</string>
+
+	<string name = "BallsLeft">Balle</string>
+	<string name = "TimeLeft">Temps</string>
+	<string name = "Score">Marquer</string>
+	<string name ="Resume">Reprendre</string>
+	<string name = "Quit">Quitter</string>
+	<string name = "YouWon">Vous avez Gagné</string>
+	<string name = "Next">Suivant</string>
+	<string name = "MainMenu">Menu</string>
+	<string name = "Playon">Jouer sur</string>
+	<string name = "GameOver">Jeu Terminé</string>
+	<string name = "Restart">Recommencer</string>
+
+	<string name = "InfoLevel0">Déplacez les boules de combiner 3 ou plus boules de la même couleur et appuyez sur eux pour les détruire</string>
+	<string name = "InfoLevel1">Plus le groupe des boules de même couleur les plus de points que vous obtenez.</string>
+	<string name = "InfoLevel2">Atteindre le score cible et assurez-vous que vous ne laissez pas les balles ont frappé le haut..</string>
+	<string name = "InfoLevel18">Boules rayées doivent être regroupés à deux reprises pour les supprimer</string>
+	<string name = "InfoLevel28">Quelque chose est en train de changer</string>
+	<string name = "InfoLevel50">Les boîtes carrées ne peux pas être déplacés</string>
+	<string name = "InfoLevel101">Atteindre %d \n Ne pas frapper le haut</string>
+
+	<string name = "PaymentFailed">Paiement a échoué</string>
+	<string name = "NoInternetAccess">Pas d\'accès à Internet</string>
+	<string name = "TwitterError">Aucune configuration du compte Twitter</string>
+	<string name = "WeiboError">Aucune configuration du compte Weibo</string>
+	<string name = "PostFailed">Après échec</string>
+    
+</resources>

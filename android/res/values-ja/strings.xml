@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">プレー</string>
+    <string name="Store">店舗</string>
+    <string name="Powers">プロダクト</string>
+
+	<string name ="P5Title">ダブルポイント</string>
+	<string name = "P5Info">10秒間のダブルポイント</string>
+
+	<string name="P4Title">アウェイあなたと一緒に</string>
+	<string name ="P4Info">下の二つの行を破棄し、あなたにポイントを付与する</string>
+
+	<string name = "P3Title">私をコピー</string>
+	<string name = "P3Info">他の色に1色のすべてのボールを変更</string>
+
+	<string name = "P2Title">私たちは、すべて同じいる</string>
+	<string name = "P2Info"> 同じ色のボール10を生成し</string>
+
+	<string name = "P1Title">ゆっくりと着実な</string>
+	<string name = "P1Info">10秒間半分にボールの速度を減らす</string>
+
+	<string name = "BallsLeft">ボール</string>
+	<string name = "TimeLeft">時間</string>
+	<string name = "Score">スコア</string>
+	<string name ="Resume">再開する</string>
+	<string name = "Quit">やめる</string>
+	<string name = "YouWon">勝者</string>
+	<string name = "Next">次</string>
+	<string name = "MainMenu">メインメニュー</string>
+	<string name = "Playon">続ける</string>
+	<string name = "GameOver">ゲームオーバー</string>
+	<string name = "Restart">再起動</string>
+
+	<string name = "InfoLevel0">同じ色の3つ以上のボールを組み合わせ、それらを破壊するためにそれらをタップする</string>
+	<string name = "InfoLevel1">同じ色のボールあなたが得るより多くのポイントのグループを大きく。</string>
+	<string name = "InfoLevel2">目標スコアに到達し、あなたはボールがトップにヒットさせていないことを確認してください。</string>
+	<string name = "InfoLevel18">ストライプボールはそれらを削除するには二回グループである必要が</string>
+	<string name = "InfoLevel28">何かが変化している</string>
+	<string name = "InfoLevel50">四角いボックスは移動できません</string>
+	<string name = "InfoLevel70">何かが変化している</string>
+	<string name = "InfoLevel101">%dリーチ \n トップにヒットしないでください</string>
+
+	<string name = "PaymentFailed">お支払いは、失敗しました</string>
+	<string name = "NoInternetAccess">いいえ、インターネットアクセスしない</string>
+	<string name = "TwitterError">いいえTwitterアカウントのセットアップん</string>
+	<string name = "WeiboError">いいえWeiboアカウントのセットアップん</string>
+	<string name = "PostFailed">共有ポスト失敗しました</string>
+    
+</resources>

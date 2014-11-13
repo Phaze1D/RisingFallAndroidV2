@@ -10,7 +10,7 @@ background
   orig: 320, 480
   offset: 0, 0
   index: -1
-back
+backbox
   rotate: false
   xy: 323, 139
   size: 260, 342

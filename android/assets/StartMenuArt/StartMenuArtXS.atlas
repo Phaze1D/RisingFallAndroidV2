@@ -10,7 +10,7 @@ background
   orig: 480, 800
   offset: 0, 0
   index: -1
-backgroundui
+background0
   rotate: false
   xy: 483, 206
   size: 402, 662

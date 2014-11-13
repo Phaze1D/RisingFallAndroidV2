@@ -47,7 +47,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     /** Creates the life panel showing how many lives the player has left*/
     public void createLifePanel(){
-        font = BitmapFontSizer.getFontWithSize(24);
+        font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes());
         Player playerInfo = Player.shareInstance();
         
         //Changes position
@@ -68,7 +68,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     	
     	//Change position
     	
-        font = BitmapFontSizer.getFontWithSize(24);
+        font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelTime());
         Player playerInfo = Player.shareInstance();
         timeLeft = playerInfo.getTimeLeftOnLifes() - System.currentTimeMillis()/1000;
 
@@ -77,7 +77,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         addActor(titleLabel);
 
         SpriteDrawable up = new SpriteDrawable(buttonSprite);
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,font);
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL()));
         style.fontColor = Color.WHITE;
 
         buyButton = new SimpleButton(strings.getValue(".99k"), style);

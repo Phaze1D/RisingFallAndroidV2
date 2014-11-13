@@ -115,7 +115,7 @@ public class AndroidSocialMediaControl implements
 				session.openForRead(opR);
 			}
 		} else {
-			postErrorMessage();
+			postErrorMessage(R.string.NoInternetAccess);
 		}
 
 	}
@@ -153,7 +153,7 @@ public class AndroidSocialMediaControl implements
 										Toast.LENGTH_SHORT).show();
 							} else {
 								// User clicked the Cancel button
-								postErrorMessage();
+								postErrorMessage(R.string.PostFailed);
 								Toast.makeText(
 										androidLan.getApplicationContext(),
 										"Publish cancelled", Toast.LENGTH_SHORT)
@@ -161,13 +161,13 @@ public class AndroidSocialMediaControl implements
 							}
 						} else if (error instanceof FacebookOperationCanceledException) {
 							// User clicked the "x" button
-							postErrorMessage();
+							postErrorMessage(R.string.PostFailed);
 							Toast.makeText(androidLan.getApplicationContext(),
 									"Publish cancelled", Toast.LENGTH_SHORT)
 									.show();
 						} else {
 							// Generic, ex: network error
-							postErrorMessage();
+							postErrorMessage(R.string.NoInternetAccess);
 							Toast.makeText(androidLan.getApplicationContext(),
 									"Error posting story", Toast.LENGTH_SHORT)
 									.show();
@@ -226,7 +226,7 @@ public class AndroidSocialMediaControl implements
 			googleConnect.execute(AndroidLauncher.GOOGLE_RC_SIGN_IN);
 
 		} else {
-			postErrorMessage();
+			postErrorMessage(R.string.NoInternetAccess);
 		}
 
 	}
@@ -241,7 +241,7 @@ public class AndroidSocialMediaControl implements
 	}
 
 	public void googleDidNotShare() {
-		postErrorMessage();
+		postErrorMessage(R.string.PostFailed);
 		smcEnable();
 		if (googleClient.isConnected()) {
 			Plus.AccountApi.clearDefaultAccount(googleClient);
@@ -362,7 +362,7 @@ public class AndroidSocialMediaControl implements
 			androidLan.appControl.pause();
 			loadTwitterLogin();
 		} else {
-			postErrorMessage();
+			postErrorMessage(R.string.NoInternetAccess);
 			smcEnable();
 		}
 	}
@@ -387,7 +387,7 @@ public class AndroidSocialMediaControl implements
 					public void complete(int status, String post) {
 
 						if (status == MySocialShareDialog.CANCELED) {
-							postErrorMessage();
+							postErrorMessage(R.string.PostFailed);
 							logoutTwitter();
 							smcEnable();
 							androidLan.appControl.resume();
@@ -442,7 +442,7 @@ public class AndroidSocialMediaControl implements
 								logoutTwitter();
 								androidLan.appControl.resume();
 								smcEnable();
-								postErrorMessage();
+								postErrorMessage(R.string.PostFailed);
 
 							}
 						});
@@ -500,7 +500,7 @@ public class AndroidSocialMediaControl implements
 									if (status == MySocialWebLoginDialog.VERIFIED) {
 										postToTwitter(oauth);
 									} else if (status == MySocialWebLoginDialog.NOT_VERIFIED) {
-										postErrorMessage();
+										postErrorMessage(R.string.PostFailed);
 										androidLan.appControl.resume();
 										smcEnable();
 									}
@@ -574,7 +574,7 @@ public class AndroidSocialMediaControl implements
 			VKSdk.initialize(new VKListener(), "4486348");
 			VKSdk.authorize(sMyScope);
 		} else {
-			postErrorMessage();
+			postErrorMessage(R.string.NoInternetAccess);
 		}
 
 	}
@@ -592,7 +592,7 @@ public class AndroidSocialMediaControl implements
 		@Override
 		public void onAccessDenied(VKError arg0) {
 			Log.d("DAVID VILLARREAL", "Access Denied");
-			postErrorMessage();
+			postErrorMessage(R.string.PostFailed);
 			smcEnable();
 			VKSdk.logout();
 		}
@@ -645,7 +645,7 @@ public class AndroidSocialMediaControl implements
 
 					@Override
 					public void onVkShareCancel() {
-						postErrorMessage();
+						postErrorMessage(R.string.PostFailed);
 						smcEnable();
 						VKSdk.logout();
 
@@ -663,8 +663,9 @@ public class AndroidSocialMediaControl implements
 
 	}
 
-	public void postErrorMessage() {
+	public void postErrorMessage(int key) {
 		smc.delegate.sharedCalledBack(false);
+		androidLan.displayInAppError(androidLan.getString(key));
 	}
 
 	public void postSuccessUpdate() {

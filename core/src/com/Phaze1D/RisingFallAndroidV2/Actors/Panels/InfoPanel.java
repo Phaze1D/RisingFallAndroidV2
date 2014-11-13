@@ -23,7 +23,7 @@ public class InfoPanel extends Panel {
         LocaleStrings strings = LocaleStrings.getOurInstance();
       
 
-        Label levelLabel = new Label("  " + levelID, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(31), new Color(.969f, .576f, .118f, 1)));
+        Label levelLabel = new Label("  " + levelID, new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontGameplayLevelID()), new Color(.969f, .576f, .118f, 1)));
         levelLabel.setPosition((int)(getWidth()/2 - levelLabel.getWidth()/2), (int)(getHeight()/2 - levelLabel.getHeight()/2));
         levelLabel.setAlignment(Align.center);
         addActor(levelLabel);

@@ -52,16 +52,16 @@ public class StoreBuyPanel extends Panel implements
 			float yPosition = yOffset + (yOffset + powerItem[0].getHeight())
 					* i;
 			powerItem[i].setPosition(
-					(int) (getWidth() / 2 - powerItem[i].getWidth() / 2),
+					(int) (getWidth() / 2 - powerItem[i].getWidth()/1.5f),
 					(int) (yPosition));
 			addActor(powerItem[i]);
 		}
 	}
-
+	
 	private void createTitle() {
 		LocaleStrings strings = LocaleStrings.getOurInstance();
-		title = new Label(strings.getValue("ItemsK"), new Label.LabelStyle(
-				BitmapFontSizer.getFontWithSize(25), Color.BLACK));
+		title = new Label(strings.getValue("Powers"), new Label.LabelStyle(
+				BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontStoreTitle()), new Color(0, .443f, .737f, 1)));
 		title.setAlignment(Align.center);
 	}
 
@@ -74,7 +74,7 @@ public class StoreBuyPanel extends Panel implements
 					itemsAtlas.createSprite("st" + (i + 1)));
 			SimpleButton pbutton = new SimpleButton("",
 					new ImageTextButton.ImageTextButtonStyle(spriteDrawable,
-							null, null, BitmapFontSizer.getFontWithSize(11)));
+							null, null, BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL())));
 			pbutton.type = i + 9;
 			pbutton.delegate = this;
 			SizeToAction up = Actions.sizeTo(pbutton.getWidth() * 1.1f,

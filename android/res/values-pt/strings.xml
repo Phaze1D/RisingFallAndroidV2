@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ 
+    <string name ="Play">Jogar</string>
+    <string name="Store">Loja</string>
+    <string name="Powers">Poderes</string>
+
+	<string name ="P5Title">Dobro de Pontos</string>
+	<string name = "P5Info">Dobro de pontos por 10 segundos</string>
+
+	<string name="P4Title">Vá embora!</string>
+	<string name ="P4Info">Destrói as duas últimas linhas e dá-lhe pontos</string>
+
+	<string name = "P3Title">Me Copiar</string>
+	<string name = "P3Info">Altera todas as bolas de uma cor para outra cor</string>
+
+	<string name = "P2Title">Nós somos todos iguais</string>
+	<string name = "P2Info">Gera 10 bolas da mesma cor</string>
+
+	<string name = "P1Title">Lento e constante</string>
+	<string name = "P1Info">Reduzir a velocidade das bolas para metade durante 10 segundos</string>
+
+	<string name = "BallsLeft">Bolas</string>
+	<string name = "TimeLeft">Tempo</string>
+	<string name = "Score">Pontos</string>
+	<string name ="Resume">Prosseguir</string>
+	<string name = "Quit">Desistir</string>
+	<string name = "YouWon">Você Ganhou</string>
+	<string name = "Next">Seguinte</string>
+	<string name = "MainMenu">Menu</string>
+	<string name = "Playon">Jogar em</string>
+	<string name = "GameOver">Game Over</string>
+	<string name = "Restart">Reiniciar</string>
+
+	<string name = "InfoLevel0">Mova as bolas para combinar 3 ou mais bolas da mesma cor e clique neles para destruí-los</string>
+	<string name = "InfoLevel1">Quanto maior o grupo das mesmas bolas de cor o mais pontos você ganha.</string>
+	<string name = "InfoLevel2">Alcançar a meta de pontuação e certifique-se que você não deixe as bolas atingiu o topo.</string>
+	<string name = "InfoLevel18">Bolas listradas precisa estar grupo duas vezes para removê-los</string>
+	<string name = "InfoLevel28">Algo está mudando</string>
+	<string name = "InfoLevel50">As caixas quadradas não pode ser movido</string>
+	<string name = "InfoLevel70">Algo está mudando</string>
+	<string name = "InfoLevel101">Chegar a %d \n Não atingiu o topo</string>
+
+	<string name = "PaymentFailed">Pagamento Falha</string>
+	<string name = "NoInternetAccess">Sem acesso à internet</string>
+	<string name = "TwitterError">Não configuração da conta do Twitter</string>
+	<string name = "WeiboError">Não configuração da conta Weibo</string>
+	<string name = "PostFailed">Publicar falhou</string>
+    
+</resources>

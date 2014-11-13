@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name ="Play">玩</string>
+    <string name="Store">商店</string>
+    <string name="Powers">制品</string>
+
+	<string name ="P5Title">双倍积分</string>
+	<string name = "P5Info">双分10秒</string>
+
+	<string name="P4Title">除掉你</string>
+	<string name ="P4Info">销毁上下两排，给你点</string>
+
+	<string name = "P3Title">我复制</string>
+	<string name = "P3Info">改变一种颜色的所有的球，以其他颜色</string>
+
+	<string name = "P2Title">我们都是一样的</string>
+	<string name = "P2Info">产卵10个球的颜色相同的</string>
+
+	<string name = "P1Title">缓慢而稳定</string>
+	<string name = "P1Info">降低球的速度的一半，10秒</string>
+
+	<string name = "BallsLeft">冒泡</string>
+	<string name = "TimeLeft">时间</string>
+	<string name = "Score">评分</string>
+	<string name ="Resume">重新开始</string>
+	<string name = "Quit">退出</string>
+	<string name = "YouWon">你赢了</string>
+	<string name = "Next">下一个</string>
+	<string name = "MainMenu">主菜单</string>
+	<string name = "Playon">玩</string>
+	<string name = "GameOver">Game Over</string>
+	<string name = "Restart">再开始</string>
+
+	<string name = "InfoLevel0">谨动议球各地结合3个或更多相同颜色的并点击他们消灭他们</string>
+	<string name = "InfoLevel1">了组相同颜色的球更多的积分，你得到的更大。</string>
+	<string name = "InfoLevel2">达到目标得分，并确保你不要让球击中顶部。</string>
+	<string name = "InfoLevel18">条纹的的球必须是组两次将其删除</string>
+	<string name = "InfoLevel28">事情正在发生变化</string>
+	<string name = "InfoLevel50">在方箱不能被移动</string>
+	<string name = "InfoLevel70">事情正在发生变化</string>
+	<string name = "InfoLevel101">达到%d \n 不打人顶</string>
+
+	<string name = "PaymentFailed">付款失败</string>
+	<string name = "NoInternetAccess">无法上网</string>
+	<string name = "TwitterError">没有Twitter账户成立</string>
+	<string name = "WeiboError">没有微博帐号创立</string>
+	<string name = "PostFailed">共享失败</string>
+    
+</resources>
