@@ -10,23 +10,16 @@ background
   orig: 640, 960
   offset: 0, 0
   index: -1
-background0
-  rotate: false
-  xy: 643, 562
-  size: 300, 399
-  orig: 300, 399
-  offset: 0, 0
-  index: -1
 soundOff
   rotate: false
-  xy: 643, 490
+  xy: 643, 891
   size: 69, 70
   orig: 69, 70
   offset: 0, 0
   index: -1
 soundOn
   rotate: false
-  xy: 945, 891
+  xy: 643, 819
   size: 69, 70
   orig: 69, 70
   offset: 0, 0
@@ -36,6 +29,13 @@ StartMenuArtS2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+background0
+  rotate: false
+  xy: 1, 87
+  size: 510, 840
+  orig: 510, 840
+  offset: 0, 0
+  index: -1
 Title
   rotate: false
   xy: 1, 1

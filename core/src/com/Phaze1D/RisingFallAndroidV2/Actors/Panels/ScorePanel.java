@@ -1,8 +1,11 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -23,10 +26,11 @@ public class ScorePanel extends Panel {
     
     public CustomLabel titleLabel;
 
-
+    public SoundControllerDelegate soundDelegate;
 
     public ScorePanel(Sprite panelSprite) {
         super(panelSprite);
+        
     }
 
     public void createScorePanel(int targetScore){
@@ -70,6 +74,7 @@ public class ScorePanel extends Panel {
 
         if (currentScore >= targetScore && !reachYet){
             titleLabel.setVisible(false);
+           soundDelegate.playHighReachSound();
             final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontScorePanel()), Color.YELLOW));
             reachL.setPosition((int)(getWidth()/2 - reachL.getWidth()/2), (int)(getHeight()/2 - reachL.getHeight()/2) );
             reachL.setAlignment(Align.center);
@@ -109,5 +114,10 @@ public class ScorePanel extends Panel {
 
     }
 
+    @Override
+    public boolean remove(){
+    	
+    	return super.remove();
+    }
 
 }

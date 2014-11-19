@@ -4,6 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.LevelButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.LifePanel;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.Gdx;
@@ -55,6 +56,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
     public CorePaymentDelegate corePaymentDelegate;
 
+    public SoundControllerDelegate soundDelegate;
 
     @Override
     public void render(float delta) {
@@ -180,6 +182,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         navigationB.setCenterPosition((int)naviPosition.x, (int)naviPosition.y);
         navigationB.delegate = this;
         navigationB.type = SimpleButton.LEVEL_BACK_BUTTON;
+        navigationB.soundDelegate = soundDelegate;
         addActor(navigationB);
     }
 
@@ -201,6 +204,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             LevelButton levelB = new LevelButton("" + i*10, style);
             levelB.setPosition((int)levelBPositions[i].x, (int)levelBPositions[i].y);
             levelB.parentNumber = i;
+            levelB.soundDelegate = soundDelegate;
             if (levelB.parentNumber * 10 > playerInfo.levelAt) {
                 levelB.setTouchable(Touchable.disabled);
                 levelB.setAlpha(.4f);
@@ -222,6 +226,8 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
         lifePanel = new LifePanel(sceneAtlas.createSprite("lifePanel"), corePaymentDelegate);
         lifePanel.setPosition((int) (getWidth() / 2 - lifePanel.getWidth() / 2), (int) (getHeight() / 2 - lifePanel.getHeight() / 2));
+        lifePanel.heartSP = sceneAtlas.createSprite("heart");
+        lifePanel.soundDelegate = soundDelegate;
         if(playerInfo.livesLeft > 0){
             lifePanel.createLifePanel();
         }else{
@@ -312,6 +318,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
             childB.levelNumber = childNumber++;
             childB.setPosition(levelBPositions[parentNumber].x, levelBPositions[parentNumber].y);
             childB.setAlpha(0);
+            childB.soundDelegate = soundDelegate;
             childB.delegate = this;
             childB.parentNumber = parentNumber*-1;
             childB.isChild = true;

@@ -5,36 +5,43 @@ filter: Nearest,Nearest
 repeat: none
 backgroundui
   rotate: false
-  xy: 2, 304
+  xy: 1, 407
   size: 750, 1200
   orig: 750, 1200
   offset: 0, 0
   index: -1
 background
   rotate: false
-  xy: 756, 547
+  xy: 753, 650
   size: 714, 957
   orig: 714, 957
   offset: 0, 0
   index: -1
 lifePanel
   rotate: false
-  xy: 2, 2
+  xy: 1, 107
   size: 326, 298
   orig: 326, 298
   offset: 0, 0
   index: -1
 naviB
   rotate: false
-  xy: 756, 432
+  xy: 753, 537
   size: 111, 111
   orig: 111, 111
   offset: 0, 0
   index: -1
 naviBPressed
   rotate: false
-  xy: 1474, 1393
+  xy: 1469, 1496
   size: 111, 111
   orig: 111, 111
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 1, 1
+  size: 110, 104
+  orig: 110, 104
   offset: 0, 0
   index: -1

@@ -101,30 +101,37 @@ shareB2
   orig: 76, 76
   offset: 0, 0
   index: -1
+heart
+  rotate: false
+  xy: 455, 249
+  size: 72, 67
+  orig: 72, 67
+  offset: 0, 0
+  index: -1
 LevelIDArea
   rotate: false
-  xy: 455, 259
+  xy: 548, 366
   size: 56, 57
   orig: 56, 57
   offset: 0, 0
   index: -1
 optionAreaPressed
   rotate: false
-  xy: 548, 378
+  xy: 641, 485
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 optionArea
   rotate: false
-  xy: 641, 486
+  xy: 772, 660
   size: 45, 44
   orig: 45, 44
   offset: 0, 0
   index: -1
 notificationCircle
   rotate: false
-  xy: 772, 684
+  xy: 865, 854
   size: 20, 20
   orig: 20, 20
   offset: 0, 0

@@ -31,9 +31,16 @@ naviBPressed
   orig: 66, 66
   offset: 0, 0
   index: -1
+heart
+  rotate: false
+  xy: 483, 256
+  size: 72, 67
+  orig: 72, 67
+  offset: 0, 0
+  index: -1
 naviB
   rotate: false
-  xy: 483, 258
+  xy: 174, 93
   size: 65, 65
   orig: 65, 65
   offset: 0, 0

@@ -87,9 +87,16 @@ playerTimeArea
   orig: 152, 88
   offset: 0, 0
   index: -1
+heart
+  rotate: false
+  xy: 809, 288
+  size: 110, 104
+  orig: 110, 104
+  offset: 0, 0
+  index: -1
 LevelIDArea
   rotate: false
-  xy: 809, 303
+  xy: 809, 197
   size: 87, 89
   orig: 87, 89
   offset: 0, 0
@@ -103,7 +110,7 @@ optionArea
   index: -1
 optionAreaPressed
   rotate: false
-  xy: 809, 232
+  xy: 809, 126
   size: 69, 69
   orig: 69, 69
   offset: 0, 0

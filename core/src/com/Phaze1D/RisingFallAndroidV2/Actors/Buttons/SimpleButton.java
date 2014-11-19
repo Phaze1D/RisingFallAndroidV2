@@ -1,5 +1,8 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Buttons;
 
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
@@ -18,23 +21,28 @@ public class SimpleButton extends ImageTextButton {
     public int type;
 
     private SimpleButtonListener listener;
+    
+    public SoundControllerDelegate soundDelegate;
 
     public SimpleButton(String text, Skin skin) {
         super(text, skin);
         listener = new SimpleButtonListener();
         addListener(listener);
+       
     }
 
     public SimpleButton(String text, Skin skin, String styleName) {
         super(text, skin, styleName);
         listener = new SimpleButtonListener();
         addListener(listener);
+       
     }
 
     public SimpleButton(String text, ImageTextButtonStyle style) {
         super(text, style);
         listener = new SimpleButtonListener();
         addListener(listener);
+        
     }
 
     public void setAlpha(float alpha){
@@ -47,6 +55,7 @@ public class SimpleButton extends ImageTextButton {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             setAlpha(.5f);
+            soundDelegate.playButtonSound();
             return super.touchDown(event, x, y, pointer, button);
 
         }
@@ -63,6 +72,12 @@ public class SimpleButton extends ImageTextButton {
             super.touchUp(event, x, y, pointer, button);
 
         }
+    }
+    
+    @Override
+    public boolean remove(){
+    	
+    	return super.remove();
     }
 
     public interface SimpleButtonDelegate{

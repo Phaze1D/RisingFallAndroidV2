@@ -33,6 +33,11 @@ public class LevelFactory {
     public int numberOfBalls;
     public int targetScore;
     public int gameObjective;
+    
+    private boolean velocityLess;
+    private boolean velocityGreater;
+    private boolean dropLess;
+    private boolean dropGreater;
 
 
 
@@ -69,6 +74,23 @@ public class LevelFactory {
         RandomXS128 randomGen = new RandomXS128();
         powerBallDrop = randomGen.nextInt(4);
 
+        if(velocity > finalSpeed){
+        	velocityGreater = true;
+        	velocityLess = false;
+        }else{
+        	velocityGreater = false;
+        	velocityLess = true;
+        }
+        
+        if(dropRate > finalDRate){
+        	dropGreater = true;
+        	dropLess = false;
+        }else{
+        	dropGreater = false;
+        	dropLess = true;
+        }
+        
+        
 
         calculateChangeSpeedTime();
     }
@@ -88,14 +110,41 @@ public class LevelFactory {
 
     /** Changes the speed and drop rate when called*/
     public void changeSpeedAndDrop(){
+    	
+    	if(velocityGreater){
+    		System.out.println("GREATER THE VELOCITY ---------");
+    		 if (velocity + incrementS > 0  && velocity >= finalSpeed) {
+    	            velocity = velocity + incrementS;
+    	            System.out.println("CHANGED THE VELOCITY ---------");
+    	        }
+    	}
+    	
+    	if(velocityLess){
+    		System.out.println("LESS THE VELOCITY ---------");
+    		 if (velocity + incrementS > 0  && velocity <= finalSpeed) {
+ 	            velocity = velocity + incrementS;
+ 	            System.out.println("CHANGED THE VELOCITY ---------");
+ 	        }
+    	}
+    	
+    	if(dropGreater){
+    		System.out.println("GREATER THE DROP ---------");
+    		if (dropRate + incrementD > 0 && dropRate >= finalDRate) {
+                dropRate = dropRate + incrementD;
+                System.out.println("CHANGED THE DROP RATE -----------");
+            }
+    	}
+    	
+    	if(dropLess){
+    		System.out.println("LESS THE DROP ---------");
+    		if (dropRate + incrementD > 0 && dropRate <= finalDRate) {
+                dropRate = dropRate + incrementD;
+                System.out.println("CHANGED THE DROP RATE -----------");
+            }
+    	}
 
-        if (velocity + incrementS > 0  && velocity != finalSpeed) {
-            velocity = velocity + incrementS;
-        }
 
-        if (dropRate + incrementD > 0 && dropRate != finalDRate) {
-            dropRate = dropRate + incrementD;
-        }
+   
 
     }
 }

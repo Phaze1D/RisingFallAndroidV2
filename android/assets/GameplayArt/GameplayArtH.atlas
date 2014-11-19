@@ -5,126 +5,133 @@ filter: Nearest,Nearest
 repeat: none
 backBoxes
   rotate: false
-  xy: 1, 502
+  xy: 1, 522
   size: 1004, 1494
   orig: 1004, 1494
   offset: 0, 0
   index: -1
 gameOverArea
   rotate: false
-  xy: 1007, 1071
+  xy: 1007, 1091
   size: 755, 925
   orig: 755, 925
   offset: 0, 0
   index: -1
 powerArea
   rotate: false
-  xy: 1, 376
+  xy: 1, 396
   size: 684, 124
   orig: 684, 124
   offset: 0, 0
   index: -1
 objectiveArea
   rotate: false
-  xy: 1007, 957
+  xy: 1007, 977
   size: 420, 112
   orig: 420, 112
   offset: 0, 0
   index: -1
 scoreArea
   rotate: false
-  xy: 1007, 957
+  xy: 1007, 977
   size: 420, 112
   orig: 420, 112
   offset: 0, 0
   index: -1
 end3
   rotate: false
-  xy: 1764, 1751
+  xy: 1764, 1771
   size: 212, 245
   orig: 212, 245
   offset: 0, 0
   index: -1
 end0
   rotate: false
-  xy: 1, 129
+  xy: 1, 149
   size: 211, 245
   orig: 211, 245
   offset: 0, 0
   index: -1
 end1
   rotate: false
-  xy: 1007, 710
+  xy: 1007, 730
   size: 211, 245
   orig: 211, 245
   offset: 0, 0
   index: -1
 end4
   rotate: false
-  xy: 1764, 1504
+  xy: 1764, 1524
   size: 211, 245
   orig: 211, 245
   offset: 0, 0
   index: -1
 end5
   rotate: false
-  xy: 214, 129
+  xy: 214, 149
   size: 211, 245
   orig: 211, 245
   offset: 0, 0
   index: -1
 end2
   rotate: false
-  xy: 1220, 710
+  xy: 1220, 730
   size: 205, 245
   orig: 205, 245
   offset: 0, 0
   index: -1
 shareB1
   rotate: false
-  xy: 1007, 517
+  xy: 1007, 537
   size: 191, 191
   orig: 191, 191
   offset: 0, 0
   index: -1
 shareB2
   rotate: false
-  xy: 1764, 1311
+  xy: 1764, 1331
   size: 190, 191
   orig: 190, 191
   offset: 0, 0
   index: -1
 playerTimeArea
   rotate: false
-  xy: 687, 376
+  xy: 687, 396
   size: 216, 124
   orig: 216, 124
   offset: 0, 0
   index: -1
-LevelIDArea
+heart
   rotate: false
   xy: 1, 1
+  size: 154, 146
+  orig: 154, 146
+  offset: 0, 0
+  index: -1
+LevelIDArea
+  rotate: false
+  xy: 427, 268
   size: 125, 126
   orig: 125, 126
   offset: 0, 0
   index: -1
 optionArea
   rotate: false
-  xy: 1956, 1411
+  xy: 1956, 1431
   size: 91, 91
   orig: 91, 91
   offset: 0, 0
   index: -1
 optionAreaPressed
   rotate: false
-  xy: 1956, 1318
+  xy: 1956, 1338
   size: 91, 91
   orig: 91, 91
   offset: 0, 0
   index: -1
 notificationCircle
   rotate: false
-  xy: 1429, 1025
+  xy: 1429, 1045
   size: 44, 44
   orig: 44, 44
   offset: 0, 0

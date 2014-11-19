@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 /**
  * Created by davidvillarreal on 8/19/14.
@@ -27,6 +29,8 @@ public class Player implements Serializable{
     public int levelAt;
     public int livesLeft;
     private int[] scores;
+    
+    private String playerRandomString;
 
     public double timeLeftOnLifes;
     public double timeLeftOnSocialMedia;
@@ -51,16 +55,22 @@ public class Player implements Serializable{
         return ourInstance;
     }
     
+    public String getPayLoad(){
+    	return playerRandomString;
+    }
 
     private void setInitialConditions(){
-        power1 =5;
-        power2 = 5;
-        power3 = 5;
-        power4 = 5;
-        power5 = 5;
-        levelAt = 25;
+        power1 =1;
+        power2 = 1;
+        power3 = 1;
+        power4 = 1;
+        power5 = 1;
+        levelAt = 95;
         livesLeft = 5;
         scores = new int[100];
+        
+        SecureRandom random = new SecureRandom();
+        playerRandomString =  new BigInteger(256, random).toString(32);	
     }
 
     /** @param powerType The power that will be increase by 1*/
@@ -169,6 +179,10 @@ public class Player implements Serializable{
     	if(livesLeft == 0){
     		livesLeft = 5;
     		timeLeftOnLifes = 0;
+    	}else{
+    		livesLeft += 5;
+    		timeLeftOnLifes = 0;
+    				
     	}
     }
 

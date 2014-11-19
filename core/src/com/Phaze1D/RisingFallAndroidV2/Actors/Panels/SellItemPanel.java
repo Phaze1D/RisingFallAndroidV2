@@ -3,6 +3,7 @@ package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StoreScene;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
@@ -33,6 +34,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
     private LocaleStrings strings;
 
     public CorePaymentDelegate corePaymentDelegate;
+    public SoundControllerDelegate soundDelegate;
     
     public SellItemPanel(Sprite panelSprite, CorePaymentDelegate cpd) {
         super(panelSprite);
@@ -92,6 +94,7 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         SimpleButton buyButton = new SimpleButton(strings.getValue(".99K"),style );
         buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()/2) );
         buyButton.delegate = this;
+        buyButton.soundDelegate = soundDelegate;
         addActor(buyButton);
 
     }

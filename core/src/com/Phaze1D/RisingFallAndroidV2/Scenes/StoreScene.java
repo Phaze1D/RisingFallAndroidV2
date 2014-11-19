@@ -5,6 +5,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.SellItemPanel;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.StoreBuyPanel;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
 import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
@@ -72,7 +73,7 @@ public class StoreScene extends Stage implements Screen,
 
 	public CorePaymentDelegate corePaymentDelegate;
 
-	// @property SKProductsRequest * productsRequest;
+	public SoundControllerDelegate soundDelegate;
 
 	@Override
 	public void render(float delta) {
@@ -235,6 +236,7 @@ public class StoreScene extends Stage implements Screen,
 		buyPanel.setPosition((int) sidePosition.x, (int) sidePosition.y);
 		buyPanel.delegate = this;
 		buyPanel.itemsAtlas = itemsAtlas;
+		buyPanel.soundDelegate = soundDelegate;
 		buyPanel.createPanel();
 		addActor(buyPanel);
 
@@ -247,6 +249,7 @@ public class StoreScene extends Stage implements Screen,
 				BitmapFontSizer.getFontWithSize(11)));
 		backB.setPosition((int) backButtonPostion.x, (int) backButtonPostion.y);
 		backB.delegate = this;
+		backB.soundDelegate = soundDelegate;
 		addActor(backB);
 
 	}
@@ -284,6 +287,7 @@ public class StoreScene extends Stage implements Screen,
 		sellItemPanel = new SellItemPanel(sellItemArea, corePaymentDelegate);
 		sellItemPanel.setPosition((int) initPointSellPanel.x,
 				(int) initPointSellPanel.y);
+		sellItemPanel.soundDelegate = soundDelegate;
 		sellItemPanel.buttonAtlas = buttonAtlas;
 		sellItemPanel.storeSceneAtlas = itemsAtlas;
 		sellItemPanel.createPanel(powerType, true);

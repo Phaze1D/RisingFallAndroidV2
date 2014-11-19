@@ -1,9 +1,12 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Buttons;
 
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -30,15 +33,18 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
     public int indexInSubArray;
     public int subType;
 
+    public SoundControllerDelegate soundDelegate;
 
     public SocialMediaButton(Drawable imageUp) {
         super(imageUp);
         addListener(new SocialMediaListener(this));
+       
     }
 
     public SocialMediaButton(Drawable imageUp, Drawable imageDown) {
         super(imageUp, imageDown);
         addListener(new SocialMediaListener(this));
+        
     }
 
 
@@ -59,6 +65,7 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             setAlpha(.5f);
+            soundDelegate.playButtonSound();
             return true;
         }
 
@@ -190,6 +197,12 @@ public class SocialMediaButton extends ImageButton implements SocialMediaControl
     @Override
     public void enableOther() {
 
+    }
+    
+    @Override
+    public boolean remove(){
+    	
+    	return super.remove();
     }
 
     public interface SocialMediaButtonDelegate{

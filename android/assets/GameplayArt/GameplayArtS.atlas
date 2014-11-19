@@ -5,112 +5,119 @@ filter: Nearest,Nearest
 repeat: none
 backBoxes
   rotate: false
-  xy: 1, 167
+  xy: 1, 150
   size: 575, 856
   orig: 575, 856
   offset: 0, 0
   index: -1
 gameOverArea
   rotate: false
-  xy: 578, 490
+  xy: 578, 473
   size: 435, 533
   orig: 435, 533
   offset: 0, 0
   index: -1
 end3
   rotate: false
-  xy: 578, 145
+  xy: 578, 128
   size: 190, 343
   orig: 190, 343
   offset: 0, 0
   index: -1
 end0
   rotate: false
-  xy: 770, 145
+  xy: 770, 128
   size: 189, 343
   orig: 189, 343
   offset: 0, 0
   index: -1
 powerArea
   rotate: false
-  xy: 1, 90
+  xy: 1, 73
   size: 414, 75
   orig: 414, 75
   offset: 0, 0
   index: -1
 objectiveArea
   rotate: false
-  xy: 1, 50
+  xy: 1, 33
   size: 222, 38
   orig: 222, 38
   offset: 0, 0
   index: -1
 scoreArea
   rotate: false
-  xy: 1, 50
+  xy: 1, 33
   size: 222, 38
   orig: 222, 38
   offset: 0, 0
   index: -1
 playerTimeArea
   rotate: false
-  xy: 417, 90
+  xy: 417, 73
   size: 130, 75
   orig: 130, 75
   offset: 0, 0
   index: -1
 shareB1
   rotate: false
-  xy: 549, 37
+  xy: 549, 20
   size: 106, 106
   orig: 106, 106
   offset: 0, 0
   index: -1
 shareB2
   rotate: false
-  xy: 657, 38
+  xy: 657, 21
   size: 106, 105
   orig: 106, 105
   offset: 0, 0
   index: -1
+heart
+  rotate: false
+  xy: 765, 48
+  size: 83, 78
+  orig: 83, 78
+  offset: 0, 0
+  index: -1
 LevelIDArea
   rotate: false
-  xy: 765, 67
+  xy: 850, 50
   size: 76, 76
   orig: 76, 76
   offset: 0, 0
   index: -1
 soundOff
   rotate: false
-  xy: 843, 73
+  xy: 225, 1
   size: 69, 70
   orig: 69, 70
   offset: 0, 0
   index: -1
 soundOn
   rotate: false
-  xy: 843, 1
+  xy: 296, 1
   size: 69, 70
   orig: 69, 70
   offset: 0, 0
   index: -1
 optionArea
   rotate: false
-  xy: 961, 437
+  xy: 961, 420
   size: 51, 51
   orig: 51, 51
   offset: 0, 0
   index: -1
 optionAreaPressed
   rotate: false
-  xy: 961, 384
+  xy: 367, 20
   size: 51, 51
   orig: 51, 51
   offset: 0, 0
   index: -1
 notificationCircle
   rotate: false
-  xy: 1, 21
+  xy: 928, 99
   size: 27, 27
   orig: 27, 27
   offset: 0, 0

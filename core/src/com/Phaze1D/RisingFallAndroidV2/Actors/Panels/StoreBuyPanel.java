@@ -1,6 +1,7 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.badlogic.gdx.graphics.Color;
@@ -28,6 +29,7 @@ public class StoreBuyPanel extends Panel implements
 	private Label title;
 
 	public TextureAtlas itemsAtlas;
+	public SoundControllerDelegate soundDelegate;
 
 	public StoreBuyPanel(Sprite panelSprite) {
 		super(panelSprite);
@@ -77,6 +79,7 @@ public class StoreBuyPanel extends Panel implements
 							null, null, BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL())));
 			pbutton.type = i + 9;
 			pbutton.delegate = this;
+			pbutton.soundDelegate = soundDelegate;
 			SizeToAction up = Actions.sizeTo(pbutton.getWidth() * 1.1f,
 					pbutton.getHeight() * 1.1f, .8f);
 			SizeToAction down = Actions.sizeTo(pbutton.getWidth() / 1.1f,

@@ -4,8 +4,10 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -51,6 +53,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     private SocialMediaButton backB;
     private LocaleStrings strings;
     public CorePaymentDelegate corePaymentDelegate;
+    public SoundControllerDelegate soundDelegate;
 
 
     public SettingPanel(Sprite panelSprite) {
@@ -129,13 +132,28 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         quitButton.type = SimpleButton.QUIT_BUTTON;
         quitButton.setPosition((int)quitPosition.x, (int)quitPosition.y);
         quitButton.delegate = this;
+        quitButton.soundDelegate = soundDelegate;
         addActor(quitButton);
 
         SimpleButton resumeButton = new SimpleButton(strings.getValue("Resume"), style);
         resumeButton.setPosition((int)resumePosition.x, (int)resumePosition.y);
         resumeButton.type = SimpleButton.RESUME_BUTTON;
         resumeButton.delegate = this;
+        resumeButton.soundDelegate = soundDelegate;
         addActor(resumeButton);
+        
+        BitmapFont font2 = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes());
+        
+        SpriteDrawable heartS = new SpriteDrawable(gameAtlas.createSprite("heart"));
+        Image heart = new Image(heartS);
+        heart.setPosition(0, (int)(getHeight() - heart.getHeight()));
+        addActor(heart);
+
+        Player playerInfo = Player.shareInstance();
+        
+        Label livesLeft = new Label("" + playerInfo.livesLeft, new Label.LabelStyle(font2, Color.WHITE));
+        livesLeft.setPosition((int)(heart.getCenterX() - livesLeft.getWidth()/2), (int)(heart.getCenterY() - livesLeft.getHeight()/2));
+        addActor(livesLeft);
 
 
     }
@@ -178,12 +196,14 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         nextLevelB.setPosition((int)(getWidth()/2 - nextLevelB.getWidth()/2), (int)(yOffset*2 + button1.getHeight()));
         nextLevelB.delegate = this;
         nextLevelB.type = SimpleButton.NEXT_LEVEL_BUTTON;
+        nextLevelB.soundDelegate = soundDelegate;
         addActor(nextLevelB);
 
         SimpleButton mainB = new SimpleButton(strings.getValue("MainMenu"), style);
         mainB.delegate = this;
         mainB.setPosition((int)(getWidth()/2 - button1.getWidth()/2), (int)(yOffset));
         mainB.type = SimpleButton.QUIT_BUTTON;
+        mainB.soundDelegate = soundDelegate;
         addActor(mainB);
     }
 
@@ -202,11 +222,23 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         float fontSizeL = BitmapFontSizer.sharedInstance().fontGameWon();
         
         BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSizeB);
+        BitmapFont font2 = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes());
 
         Vector2 payBPosition = new Vector2(getWidth()/2 - button1b.getWidth()/2, getHeight() - yOffset*2 - button1b.getHeight()*2);
         Vector2 socialPosition = new Vector2( getWidth()/2, getHeight() - yOffset*3 - button1b.getHeight()*3);
         Vector2 resetPosition = new Vector2(xOffset, getHeight() - yOffset*5 - button1b.getHeight()*5);
         Vector2 quitPosition = new Vector2(xOffset*2 + button1b.getWidth(),getHeight() - yOffset*5 - button1b.getHeight()*5 );
+        
+        SpriteDrawable heartS = new SpriteDrawable(gameAtlas.createSprite("heart"));
+        Image heart = new Image(heartS);
+        heart.setPosition(0, (int)(getHeight() - heart.getHeight()));
+        addActor(heart);
+
+        Player playerInfo = Player.shareInstance();
+        
+        Label livesLeft = new Label("" + playerInfo.livesLeft, new Label.LabelStyle(font2, Color.WHITE));
+        livesLeft.setPosition((int)(heart.getCenterX() - livesLeft.getWidth()/2), (int)(heart.getCenterY() - livesLeft.getHeight()/2));
+        addActor(livesLeft);
 
 
         Label keepPlayLabel = new Label(strings.getValue("Playon"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL), Color.BLACK));
@@ -230,6 +262,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         payButton.delegate = this;
         payButton.type = SimpleButton.PAY_BUTTON;
         payButton.setPosition((int)payBPosition.x, (int)payBPosition.y);
+        payButton.soundDelegate = soundDelegate;
         addActor(payButton);
 
         SpriteDrawable shareUp = new SpriteDrawable(gameAtlas.createSprite("shareB1"));
@@ -239,6 +272,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         socialB = new SocialMediaButton(shareUp, shareDown);
         socialB.setCenterPosition((int)socialPosition.x, (int)socialPosition.y);
         socialB.delegate = this;
+        socialB.soundDelegate = soundDelegate;
         socialB.type = SocialMediaButton.SOCIAL_BUTTON;
         addActor(socialB);
 
@@ -250,12 +284,14 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         resetButton.setPosition((int)resetPosition.x, (int)resetPosition.y);
         resetButton.type = SimpleButton.RESTART_BUTTON;
         resetButton.delegate = this;
+        resetButton.soundDelegate = soundDelegate;
         addActor(resetButton);
 
         SimpleButton quitButton = new SimpleButton(strings.getValue("Quit"), styleG);
         quitButton.setPosition((int)quitPosition.x, (int)quitPosition.y);
         quitButton.type = SimpleButton.QUIT_BUTTON;
         quitButton.delegate = this;
+        quitButton.soundDelegate = soundDelegate;
         addActor(quitButton);
 
     }
@@ -286,6 +322,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
                 subSocial.subType = regions.get(count).index;
                 subSocial.indexInSubArray = count;
                 subSocial.setTouchable(Touchable.disabled);
+                subSocial.soundDelegate = soundDelegate;
                 socialChildren[count] = subSocial;
 
                 AlphaAction fadeIN = Actions.fadeIn(duration);
@@ -311,6 +348,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         backB.setPosition((int)(getWidth()/2 - backB.getWidth()/2), (int)(yOffset - backB.getHeight()/2));
         backB.delegate = this;
         backB.type = SocialMediaButton.SOCIAL_BUTTON;
+        backB.soundDelegate = soundDelegate;
         addActor(backB);
     }
 

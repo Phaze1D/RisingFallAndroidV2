@@ -42,6 +42,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	private int currentSceneID = 0;
 	
 	private AndroidPaymentClass payDelegate;
+	private AndroidSoundHandler soundDelegate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,9 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 		
 		payDelegate = AndroidPaymentClass.shareInstance(this);
 		payDelegate.setUpAndroidPayment();
+		
+		soundDelegate = new AndroidSoundHandler();
+		soundDelegate.loadSounds(this);
 
 		
 		RelativeLayout layout = new RelativeLayout(this);
@@ -84,7 +88,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 
 		
 		
-		appControl = new ApplicationController(hashtable, payDelegate);
+		appControl = new ApplicationController(hashtable, payDelegate, soundDelegate);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		View gameView = initializeForView(appControl, config);
 		appControl.setAdDelegate(this);
@@ -138,6 +142,8 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	protected void onDestroy() {
 		payDelegate.dispose();
 		payDelegate = null;
+		soundDelegate.disposeSounds();
+		soundDelegate = null;
 		
 		if (adView != null) {
 			adView.destroy();

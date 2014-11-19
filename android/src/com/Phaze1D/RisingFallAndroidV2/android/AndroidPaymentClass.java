@@ -42,6 +42,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 	private Player myPlayer;
 	private PaymentFlowCompletionListener paymentCompleteListener;
 
+	private boolean didSetup;
 	
 	private AndroidPaymentClass(Context context) {
 		this.context = context;
@@ -65,6 +66,11 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 	public void setPaymentFlowCompletionListener(PaymentFlowCompletionListener lis){
 		this.paymentCompleteListener = null;
 		this.paymentCompleteListener = lis;
+		if(!didSetup){
+			setUpAndroidPayment();
+		}
+		
+		
 	}
 
 	public void consumeOwnedItems(Inventory inv) {
@@ -154,16 +160,19 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
 				if (!result.isSuccess()) {
 					// Oh noes, there was a problem.
 					((AndroidLauncher) context).displayInAppError(context.getString(R.string.PaymentFailed));
-					
+					didSetup = false;
 					return;
 				}
 
 				// Have we been disposed of in the meantime? If so, quit.
-				if (mHelper == null)
+				if (mHelper == null){
+					didSetup = false;
 					return;
+				}
 
 				// IAB is fully set up. Now, let's get an inventory of stuff we
 				// own.
+				didSetup = true;
 				Log.d(TAG, "Setup successful. Querying inventory.");
 				ArrayList<String> myList = new ArrayList<String>();
 				myList.add(KEEP_PLAYING_ID);
@@ -187,7 +196,7 @@ public class AndroidPaymentClass implements CorePaymentDelegate {
         /* TODO: for security, generate your payload here for verification. See the comments on
          *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
          *        an empty string, but on a production app you should carefully generate this. */
-        String payload = "";
+        String payload = myPlayer.getPayLoad();;
 
         mHelper.launchPurchaseFlow((AndroidLauncher)context, itemID, ANDROID_PAYMENT_BUY_RC, new MyPurcheseListener(), payload);
 

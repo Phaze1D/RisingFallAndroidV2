@@ -5,6 +5,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Panels.*;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LevelFactory;
 import com.Phaze1D.RisingFallAndroidV2.Objects.LinkedList;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
@@ -14,6 +15,7 @@ import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -117,6 +119,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     
     public PhysicsWorld world;
     public CorePaymentDelegate corePaymentDelegate;
+    
+    public SoundControllerDelegate soundDelegate;
+   
 
     public GameplayScene(int levelID){
         this.levelID = levelID;
@@ -229,6 +234,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
 	public void dispose() {
 		corePaymentDelegate = null;
+
 		super.dispose();
 	}
 
@@ -254,6 +260,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         powerMaxAmount = 0;
         playerInfo = Player.shareInstance();
         stageAt = 1;
+        
         
         switch (levelFactory.ceilingHeight){
         case 1:
@@ -382,6 +389,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         optionPanel = new SimpleButton("", new ImageTextButton.ImageTextButtonStyle(new SpriteDrawable(gameSceneAtlas.createSprite("optionArea")),null,null, BitmapFontSizer.getFontWithSize(11)));
         optionPanel.setPosition((int)optionAreaPosition.x, (int)optionAreaPosition.y);
         optionPanel.delegate = this;
+        optionPanel.soundDelegate = soundDelegate;
         addActor(optionPanel);
 
         powerSidePanel = new PowerSidePanel(gameSceneAtlas.createSprite("powerArea"));
@@ -413,6 +421,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         scorePanel.setPosition((int)scorePosition.x - scorePanel.getWidth(), (int)scorePosition.y - scorePanel.getHeight());
         scorePanel.targetScore = levelFactory.targetScore;
         scorePanel.createScorePanel(levelFactory.targetScore);
+        scorePanel.soundDelegate = soundDelegate;
         addActor(scorePanel);
 
         infoPanel = new InfoPanel(gameSceneAtlas.createSprite("LevelIDArea"));
@@ -543,6 +552,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel.buttonAtlas = buttonAtlas;
             settingPanel.gameAtlas = gameSceneAtlas;
             settingPanel.infoAtlas = infoAtlas;
+            settingPanel.soundDelegate = soundDelegate;
             settingPanel.setPosition((int)settingPosition.x, (int)settingPosition.y);
             settingPanel.gameType = levelFactory.gameType;
 
@@ -566,9 +576,9 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }else if(stageAt == 3){
 
                 if (ceilingHit){
-
-
-
+                	soundDelegate.playLoseSound();
+                	playerInfo.livesLeft--;
+                	
                     int hitIndex = hitBall.column - levelFactory.numOfColumns + (levelFactory.numOfColumns * hitBall.row);
 
                     for (int i = hitIndex; i>= 0; i = i -levelFactory.numOfColumns){
@@ -610,10 +620,15 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
                     if (!didReachScore){
                         scorePanel.didNotReachAnimation();
                         didWin = false;
+                        playerInfo.livesLeft--;
+                        soundDelegate.playLoseSound();
+                        
                     }
 
                     if (objectiveReached && didReachScore){
                         didWin = true;
+                        soundDelegate.playWinSound();
+                        
                     }
 
                     settingPanel.createGameOverPanel(didWin, corePaymentDelegate);
@@ -805,6 +820,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             }
 
             if (connectedBalls.size >= 3){
+            	soundDelegate.playNormalSound();
+            	
                 int score = (connectedBalls.size -2)*3;
                 if (powerTypeAt == 5){
                     score *= 2;
@@ -908,7 +925,10 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     @Override
     public void ballMoved(Ball ball, int direction) {
 
+    	
+    	
         int ballIndex = ball.column + levelFactory.numOfColumns*ball.row;
+        soundDelegate.playSwipeSound();
 
         if (direction == 1){
             int upBallIndex = ballIndex + levelFactory.numOfColumns;
@@ -958,6 +978,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public void powerBallTouch(Ball ball) {
 
         int powerBallType = ball.powerType;
+       soundDelegate.playPowerSound();
 
         switch (powerBallType){
             case 1:
@@ -1077,17 +1098,23 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     @Override
     public void quitButtonPressed() {
+    	
+    	 if(stageAt == 2){
+         	playerInfo.livesLeft--;
+         }
 
         if (didWin){
             if (playerInfo.levelAt < 100 && playerInfo.levelAt == levelID){
                 playerInfo.levelAt++;
             }
         }else {
-            playerInfo.livesLeft--;
+            
             if (playerInfo.livesLeft == 0){
                 playerInfo.calculateNextLifeTime();
             }
         }
+        
+        
         if (playerInfo.getPassedScore(levelID) < scorePanel.currentScore){
             playerInfo.setScore(levelID, scorePanel.currentScore);
         }
@@ -1126,7 +1153,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             playerInfo.setScore(levelID, scorePanel.currentScore);
         }
 
-        playerInfo.livesLeft--;
+        
         if (playerInfo.livesLeft == 0){
             playerInfo.calculateNextLifeTime();
             delegate.quitGamePlay();
@@ -1137,6 +1164,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     @Override
     public void continuePlaying() {
+    	
+    	playerInfo.livesLeft++;
 
         int midIndex = (int)ballsArray.length/2;
         if(endAnimationNode != null){

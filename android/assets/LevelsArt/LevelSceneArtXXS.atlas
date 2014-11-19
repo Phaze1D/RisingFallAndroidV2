@@ -12,28 +12,35 @@ backgroundui
   index: -1
 background
   rotate: false
-  xy: 323, 61
-  size: 312, 420
-  orig: 312, 420
+  xy: 323, 78
+  size: 300, 403
+  orig: 300, 403
   offset: 0, 0
   index: -1
 lifePanel
   rotate: false
-  xy: 637, 359
+  xy: 625, 359
   size: 121, 122
   orig: 121, 122
   offset: 0, 0
   index: -1
+heart
+  rotate: false
+  xy: 323, 30
+  size: 48, 46
+  orig: 48, 46
+  offset: 0, 0
+  index: -1
 naviB
   rotate: false
-  xy: 323, 21
+  xy: 625, 319
   size: 38, 38
   orig: 38, 38
   offset: 0, 0
   index: -1
 naviBPressed
   rotate: false
-  xy: 637, 320
+  xy: 748, 444
   size: 37, 37
   orig: 37, 37
   offset: 0, 0

@@ -3,6 +3,7 @@ package com.Phaze1D.RisingFallAndroidV2.Scenes;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Ball;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Objects.Spawner;
 import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
@@ -70,6 +71,8 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
     private LocaleStrings strings;
 
+    public SoundControllerDelegate soundDelegate;
+    
     public StartScene(Viewport viewport, Batch batch) {
         super(viewport, batch);
         strings = LocaleStrings.getOurInstance();
@@ -225,6 +228,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         playButton.setPosition((int)(playButtonPosition.x - playButton.getWidth()/2), (int)(playButtonPosition.y - playButton.getHeight()/2));
         playButton.delegate = this;
         playButton.type = SimpleButton.PLAY_BUTTON;
+        playButton.soundDelegate = soundDelegate;
         addActor(playButton);
 
     }
@@ -241,6 +245,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
         storeButton.setPosition((int)(storeButtonPosition.x - storeButton.getWidth()/2), (int)(storeButtonPosition.y - storeButton.getHeight()/2));
         storeButton.delegate = this;
         storeButton.type = SimpleButton.STORE_BUTTON;
+        storeButton.soundDelegate = soundDelegate;
         addActor(storeButton);
 
     }

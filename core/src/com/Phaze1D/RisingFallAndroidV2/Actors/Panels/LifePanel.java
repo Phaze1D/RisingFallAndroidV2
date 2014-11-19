@@ -4,6 +4,7 @@ import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.CustomLabel;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.PaymentFlowCompletionListener;
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SizeToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -38,6 +40,9 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     private LocaleStrings strings;
     
     public CorePaymentDelegate corePaymentDelegate;
+    
+    public Sprite heartSP;
+    public SoundControllerDelegate soundDelegate;
 
     public LifePanel(Sprite panelSprite, CorePaymentDelegate cpd){
         super(panelSprite);
@@ -51,13 +56,13 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         Player playerInfo = Player.shareInstance();
         
         //Changes position
-
-        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.WHITE));
-        titleLabel.setPosition((int) (getWidth() / 2 - titleLabel.getWidth() / 2), (int) (getHeight() * 2 / 3 - titleLabel.getHeight() / 2));
-        addActor(titleLabel);
+        SpriteDrawable heartS = new SpriteDrawable(heartSP);
+        Image heart = new Image(heartS);
+        heart.setPosition((int)(getWidth()/2 - heart.getWidth()/2), (int)(getHeight()/2 - heart.getHeight()/2));
+        addActor(heart);
 
         Label livesLeft = new Label("" + playerInfo.livesLeft, new Label.LabelStyle(font, Color.WHITE));
-        livesLeft.setPosition((int) (getWidth() / 2 - livesLeft.getWidth() / 2), (int) (getHeight() / 3 - livesLeft.getHeight() / 2));
+        livesLeft.setPosition((int) (getWidth() / 2 - livesLeft.getWidth() / 2), (int) (getHeight() / 2 - livesLeft.getHeight() / 2));
         addActor(livesLeft);
 
         
@@ -72,9 +77,15 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         Player playerInfo = Player.shareInstance();
         timeLeft = playerInfo.getTimeLeftOnLifes() - System.currentTimeMillis()/1000;
 
-        Label titleLabel = new Label(strings.getValue("LifesK"), new Label.LabelStyle(font, Color.WHITE));
-        titleLabel.setPosition((int) (getWidth() / 2 - titleLabel.getWidth() / 2), (int) (getHeight() - titleLabel.getHeight()));
-        addActor(titleLabel);
+        
+        SpriteDrawable heartS = new SpriteDrawable(heartSP);
+        Image heart = new Image(heartS);
+        heart.setPosition((int)(getWidth()/2 - heart.getWidth()/2), (int)(getHeight()/2 - heart.getHeight()/2));
+        addActor(heart);
+
+        Label livesLeft = new Label("" + playerInfo.livesLeft, new Label.LabelStyle(font, Color.WHITE));
+        livesLeft.setPosition((int) (getWidth() / 2 - livesLeft.getWidth() / 2), (int) (getHeight() / 2 - livesLeft.getHeight() / 2));
+        addActor(livesLeft);
 
         SpriteDrawable up = new SpriteDrawable(buttonSprite);
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL()));
@@ -82,7 +93,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
         buyButton = new SimpleButton(strings.getValue(".99k"), style);
         buyButton.setPosition((int) (getWidth() / 2 - buyButton.getWidth() / 2), (int) (buttonSprite.getHeight() / 2 - buyButton.getHeight()));
-
+        buyButton.soundDelegate = soundDelegate;
 
         buyButton.delegate = this;
         addActor(buyButton);
@@ -91,7 +102,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         int seconds = (int) (timeLeft - minutes*60);
         String formatted = String.format("%02d:%02d",minutes, seconds);
         timeLabel = new CustomLabel(formatted, new Label.LabelStyle(font, Color.WHITE));
-        timeLabel.setPosition((int) (getWidth() / 2 - timeLabel.getWidth() / 2), (int) (getHeight() / 2 - timeLabel.getHeight() / 2));
+        timeLabel.setPosition((int) (getWidth() / 2 - timeLabel.getWidth() / 2), (int) (getHeight() - timeLabel.getHeight()/2));
         timeLabel.setAlignment(Align.center);
         addActor(timeLabel);
 

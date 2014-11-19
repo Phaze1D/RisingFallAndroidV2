@@ -34,10 +34,13 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     
     private CorePaymentDelegate paymentDelegate;
     
+    private SoundControllerDelegate soundDelegate;
+    
 
-    public GameController(SpriteBatch batch, CorePaymentDelegate paymentDelegate){
+    public GameController(SpriteBatch batch, CorePaymentDelegate paymentDelegate, SoundControllerDelegate soundDelegate){
         this.batch = batch;
         this.paymentDelegate = paymentDelegate;
+        this.soundDelegate = soundDelegate;
         
     }
     
@@ -99,6 +102,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         startScreen.buttonAtlas = textureLoader.getButtonAtlas();
         startScreen.ballsAtlas = textureLoader.getBallsAtlas();
         startScreen.delegate = this;
+        startScreen.soundDelegate = soundDelegate;
         setScreen(startScreen);
         
 
@@ -117,6 +121,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         levelsScene.buttonAtlas = textureLoader.getButtonAtlas();
         levelsScene.sceneAtlas = textureLoader.getLevelsScreenAtlas();
         levelsScene.delegate = this;
+        levelsScene.soundDelegate = soundDelegate;
         setScreen(levelsScene);
        
 
@@ -130,6 +135,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         textureLoader.dispose();
         textureLoader.loadGamePlayScreenAtlases(levelID);
         GameplayScene gameplayScreen = new GameplayScene(levelID);
+        gameplayScreen.soundDelegate = soundDelegate;
         gameplayScreen.badBallAtlas = textureLoader.getBadBallAtlas();
         gameplayScreen.ballAtlas = textureLoader.getBallsAtlas();
         gameplayScreen.gameSceneAtlas = textureLoader.getGameplayAtlas();
@@ -159,6 +165,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         storeScene.itemsAtlas = textureLoader.getItemsAtlas();
         storeScene.delegate = this;
         storeScene.corePaymentDelegate = paymentDelegate;
+        storeScene.soundDelegate = soundDelegate;
         setScreen(storeScene);
 
 

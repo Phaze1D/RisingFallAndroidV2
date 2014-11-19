@@ -1,6 +1,9 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Buttons;
 
 
+import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -25,19 +28,24 @@ public class LevelButton extends ImageTextButton {
     public int levelNumber;
 
     public boolean isChild;
-
+    
+    public SoundControllerDelegate soundDelegate;
+ 
 
     public LevelButton(String text, Skin skin) {
         super(text, skin);
+        
     }
 
     public LevelButton(String text, Skin skin, String styleName) {
         super(text, skin, styleName);
+        
     }
 
     public LevelButton(String text, ImageTextButtonStyle style) {
         super(text, style);
         addListener(new LevelButtonListener());
+        
     }
 
     public void setAlpha(float alpha){
@@ -61,7 +69,7 @@ public class LevelButton extends ImageTextButton {
 
         @Override
         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
+        	
             setAlpha(1);
             if (!isChild){
                 delegate.parentPressed(parentNumber);
@@ -73,11 +81,20 @@ public class LevelButton extends ImageTextButton {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             setAlpha(.5f);
+           soundDelegate.playButtonSound();
             return true;
         }
     }
+    
+    
 
-    public interface LevelButtonDelegate{
+    @Override
+	public boolean remove() {
+		
+		return super.remove();
+	}
+
+	public interface LevelButtonDelegate{
 
         public void parentPressed(int parentNumber);
         public void childPressed(int levelNumber);

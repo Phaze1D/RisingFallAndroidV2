@@ -19,10 +19,10 @@ public class ApplicationController extends ApplicationAdapter {
 
     }
 
-    public ApplicationController(Hashtable<String, String> localeStrings, CorePaymentDelegate paymentDelegate){
+    public ApplicationController(Hashtable<String, String> localeStrings, CorePaymentDelegate paymentDelegate, SoundControllerDelegate soundControllerDelegate){
         LocaleStrings.getInstance(localeStrings);
         
-        gameController = new GameController(batch, paymentDelegate);
+        gameController = new GameController(batch, paymentDelegate, soundControllerDelegate);
     }
 
     public void setAdDelegate(AdDelegate adDelegate){
