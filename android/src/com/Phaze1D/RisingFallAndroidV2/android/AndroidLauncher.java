@@ -2,6 +2,7 @@ package com.Phaze1D.RisingFallAndroidV2.android;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.ApplicationController;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.GameController.AdDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.SocialMediaControl;
+import com.Phaze1D.RisingFallAndroidV2.Scenes.LevelsScene;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.facebook.Session;
@@ -48,6 +50,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		Log.d("DAVID VILLARREAL", Locale.getDefault().getLanguage());
 		
 		payDelegate = AndroidPaymentClass.shareInstance(this);
 		payDelegate.setUpAndroidPayment();
@@ -107,6 +110,7 @@ public class AndroidLauncher extends AndroidApplication implements AdDelegate {
 	        
 	        setContentView(layout);
 	}
+	
 
 	@Override
 	protected void onStart() {

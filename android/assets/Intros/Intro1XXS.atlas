@@ -1,0 +1,33 @@
+
+Intro1XXS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level10
+  rotate: false
+  xy: 1, 1
+  size: 178, 117
+  orig: 178, 117
+  offset: 0, 0
+  index: -1
+Level11
+  rotate: false
+  xy: 181, 2
+  size: 178, 116
+  orig: 178, 116
+  offset: 0, 0
+  index: -1
+Level12
+  rotate: false
+  xy: 361, 2
+  size: 177, 116
+  orig: 177, 116
+  offset: 0, 0
+  index: -1
+Level13
+  rotate: false
+  xy: 540, 1
+  size: 177, 117
+  orig: 177, 117
+  offset: 0, 0
+  index: -1

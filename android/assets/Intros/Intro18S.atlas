@@ -1,0 +1,26 @@
+
+Intro18S.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level182
+  rotate: false
+  xy: 1, 243
+  size: 366, 240
+  orig: 366, 240
+  offset: 0, 0
+  index: -1
+Level181
+  rotate: false
+  xy: 1, 1
+  size: 364, 240
+  orig: 364, 240
+  offset: 0, 0
+  index: -1
+Level180
+  rotate: false
+  xy: 369, 244
+  size: 364, 239
+  orig: 364, 239
+  offset: 0, 0
+  index: -1

@@ -63,7 +63,7 @@ public class StoreBuyPanel extends Panel implements
 	private void createTitle() {
 		LocaleStrings strings = LocaleStrings.getOurInstance();
 		title = new Label(strings.getValue("Powers"), new Label.LabelStyle(
-				BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontStoreTitle()), new Color(0, .443f, .737f, 1)));
+				BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontStoreTitle(), strings.getValue("Powers")), new Color(0, .443f, .737f, 1)));
 		title.setAlignment(Align.center);
 	}
 
@@ -76,7 +76,7 @@ public class StoreBuyPanel extends Panel implements
 					itemsAtlas.createSprite("st" + (i + 1)));
 			SimpleButton pbutton = new SimpleButton("",
 					new ImageTextButton.ImageTextButtonStyle(spriteDrawable,
-							null, null, BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL())));
+							null, null, BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), null)));
 			pbutton.type = i + 9;
 			pbutton.delegate = this;
 			pbutton.soundDelegate = soundDelegate;

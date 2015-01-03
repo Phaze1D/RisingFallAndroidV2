@@ -69,10 +69,10 @@ public class TextureLoader implements Disposable {
     	    if(screenWidth >= 750 && screenHeight >= 1200){
     	        screenSizeAlt = "M";
     	    }
-//
-//    	    if(screenWidth >= 1080 && screenHeight >= 1700){
-//    	        screenSizeAlt = "H";
-//    	    }
+
+    	    if(screenWidth >= 1080 && screenHeight >= 1700){
+    	        screenSizeAlt = "H";
+    	    }
 
 //    	    if(screenWidth >= 1440 && screenHeight >= 2200){
 //    	        screenSizeAlt = "XH";
@@ -112,8 +112,8 @@ public class TextureLoader implements Disposable {
     /** Loads the game play screen atlases into memory*/
     public void loadGamePlayScreenAtlases(int levelAt){
 
-        if (levelAt <= 2 || levelAt == 18 || levelAt == 28 || levelAt == 50 || levelAt == 70) {
-
+        if (levelAt <= 2 || levelAt == 18) {
+        	assetManager.load("Intros/Intro"+levelAt+screenSizeAlt+".atlas", TextureAtlas.class);
         }else{
             levelAt = 101;
         }
@@ -126,7 +126,7 @@ public class TextureLoader implements Disposable {
         assetManager.load("AllBallArt/UnmovableBallArt" + screenSizeAlt + ".atlas",TextureAtlas.class);
         assetManager.load("AllBallArt/BadBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         assetManager.load("SocialMediaArt/SocialMediaArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
-       // assetManager.load("InfoAtlas/Info"+levelAt +".atlas", TextureAtlas.class);
+        
         assetManager.finishLoading();
 
         buttonAtlas = assetManager.get("Buttons/Buttons" + screenSizeAlt + ".atlas", TextureAtlas.class);
@@ -136,7 +136,14 @@ public class TextureLoader implements Disposable {
         unmovableBallAtlas = assetManager.get("AllBallArt/UnmovableBallArt" + screenSizeAlt + ".atlas",TextureAtlas.class);
         badBallAtlas = assetManager.get("AllBallArt/BadBallArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
         socialMediaAtlas = assetManager.get("SocialMediaArt/SocialMediaArt" + screenSizeAlt + ".atlas", TextureAtlas.class);
-       // infoAtlas = assetManager.get("InfoAtlas/Info"+levelAt+".atlas", TextureAtlas.class);
+       
+        
+        if (levelAt <= 2 || levelAt == 18) {
+        	infoAtlas = assetManager.get("Intros/Intro"+levelAt+screenSizeAlt+".atlas", TextureAtlas.class);
+        }else{
+            levelAt = 101;
+        }
+        
         isGameplayScreenLoaded = true;
 
     }

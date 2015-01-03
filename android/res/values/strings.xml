@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">RisingFallAndroid</string>
+    <string name="app_name">Rising Fall</string>
     <string name="app_id">1462139420708376</string>
-    <string name="share_text">Playing RisingFall \n https://www.facebook.com/RisingFallApp</string>
+    <string name="share_text">Playing Rising Fall \n https://www.facebook.com/RisingFallApp</string>
+    
+    <string name="buy">Buy</string>
     
     <string name ="Play">Play</string>
     <string name="Store">Store</string>

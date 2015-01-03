@@ -12,7 +12,7 @@ import java.util.Hashtable;
 
 public class ApplicationController extends ApplicationAdapter {
     private SpriteBatch batch;
-    private GameController gameController;
+    public GameController gameController;
     
 
     public ApplicationController(){

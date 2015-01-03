@@ -52,8 +52,9 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
 
     /** Creates the life panel showing how many lives the player has left*/
     public void createLifePanel(){
-        font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes());
-        Player playerInfo = Player.shareInstance();
+    	 Player playerInfo = Player.shareInstance();
+        font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes(), null);
+       
         
         //Changes position
         SpriteDrawable heartS = new SpriteDrawable(heartSP);
@@ -73,7 +74,7 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
     	
     	//Change position
     	
-        font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelTime());
+        font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelTime(), null );
         Player playerInfo = Player.shareInstance();
         timeLeft = playerInfo.getTimeLeftOnLifes() - System.currentTimeMillis()/1000;
 
@@ -88,10 +89,10 @@ public class LifePanel extends Panel  implements SimpleButton.SimpleButtonDelega
         addActor(livesLeft);
 
         SpriteDrawable up = new SpriteDrawable(buttonSprite);
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL()));
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,null,null,BitmapFontSizer.getFontWithSize( (int)BitmapFontSizer.sharedInstance().fontButtonL(), strings.getValue("buy") ) );
         style.fontColor = Color.WHITE;
 
-        buyButton = new SimpleButton(strings.getValue(".99k"), style);
+        buyButton = new SimpleButton(strings.getValue("buy"), style);
         buyButton.setPosition((int) (getWidth() / 2 - buyButton.getWidth() / 2), (int) (buttonSprite.getHeight() / 2 - buyButton.getHeight()));
         buyButton.soundDelegate = soundDelegate;
 

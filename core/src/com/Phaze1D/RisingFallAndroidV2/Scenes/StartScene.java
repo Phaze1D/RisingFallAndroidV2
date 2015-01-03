@@ -109,6 +109,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
     public void show() {
         if (!isCreated) {
             Gdx.input.setInputProcessor(this);
+            Gdx.input.setCatchBackKey(false);
             createScene();
             isCreated = true;
         }
@@ -220,7 +221,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         SpriteDrawable up = new SpriteDrawable(playSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
-        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), strings.getValue("Play"));
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLUE;
 
@@ -237,7 +238,7 @@ public class StartScene extends Stage implements Screen, SimpleButton.SimpleButt
 
         SpriteDrawable up = new SpriteDrawable(storeSprite);
         SpriteDrawable down = new SpriteDrawable(buttonAtlas.createSprite("buttonL2"));
-        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), strings.getValue("Store"));
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLUE;
 

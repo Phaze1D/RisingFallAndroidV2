@@ -65,9 +65,9 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         
 
 
-        textView = new TextArea(title + "\n" + info, new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null));
+        textView = new TextArea(title + "\n" + info, new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize, title + info), Color.BLACK,null,null,null));
         textView.setSize((int)(getWidth()/1.5f), (int)(getHeight()/2));
-        textView.setPosition( getWidth()/2 - textView.getWidth()/2, getHeight()/2 - textView.getHeight()/2);
+        textView.setPosition( (int)(getWidth()/2 - textView.getWidth()/2), (int)(getHeight()/2 - textView.getHeight()/2));
         textView.setDisabled(true);
         textView.setTouchable(Touchable.disabled);
         addActor(textView);
@@ -87,11 +87,11 @@ public class SellItemPanel extends Panel implements SimpleButton.SimpleButtonDel
         addActor(titleNode);
 
         SpriteDrawable up = new SpriteDrawable(buyButtonSp);
-        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), strings.getValue("buy"));
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, null, null, font);
         style.fontColor = Color.BLUE;
 
-        SimpleButton buyButton = new SimpleButton(strings.getValue(".99K"),style );
+        SimpleButton buyButton = new SimpleButton(strings.getValue("buy"),style );
         buyButton.setPosition((int)(getWidth()/2 - buyButton.getWidth()/2), (int)(yOffset - buyButton.getHeight()/2) );
         buyButton.delegate = this;
         buyButton.soundDelegate = soundDelegate;

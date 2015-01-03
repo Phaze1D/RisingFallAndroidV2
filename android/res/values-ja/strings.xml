@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <string name="buy">買う</string>
     <string name ="Play">プレー</string>
     <string name="Store">店舗</string>
     <string name="Powers">プロダクト</string>

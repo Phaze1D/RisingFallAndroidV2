@@ -1,12 +1,15 @@
 package com.Phaze1D.RisingFallAndroidV2.Controllers;
 
 
+import java.util.Locale;
+
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.GameplayScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.LevelsScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StartScene;
 import com.Phaze1D.RisingFallAndroidV2.Scenes.StoreScene;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
 import com.badlogic.gdx.Game;
@@ -36,11 +39,14 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     
     private SoundControllerDelegate soundDelegate;
     
+    public int stageAt = 0;
 
     public GameController(SpriteBatch batch, CorePaymentDelegate paymentDelegate, SoundControllerDelegate soundDelegate){
         this.batch = batch;
         this.paymentDelegate = paymentDelegate;
         this.soundDelegate = soundDelegate;
+        String laCode = Locale.getDefault().getLanguage();
+       
         
     }
     
@@ -86,7 +92,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
     }
 
     /** Loads the StartScreen data*/
-    private void loadStartScreen(){
+    public void loadStartScreen(){
     	adDelegate.currentScene(1);
     	if(isCreated){
     		adDelegate.showAd();
@@ -103,13 +109,15 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         startScreen.ballsAtlas = textureLoader.getBallsAtlas();
         startScreen.delegate = this;
         startScreen.soundDelegate = soundDelegate;
+        stageAt = 0;
         setScreen(startScreen);
+        
         
 
     }
 
     /** Loads the LevelScreen*/
-    private void loadLevelScreen(){
+    public void loadLevelScreen(){
     	getScreen().dispose();
     	 adDelegate.currentScene(2);
     	adDelegate.showAd();
@@ -122,12 +130,13 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         levelsScene.sceneAtlas = textureLoader.getLevelsScreenAtlas();
         levelsScene.delegate = this;
         levelsScene.soundDelegate = soundDelegate;
+        stageAt = 1;
         setScreen(levelsScene);
        
 
     }
 
-    private void loadGameplayScreen(int levelID){
+    public void loadGameplayScreen(int levelID){
     	getScreen().dispose();
     	adDelegate.currentScene(3);
     	adDelegate.hideAd();
@@ -146,12 +155,13 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         gameplayScreen.infoAtlas = textureLoader.getInfoAtlas();
         gameplayScreen.delegate = this;
         gameplayScreen.corePaymentDelegate = paymentDelegate;
+        stageAt = 2;
         setScreen(gameplayScreen);
         
 
     }
 
-    private void loadStoreScreen(){
+    public void loadStoreScreen(){
     	getScreen().dispose();
     	adDelegate.currentScene(4);
     	adDelegate.hideAd();
@@ -166,6 +176,7 @@ public class GameController extends Game implements StartScene.StartScreenDelega
         storeScene.delegate = this;
         storeScene.corePaymentDelegate = paymentDelegate;
         storeScene.soundDelegate = soundDelegate;
+        stageAt = -1;
         setScreen(storeScene);
 
 

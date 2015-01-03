@@ -34,26 +34,7 @@ public class ScorePanel extends Panel {
     }
 
     public void createScorePanel(int targetScore){
-    	
-//    	 int fontsize = 16;
-//    	    _currentScore = 0;
-//    	    _targetScore = targetScore;
-//    	    
-//    	    NSMutableString * stringL = [[NSMutableString alloc]init];
-//    	    
-//    	    [stringL appendString:NSLocalizedString(@"Score:", nil)];
-//    	    [stringL appendFormat:@" %d/%d", _currentScore, _targetScore];
-//    	    
-//    	    _titleLabel = [SKLabelNode labelNodeWithFontNamed:@"CooperBlack"];
-//    	    _titleLabel.fontColor = [UIColor whiteColor];
-//    	    _titleLabel.fontSize = fontsize;
-//    	    _titleLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-//    	    _titleLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-//    	    _titleLabel.zPosition = 2;
-//    	    _titleLabel.text = stringL;
-//    	    _titleLabel.position = CGPointMake(-_titleLabel.frame.size.width/1.5, -self.size.height/2);
-//    	    [self addChild: _titleLabel];
-
+   
     	
         currentScore = 0;
         this.targetScore = targetScore;
@@ -61,8 +42,9 @@ public class ScorePanel extends Panel {
 
         int fontSize = (int)BitmapFontSizer.sharedInstance().fontScorePanel();
         
-        titleLabel = new CustomLabel(titleString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.YELLOW));
-        titleLabel.setPosition((int)(titleLabel.getWidth()/5), (int) (getHeight() / 2 - titleLabel.getHeight() / 2) );
+        titleLabel = new CustomLabel(titleString, new Label.LabelStyle(BitmapFontSizer.getFontWithSize(fontSize, titleString + "0123456789"), Color.YELLOW));
+        titleLabel.setPosition((int)(0), (int) (getHeight() / 2 - titleLabel.getHeight() / 2) );
+        titleLabel.setAlignment(Align.left);
         addActor(titleLabel);
 
 
@@ -75,7 +57,7 @@ public class ScorePanel extends Panel {
         if (currentScore >= targetScore && !reachYet){
             titleLabel.setVisible(false);
            soundDelegate.playHighReachSound();
-            final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontScorePanel()), Color.YELLOW));
+            final CustomLabel reachL = new CustomLabel(targetScore + "", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontScorePanel(), null), Color.YELLOW));
             reachL.setPosition((int)(getWidth()/2 - reachL.getWidth()/2), (int)(getHeight()/2 - reachL.getHeight()/2) );
             reachL.setAlignment(Align.center);
             AlphaAction alphaAction = Actions.alpha(0, 1.5f);

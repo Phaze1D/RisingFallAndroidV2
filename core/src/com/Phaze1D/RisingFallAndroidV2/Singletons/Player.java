@@ -60,12 +60,12 @@ public class Player implements Serializable{
     }
 
     private void setInitialConditions(){
-        power1 =1;
+        power1 = 1;
         power2 = 1;
         power3 = 1;
         power4 = 1;
         power5 = 1;
-        levelAt = 95;
+        levelAt = 0;
         livesLeft = 5;
         scores = new int[100];
         
@@ -154,8 +154,8 @@ public class Player implements Serializable{
 
     /** Calculates the next available time to share in social media*/
     public void calculateNextShareTime(){
-        //timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 172800;
-    	timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 30;
+       timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 172800;
+    	//timeLeftOnSocialMedia = System.currentTimeMillis()/1000 + 30;
     }
 
     /** Calculates the next time for 5 new lives */

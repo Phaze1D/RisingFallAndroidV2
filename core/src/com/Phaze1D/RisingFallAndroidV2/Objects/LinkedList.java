@@ -76,47 +76,81 @@ public class LinkedList {
 
         NodeNew current = head;
         NodeNew previous = null;
+        
+        
 
         while (current != null){
-
+        	
+        	
             if (current.element.isAtFinalPosition()){
 
+            	boolean ready = true;
+            	
+            	
+            	
                 if (current.element.row == gameScene.numRows - 1){
-                    gameScene.disableBalls();
-                    gameScene.ceilingHit = true;
-                    gameScene.stageAt = 3;
-                    gameScene.hitBall = current.element;
+                	
+                	boolean isBelowMoving = false;
+                	int belowBallIndex = current.element.column + gameScene.levelFactory.numOfColumns*(current.element.row - 1);
+                	
+                	while(belowBallIndex >= 0){
+                		if(gameScene.ballsArray[belowBallIndex].isInMovingList){
+                			isBelowMoving = true;
+                			break;
+                		}
+                		
+                		belowBallIndex = belowBallIndex - gameScene.levelFactory.numOfColumns;
+                	}
+                	
+                	//System.out.println(isBelowMoving);
+                	
+                	if(isBelowMoving){
+                		ready = false;
+                	}else{
+                		 gameScene.disableBalls();
+                         gameScene.ceilingHit = true;
+                         gameScene.stageAt = 3;
+                         gameScene.hitBall = current.element;
+                	}
+                	
                 }
-
-                if (current == head) {
-                    current.element.setTouchable(Touchable.enabled);
-                    current.element.isInMovingList = false;
-                    current.element.isPhysicsActive = false;
-                    head = current.next;
-                    current.next = null;
-                    //current.element = null;
-                    current = null;
-                    current = head;
-                    count--;
-                }else if (current == tail){
-                    current.element.setTouchable(Touchable.enabled);
-                    current.element.isInMovingList = false;
-                    current.element.isPhysicsActive = false;
-                    previous.next = null;
-                    //current.element = null;
-                    current = null;
-                    tail = previous;
-                    count--;
-                }else {
-                    current.element.setTouchable(Touchable.enabled);
-                    current.element.isInMovingList = false;
-                    current.element.isPhysicsActive = false;
-                    previous.next = current.next;
-                    current.next = null;
-                    //current.element = null;
-                    current = null;
-                    current = previous.next;
-                    count--;
+                
+                
+                if(ready){
+                	
+					if (current == head) {
+						current.element.setTouchable(Touchable.enabled);
+						current.element.isInMovingList = false;
+						current.element.isPhysicsActive = false;
+						head = current.next;
+						current.next = null;
+						// current.element = null;
+						current = null;
+						current = head;
+						count--;
+					} else if (current == tail) {
+						current.element.setTouchable(Touchable.enabled);
+						current.element.isInMovingList = false;
+						current.element.isPhysicsActive = false;
+						previous.next = null;
+						// current.element = null;
+						current = null;
+						tail = previous;
+						count--;
+					} else {
+						current.element.setTouchable(Touchable.enabled);
+						current.element.isInMovingList = false;
+						current.element.isPhysicsActive = false;
+						previous.next = current.next;
+						current.next = null;
+						// current.element = null;
+						current = null;
+						current = previous.next;
+						count--;
+					}
+                }else{
+                	previous = current;
+                    current = current.next;
                 }
 
             }else {

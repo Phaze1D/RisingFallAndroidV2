@@ -1,5 +1,8 @@
 package com.Phaze1D.RisingFallAndroidV2.Actors.Panels;
 
+import java.io.StringWriter;
+import java.util.ArrayList;
+
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SimpleButton;
 import com.Phaze1D.RisingFallAndroidV2.Actors.Buttons.SocialMediaButton;
 import com.Phaze1D.RisingFallAndroidV2.Controllers.CorePaymentDelegate;
@@ -8,10 +11,15 @@ import com.Phaze1D.RisingFallAndroidV2.Controllers.SoundControllerDelegate;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.LocaleStrings;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
+import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -54,11 +62,17 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     private LocaleStrings strings;
     public CorePaymentDelegate corePaymentDelegate;
     public SoundControllerDelegate soundDelegate;
+    
+    public Animation introAni;
+    
+    public Image introImage;
 
 
     public SettingPanel(Sprite panelSprite) {
         super(panelSprite);
         strings = LocaleStrings.getOurInstance();
+        float fontSize = BitmapFontSizer.sharedInstance().fontButtonL();
+        BitmapFontSizer.getFontWithSize((int)fontSize, strings.getValue("Quit") + strings.getValue("Resume") );
     }
 
     public void createIntroPanel(int levelAt){
@@ -70,16 +84,15 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
             key = "InfoLevel"+levelAt;
             info = strings.getValue(key);
         }else{
-           info = strings.getValue("LevelInfo"+101);
+           info = String.format(strings.getValue("InfoLevel"+101), targetScore);
         }
 
-        float xOffset = (getWidth() - infoAtlas.createSprite("correct").getWidth()*2)/3;
         int fontSize = (int) BitmapFontSizer.sharedInstance().fontIntroText();
-        TextField.TextFieldStyle style = new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize), Color.BLACK,null,null,null);
+        TextField.TextFieldStyle style = new TextField.TextFieldStyle(BitmapFontSizer.getFontWithSize(fontSize, info),Color.BLACK,null,null,null);
         textView = new TextArea(info, style);
         textView.setDisabled(true);
-        textView.setBounds(xOffset,0, xOffset + infoAtlas.createSprite("correct").getWidth()*2, getHeight()/2 - 5);
-       
+        textView.setSize((int)(getWidth()/1.25f), (int)(getHeight()/2 - getHeight()/8f));
+        textView.setPosition( (int)(getWidth()/2 - textView.getWidth()/2), (int)(getHeight()/25f));
         textView.setTouchable(Touchable.disabled);
         textView.setMessageText("INFO");
 
@@ -90,25 +103,36 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
     }
 
     private void createInfoTexture(int levelAt){
+    	
+    	if(levelAt <= 2 || levelAt == 18){
+    		
+    		Array<Sprite> frames = new Array<Sprite>();
+    		
+    		for(int i = 0; i < infoAtlas.createSprites().size; i++){
+    			frames.add(infoAtlas.createSprite("Level"+levelAt+""+i));	
+    		}
+    		
+    		introAni = new Animation(1f, frames);
+    		
+    		introImage = new Image(new SpriteDrawable(frames.first()));
+    		introImage.setCenterPosition((int)(this.getWidth()/2), (int)(this.getHeight() - this.getHeight()/4 - 10));
+    		addActor(introImage);
+    	}
 
+    	if(levelAt == 50){
+    		Sprite image = new Sprite(new Texture(Gdx.files.internal("Intros/Intro50" + TextureLoader.shareTextureLoader().screenSizeAlt + ".png")));
+    		introImage = new Image(new SpriteDrawable(image));
+    		introImage.setCenterPosition((int)(this.getWidth()/2), (int)(this.getHeight() - this.getHeight()/4 - 10));
+    		addActor(introImage);
+    	}
+    	
 
-//        if (levelAt <= 2 || levelAt == 18 || levelAt == 28 || levelAt == 50 || levelAt == 70) {
-//
-//        }else{
-//            levelAt = 101;
-//        }
-
-
-        float xOffset = (getWidth() - infoAtlas.createSprite("correct").getWidth()*2)/3;
-
-        Image correctI = new Image(infoAtlas.createSprite("correct"));
-        correctI.setPosition((int)(xOffset), (int)(getHeight() - 5 - correctI.getHeight()));
-        addActor(correctI);
-
-        Image incorrectI = new Image(infoAtlas.createSprite("incorrect"));
-        incorrectI.setPosition((int)(xOffset*2 + incorrectI.getWidth()), (int)(getHeight() - 5 - incorrectI.getHeight()));
-        addActor(incorrectI);
-
+    }
+    
+    public void animationNumber(float number){
+    	if(introImage != null && introAni != null){
+    		introImage.setDrawable(new SpriteDrawable((Sprite) introAni.getKeyFrame(number, true)));
+    	}
     }
 
 
@@ -124,7 +148,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         SpriteDrawable up = new SpriteDrawable(button1);
         SpriteDrawable down = new SpriteDrawable(button2);
         float fontSize = BitmapFontSizer.sharedInstance().fontButtonL();
-        BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSize);
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSize, strings.getValue("Quit") + strings.getValue("Resume") );
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up, down, null, font);
         style.fontColor = Color.BLUE;
 
@@ -142,7 +166,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         resumeButton.soundDelegate = soundDelegate;
         addActor(resumeButton);
         
-        BitmapFont font2 = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes());
+        BitmapFont font2 = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes(), null);
         
         SpriteDrawable heartS = new SpriteDrawable(gameAtlas.createSprite("heart"));
         Image heart = new Image(heartS);
@@ -179,9 +203,9 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         float fontSizeL = BitmapFontSizer.sharedInstance().fontGameWon();
         
         
-        BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSizeB);
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSizeB, strings.getValue("Next")+strings.getValue("MainMenu"));
         
-        Label title = new Label(strings.getValue("YouWon"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL), Color.BLACK));
+        Label title = new Label(strings.getValue("YouWon"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL, strings.getValue("YouWon")), Color.BLACK));
         title.setPosition((int)(getWidth()/2 - title.getWidth()/2), (int)(getHeight() - yOffset - title.getHeight()));
         title.setAlignment(Align.center);
         addActor(title);
@@ -221,11 +245,11 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         float fontSizeB = BitmapFontSizer.sharedInstance().fontButtonL();
         float fontSizeL = BitmapFontSizer.sharedInstance().fontGameWon();
         
-        BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSizeB);
-        BitmapFont font2 = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes());
+        BitmapFont font = BitmapFontSizer.getFontWithSize((int)fontSizeB, strings.getValue("Restart") + strings.getValue("Quit") + strings.getValue("buy"));
+        BitmapFont font2 = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontLifePanelLifes(), null);
 
-        Vector2 payBPosition = new Vector2(getWidth()/2 - button1b.getWidth()/2, getHeight() - yOffset*2 - button1b.getHeight()*2);
-        Vector2 socialPosition = new Vector2( getWidth()/2, getHeight() - yOffset*3 - button1b.getHeight()*3);
+        Vector2 payBPosition = new Vector2(xOffset, getHeight() - yOffset*2 - button1b.getHeight()*2);
+        Vector2 socialPosition = new Vector2( xOffset*2 + button1b.getWidth(), getHeight() - yOffset*2 - button1b.getHeight()*2);
         Vector2 resetPosition = new Vector2(xOffset, getHeight() - yOffset*5 - button1b.getHeight()*5);
         Vector2 quitPosition = new Vector2(xOffset*2 + button1b.getWidth(),getHeight() - yOffset*5 - button1b.getHeight()*5 );
         
@@ -241,7 +265,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         addActor(livesLeft);
 
 
-        Label keepPlayLabel = new Label(strings.getValue("Playon"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL), Color.BLACK));
+        Label keepPlayLabel = new Label(strings.getValue("Playon"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL, strings.getValue("Playon")), Color.BLACK));
         keepPlayLabel.setPosition((int)(getWidth()/2 - keepPlayLabel.getWidth()/2), (int)(getHeight() -  yOffset - button1b.getHeight()));
         addActor(keepPlayLabel);
 
@@ -258,7 +282,7 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         ImageTextButton.ImageTextButtonStyle styleG = new ImageTextButton.ImageTextButtonStyle(upG, downG, null, font);
    
 
-        SimpleButton payButton = new SimpleButton(strings.getValue(".99K"), styleB);
+        SimpleButton payButton = new SimpleButton(strings.getValue("buy"), styleB);
         payButton.delegate = this;
         payButton.type = SimpleButton.PAY_BUTTON;
         payButton.setPosition((int)payBPosition.x, (int)payBPosition.y);
@@ -270,13 +294,13 @@ public class SettingPanel extends Panel implements SimpleButton.SimpleButtonDele
         
         
         socialB = new SocialMediaButton(shareUp, shareDown);
-        socialB.setCenterPosition((int)socialPosition.x, (int)socialPosition.y);
+        socialB.setCenterPosition((int)(socialPosition.x + socialB.getWidth()/1.5f), payButton.getCenterY());
         socialB.delegate = this;
         socialB.soundDelegate = soundDelegate;
         socialB.type = SocialMediaButton.SOCIAL_BUTTON;
         addActor(socialB);
 
-        Label endLabel = new Label(strings.getValue("GameOver"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL), Color.BLACK));
+        Label endLabel = new Label(strings.getValue("GameOver"), new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)fontSizeL, strings.getValue("GameOver")), Color.BLACK));
         endLabel.setPosition((int)(getWidth()/2 - endLabel.getWidth()/2), (int)(getHeight() -  yOffset*4 - button1b.getHeight()*4));
         addActor(endLabel);
 

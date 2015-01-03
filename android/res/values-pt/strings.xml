@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- 
+ 	<string name="buy">Comprar</string>
     <string name ="Play">Jogar</string>
     <string name="Store">Loja</string>
     <string name="Powers">Poderes</string>

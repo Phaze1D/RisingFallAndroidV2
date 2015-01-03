@@ -1,0 +1,40 @@
+
+Intro0M.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level00
+  rotate: false
+  xy: 1, 630
+  size: 476, 313
+  orig: 476, 313
+  offset: 0, 0
+  index: -1
+Level04
+  rotate: false
+  xy: 1, 315
+  size: 476, 313
+  orig: 476, 313
+  offset: 0, 0
+  index: -1
+Level01
+  rotate: false
+  xy: 479, 631
+  size: 476, 312
+  orig: 476, 312
+  offset: 0, 0
+  index: -1
+Level02
+  rotate: false
+  xy: 1, 1
+  size: 476, 312
+  orig: 476, 312
+  offset: 0, 0
+  index: -1
+Level03
+  rotate: false
+  xy: 479, 317
+  size: 476, 312
+  orig: 476, 312
+  offset: 0, 0
+  index: -1

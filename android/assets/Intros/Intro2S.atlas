@@ -1,0 +1,26 @@
+
+Intro2S.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level21
+  rotate: false
+  xy: 1, 242
+  size: 364, 240
+  orig: 364, 240
+  offset: 0, 0
+  index: -1
+Level20
+  rotate: false
+  xy: 1, 1
+  size: 364, 239
+  orig: 364, 239
+  offset: 0, 0
+  index: -1
+Level22
+  rotate: false
+  xy: 367, 243
+  size: 364, 239
+  orig: 364, 239
+  offset: 0, 0
+  index: -1

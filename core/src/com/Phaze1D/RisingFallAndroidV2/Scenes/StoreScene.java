@@ -11,6 +11,7 @@ import com.Phaze1D.RisingFallAndroidV2.Physics.PhysicsWorld;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.RandomXS128;
@@ -102,6 +103,7 @@ public class StoreScene extends Stage implements Screen,
 	public void show() {
 		if (!isCreated) {
 			Gdx.input.setInputProcessor(this);
+			Gdx.input.setCatchBackKey(true);
 			createScene();
 			hasFinished = true;
 		}
@@ -246,7 +248,7 @@ public class StoreScene extends Stage implements Screen,
 
 		backB = new SimpleButton("", new ImageTextButton.ImageTextButtonStyle(
 				new SpriteDrawable(backButton), null, null,
-				BitmapFontSizer.getFontWithSize(11)));
+				BitmapFontSizer.getFontWithSize(11, null)));
 		backB.setPosition((int) backButtonPostion.x, (int) backButtonPostion.y);
 		backB.delegate = this;
 		backB.soundDelegate = soundDelegate;
@@ -391,6 +393,14 @@ public class StoreScene extends Stage implements Screen,
 			replaceSellPanel(powerTyped);
 		}
 
+	}
+	
+	@Override
+	public boolean keyDown(int keyCode) {
+		if(keyCode == Keys.BACK){
+			buttonPressed(0);
+		}
+		return super.keyDown(keyCode);
 	}
 
 	@Override

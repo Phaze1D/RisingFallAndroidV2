@@ -65,7 +65,7 @@ public class Ball extends Image {
 
     public boolean isAtFinalPosition(){
 
-        if (getY() < finalYPosition){
+        if (getY() <= finalYPosition){
             isPhysicsActive = false;
             setPosition((int)getX(), (int)finalYPosition);
             return true;

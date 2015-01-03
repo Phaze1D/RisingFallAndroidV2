@@ -1,0 +1,31 @@
+
+Intro2H.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level22
+  rotate: false
+  xy: 1, 401
+  size: 607, 399
+  orig: 607, 399
+  offset: 0, 0
+  index: -1
+Level21
+  rotate: false
+  xy: 1, 1
+  size: 607, 398
+  orig: 607, 398
+  offset: 0, 0
+  index: -1
+
+Intro2H2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level20
+  rotate: false
+  xy: 1, 1
+  size: 606, 398
+  orig: 606, 398
+  offset: 0, 0
+  index: -1

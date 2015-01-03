@@ -43,7 +43,7 @@ public class ObjectivePanel extends Panel {
 			titleString = strings.getValue("TimeLeft") + " " + objectString;
 		}
 
-		font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontObjectivePanel());
+		font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontObjectivePanel(), titleString + "0123456789");
 		titleNode = new Label(titleString, new Label.LabelStyle(font,
 				Color.YELLOW));
 		titleNode.setPosition((int)(getWidth()/8),

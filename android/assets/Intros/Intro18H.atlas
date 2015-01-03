@@ -1,0 +1,31 @@
+
+Intro18H.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level180
+  rotate: false
+  xy: 1, 402
+  size: 607, 399
+  orig: 607, 399
+  offset: 0, 0
+  index: -1
+Level182
+  rotate: false
+  xy: 1, 1
+  size: 606, 399
+  orig: 606, 399
+  offset: 0, 0
+  index: -1
+
+Intro18H2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level181
+  rotate: false
+  xy: 1, 1
+  size: 606, 398
+  orig: 606, 398
+  offset: 0, 0
+  index: -1

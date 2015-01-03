@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <string name="buy">купить</string>
     <string name ="Play">играть</string>
     <string name="Store">магазин</string>
     <string name="Powers">продукты</string>

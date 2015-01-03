@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <string name="buy">买</string>
     <string name ="Play">玩</string>
     <string name="Store">商店</string>
     <string name="Powers">制品</string>

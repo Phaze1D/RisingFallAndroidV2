@@ -15,6 +15,7 @@ import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.TextureLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -121,6 +122,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public CorePaymentDelegate corePaymentDelegate;
     
     public SoundControllerDelegate soundDelegate;
+    
+    public float aniNumber;
    
 
     public GameplayScene(int levelID){
@@ -133,8 +136,12 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         act(delta);
         draw();
         
+        aniNumber+=delta;
 
-
+        if(stageAt == 1 && settingPanel != null){
+        	settingPanel.animationNumber(aniNumber);
+        }
+        
         if (powerTimePanel != null){
             powerTimePanel.currentTime = (float)currentTime;
         }
@@ -207,6 +214,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     public void show() {
         if (!isCreated){
             Gdx.input.setInputProcessor(this);
+            Gdx.input.setCatchBackKey(true);
             addListener(new ScreenListener());
             createScene();
         }
@@ -386,7 +394,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
     }
 
     private void createSideView() {
-        optionPanel = new SimpleButton("", new ImageTextButton.ImageTextButtonStyle(new SpriteDrawable(gameSceneAtlas.createSprite("optionArea")),null,null, BitmapFontSizer.getFontWithSize(11)));
+        optionPanel = new SimpleButton("", new ImageTextButton.ImageTextButtonStyle(new SpriteDrawable(gameSceneAtlas.createSprite("optionArea")),null,null, BitmapFontSizer.getFontWithSize(11, null)));
         optionPanel.setPosition((int)optionAreaPosition.x, (int)optionAreaPosition.y);
         optionPanel.delegate = this;
         optionPanel.soundDelegate = soundDelegate;
@@ -460,6 +468,8 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
         }
     }
 
+   
+    
     private void spawnBall(){
 
         if (powerMaxAmount >= 2){
@@ -471,6 +481,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
 
         int randC = randGen.nextInt(levelFactory.numOfColumns);
+       // int randC = 0;
         int row = 0;
         int index = randC;
 
@@ -555,6 +566,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel.soundDelegate = soundDelegate;
             settingPanel.setPosition((int)settingPosition.x, (int)settingPosition.y);
             settingPanel.gameType = levelFactory.gameType;
+            settingPanel.targetScore = levelFactory.targetScore;
 
 
             if (levelFactory.gameType == 1) {
@@ -566,7 +578,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
             settingPanel.delegate = this;
 
             if (stageAt == 1){
-                //settingPanel.createIntroPanel(levelID);
+                settingPanel.createIntroPanel(levelID);
                 addActor(settingPanel);
             }else if (stageAt == 2){
 
@@ -903,7 +915,7 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
     private void runBallRemoveEffect(int score, Ball ball){
 
-        final CustomLabel scoreLab = new CustomLabel("" + score, new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontPopEffect()), Color.BLACK));
+        final CustomLabel scoreLab = new CustomLabel("" + score, new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontPopEffect(), null), Color.BLACK));
         scoreLab.setPosition(ball.getX() + ball.getWidth()/2, ball.getY() + ball.getHeight()/2);
         scoreLab.setScale(0);
 
@@ -1262,6 +1274,18 @@ public class GameplayScene extends Stage implements Screen, Ball.BallDelegate, S
 
         }
     }
+    
+    @Override
+	public boolean keyDown(int keyCode) {
+		if(keyCode == Keys.BACK){
+			if(!pausedGame ){
+				pauseGame();
+			}else if(pausedGame && stageAt != 1){
+				quitButtonPressed();
+			}
+		}
+		return super.keyDown(keyCode);
+	}
 
     public interface GameSceneDelegate{
         public void quitGamePlay();

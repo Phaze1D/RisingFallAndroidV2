@@ -1,6 +1,8 @@
 package com.Phaze1D.RisingFallAndroidV2.android;
 
 
+import java.util.Arrays;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -93,26 +95,27 @@ public class AndroidSocialMediaControl implements
 				public void call(Session session, SessionState state,
 						Exception exception) {
 
-					Log.d("DAVID VILLARREAL", "changing");
+					
 
 					if (session.isOpened()) {
 						smcDisable();
-						Log.d("DAVID VILLARREAL", "log is open");
+						
 						facebookAfterLoggedIn();
 					} else if (session.isClosed()) {
-						Log.d("DAVID VILLARREAL", "log is closed");
+						
 					}
 				}
 			};
 
 			Session.OpenRequest opR = new Session.OpenRequest(androidLan);
 			opR.setLoginBehavior(SessionLoginBehavior.SUPPRESS_SSO);
+			opR.setPermissions(Arrays.asList("public_profile","publish_actions"));
 			opR.setCallback(statusCallback);
 
 			Session session = new Builder(androidLan).build();
 			if (SessionState.CREATED_TOKEN_LOADED.equals(session.getState()) || true) {
 				Session.setActiveSession(session);
-				session.openForRead(opR);
+				session.openForPublish(opR);
 			}
 		} else {
 			postErrorMessage(R.string.NoInternetAccess);
@@ -123,15 +126,15 @@ public class AndroidSocialMediaControl implements
 	// Handles the facebook sharing after logging in
 	private void facebookAfterLoggedIn() {
 		Bundle params = new Bundle();
-		params.putString("name", "Facebook SDK for Android");
+		params.putString("name", "Rising Fall");
 		params.putString("caption",
-				"Build great social apps and get more installs.");
+				"Playing Rising Fall.");
 		params.putString(
 				"description",
-				"The Facebook SDK for Android makes it easier and faster to develop Facebook integrated Android apps.");
-		params.putString("link", "https://developers.facebook.com/android");
+				"Small little game I made");
+		params.putString("link", "https://www.facebook.com/RisingFallApp");
 		params.putString("picture",
-				"https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
+				"http://i.imgur.com/rt0Z71e.png");
 
 		final WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(
 				androidLan, Session.getActiveSession(), params))
@@ -179,10 +182,10 @@ public class AndroidSocialMediaControl implements
 				}).build();
 
 		if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
-			Log.d("DAVID VILLARREAL", "RUNNING ON MAIN THREAD");
+			//Log.d("DAVID VILLARREAL", "RUNNING ON MAIN THREAD");
 			feedDialog.show();
 		} else {
-			Log.d("DAVID VILLARREAL", " NOT RUNNING ON MAIN THREAD");
+			//Log.d("DAVID VILLARREAL", " NOT RUNNING ON MAIN THREAD");
 			androidLan.runOnUiThread(new Runnable() {
 
 				@Override
@@ -201,8 +204,8 @@ public class AndroidSocialMediaControl implements
 			Intent email = new Intent(Intent.ACTION_SEND);
 			email.setData(Uri.parse("mailto:"));
 			// email.putExtra(Intent.EXTRA_EMAIL, new String[]{"", ""});
-			email.putExtra(Intent.EXTRA_SUBJECT, "subject");
-			email.putExtra(Intent.EXTRA_TEXT, "message");
+			email.putExtra(Intent.EXTRA_SUBJECT, "Rising Fall Game");
+			email.putExtra(Intent.EXTRA_TEXT, "Playing Rising Fall");
 			email.setType("message/rfc822");
 
 			androidLan.startActivityForResult(
@@ -257,8 +260,8 @@ public class AndroidSocialMediaControl implements
 	private void googleCreateShare() {
 		Intent shareIntent = new PlusShare.Builder(androidLan)
 				.setType("text/plain")
-				.setText("Welcome to the Google+ platform.")
-				.setContentUrl(Uri.parse("https://developers.google.com/+/"))
+				.setText("Playing Rising Fall")
+				.setContentUrl(Uri.parse("https://www.facebook.com/RisingFallApp"))
 				.getIntent();
 
 		androidLan.startActivityForResult(shareIntent,
@@ -283,7 +286,8 @@ public class AndroidSocialMediaControl implements
 	}
 
 	private void resolveSignInError() {
-		Log.d("DAVID", "resolve sign in error");
+		Log.d("DAVID VILLARREAL", "resolve sign in error" + mConnectionResult);
+		
 		if (mConnectionResult.hasResolution()) {
 			try {
 
@@ -631,8 +635,8 @@ public class AndroidSocialMediaControl implements
 			@Override
 			public void run() {
 				MyVKShareDialog vkShareD = new MyVKShareDialog(androidLan);
-				vkShareD.setText("Testing VK");
-				vkShareD.setAttachmentLink("Rising Fall", "vk.com");
+				vkShareD.setText("Playing Rising Fall");
+				vkShareD.setAttachmentLink("Rising Fall", "https://www.facebook.com/RisingFallApp");
 				vkShareD.setShareDialogListener(new MyVKShareDialogListener() {
 
 					@Override
@@ -663,9 +667,17 @@ public class AndroidSocialMediaControl implements
 
 	}
 
-	public void postErrorMessage(int key) {
-		smc.delegate.sharedCalledBack(false);
-		androidLan.displayInAppError(androidLan.getString(key));
+	public void postErrorMessage( final int key) {
+		androidLan.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				smc.delegate.sharedCalledBack(false);
+				androidLan.displayInAppError(androidLan.getString(key));
+
+			}
+		});
+		
 	}
 
 	public void postSuccessUpdate() {

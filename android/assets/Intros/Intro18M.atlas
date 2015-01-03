@@ -1,0 +1,26 @@
+
+Intro18M.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Level180
+  rotate: false
+  xy: 1, 631
+  size: 476, 313
+  orig: 476, 313
+  offset: 0, 0
+  index: -1
+Level181
+  rotate: false
+  xy: 1, 316
+  size: 476, 313
+  orig: 476, 313
+  offset: 0, 0
+  index: -1
+Level182
+  rotate: false
+  xy: 1, 1
+  size: 476, 313
+  orig: 476, 313
+  offset: 0, 0
+  index: -1

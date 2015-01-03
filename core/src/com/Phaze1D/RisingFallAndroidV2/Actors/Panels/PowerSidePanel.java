@@ -78,7 +78,7 @@ public class PowerSidePanel extends Panel {
                     @Override
                     public boolean act(float delta) {
 
-                        CustomLabel label = new CustomLabel(amount+"", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontPowerNoti()), Color.BLACK));
+                        CustomLabel label = new CustomLabel(amount+"", new Label.LabelStyle(BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontPowerNoti(), null), Color.BLACK));
                         label.setAlignment(Align.center);
                         label.setPosition((int)(noti.getX() + notificationSprite.getWidth()/2 - label.getWidth()/2), (int)(noti.getY() + notificationSprite.getHeight()/2 - label.getHeight()/2));
                         notiGroup.addActor(label);

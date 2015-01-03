@@ -32,7 +32,7 @@ repeat: none
 itemsArea
   rotate: false
   xy: 1, 1
-  size: 322, 1218
-  orig: 322, 1218
+  size: 303, 1218
+  orig: 303, 1218
   offset: 0, 0
   index: -1

@@ -9,6 +9,7 @@ import com.Phaze1D.RisingFallAndroidV2.Singletons.BitmapFontSizer;
 import com.Phaze1D.RisingFallAndroidV2.Singletons.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -77,6 +78,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     public void show() {
         if (!isCreated){
             Gdx.input.setInputProcessor(this);
+            Gdx.input.setCatchBackKey(true);
             createScene();
             isCreated = true;
         }
@@ -176,7 +178,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
         SpriteDrawable up  = new SpriteDrawable(sceneAtlas.createSprite("naviB"));
         SpriteDrawable down = new SpriteDrawable(sceneAtlas.createSprite("naviBPressed"));
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down,null,BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL()));
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle(up,down,null,BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), null));
 
         navigationB = new SimpleButton("",style);
         navigationB.setCenterPosition((int)naviPosition.x, (int)naviPosition.y);
@@ -193,7 +195,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
         parentLevelButtons = new LevelButton[10];
 
         ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-        style.font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
+        style.font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), null);
         style.fontColor = Color.BLACK;
         SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelbutton"));
         style.up = up;
@@ -309,7 +311,7 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
 
         for (int i = 0; i < 10; i++){
             ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-            style.font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL());
+            style.font = BitmapFontSizer.getFontWithSize((int)BitmapFontSizer.sharedInstance().fontButtonL(), null);
             style.fontColor = Color.BLACK;
             SpriteDrawable up = new SpriteDrawable(buttonAtlas.createSprite("levelbutton"));
             style.up = up;
@@ -399,8 +401,20 @@ public class LevelsScene extends Stage implements Screen, SimpleButton.SimpleBut
     public void childPressed(int levelNumber) {
         delegate.beginGamePlay(levelNumber);
     }
+    
+    
 
-    public interface LevelSceneDelegate{
+    @Override
+	public boolean keyDown(int keyCode) {
+		if(keyCode == Keys.BACK){
+			buttonPressed(0);
+		}
+		return super.keyDown(keyCode);
+	}
+
+
+
+	public interface LevelSceneDelegate{
         public void navigationPressed();
         public void beginGamePlay(int levelID);
 

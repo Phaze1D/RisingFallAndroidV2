@@ -111,7 +111,7 @@ public class MySocialShareDialog extends Dialog {
 		textArea.setLayoutParams(layout);
 		textArea.setLines(4);
 		textArea.setMaxLines(4);
-		textArea.setText(getContext().getResources().getString(R.string.share_text));
+		textArea.setText("Playing Rising Fall  https://www.facebook.com/RisingFallApp");
 		InputFilter[] FilterArray = new InputFilter[1];
 		FilterArray[0] = new InputFilter.LengthFilter(160);
 		textArea.setFilters(FilterArray);
